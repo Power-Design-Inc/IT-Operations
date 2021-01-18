@@ -1,0 +1,53 @@
+2001
+{
+    "spec": {
+        "backing": {
+            "vmdk_file": "[LAB04DB2] PDIVLORACLDB/PDIVLORACLDB_9.vmdk",
+            "type": "VMDK_FILE"
+        }
+    }
+}
+
+
+2002
+{
+    "spec": {
+        "backing": {
+            "vmdk_file": "[LAB04DB3] PDIVLORACLDB/PDIVLORACLDB_11.vmdk",
+            "type": "VMDK_FILE"
+        }
+    }
+}
+
+
+2003
+{
+    "spec": {
+        "backing": {
+            "vmdk_file": "[LAB04DB4] PDIVLORACLDB/PDIVLORACLDB_4.vmdk",
+            "type": "VMDK_FILE"
+        }
+    }
+}
+
+
+2004
+{
+    "spec": {
+        "backing": {
+            "vmdk_file": "[LAB04DB5] PDIVLORACLDB/PDIVLORACLDB_7.vmdk",
+            "type": "VMDK_FILE"
+        }
+    }
+}
+
+
+2006
+{
+    "spec": {
+        "backing": {
+            "vmdk_file": "[LAB04DB6] PDIVLORACLDB/PDIVLORACLDB_8.vmdk",
+            "type": "VMDK_FILE"
+        }
+    }
+}

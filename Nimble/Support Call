@@ -1,0 +1,10 @@
+5.0.10.0 Code is a long term support code release and it came out after the 5.1.4.200. The release versioning and merging of code didn't line up so we are on a newer version of code than the version would suggest.
+
+
+
+No plan to integrate HTML5 into 5.0.x, support is pushing for this, but engineering does not want to backfill the code banks for this feature.
+5.2 has full support for HTML5 and the plugins
+They have to have a specific amount of arrays running the GA Candidate and a certain threshold of tickets per code release.
+5.2 adds Fan Out replication
+5.2 adds controller upgrade path from AF5000 to AF60 (offline upgrade)
+5.2 adds storage class memory for caching on AF60, goes directly into the controller

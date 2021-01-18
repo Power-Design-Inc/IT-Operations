@@ -1,0 +1,51 @@
+#Import the VMware Horizon View Modules
+Import-Module VMware.VimAutomation.HorizonView
+Import-Module VMware.VimAutomation.Core
+
+# Specify the LogicMonitor-specific variables
+$hostname = '##HOSTNAME##'
+$username = '##horizon.user##'
+$password = '##horizon.pass##'
+$domain = '##SYSTEM.DOMAIN##'
+
+#Allow connectivity with TLS1.1 for View 6.1 compatibility
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12 -bor [System.Net.SecurityProtocolType]::Tls11
+
+#Connect to the View server
+$hv_server = Connect-HVServer -Server $hostname -User $username -Password $password -Domain $domain -WarningAction SilentlyContinue -Force
+
+# Our entry point into the API
+$api = $Global:DefaultHVServers[0].ExtensionData
+
+# Grab the licensing info object
+$license_info = $api.License.License_Get()
+
+# usage models hash
+$usage_models = @{
+        "CONCURRENT_USER" = 1;
+        "NAMED_USER" = 2
+}
+
+# Calculate how much time is left on the license. Licenses without expiration dates will report No Data
+if ($license_info.expirationTime)
+{
+    $expiration_time = $license_info.expirationTime
+    $now = Get-Date
+    $days_until_expiration = @(New-TimeSpan -Start $now -End $expiration_time).TotalDays
+}
+else {
+    $days_until_expiration = $null
+}
+
+# Write out collection data
+Write-Output "Licensed=$([int]$license_info.Licensed)"
+Write-Output "ViewComposerEnabled=$([int]$license_info.ViewComposerEnabled)"
+Write-Output "DesktopLaunchingEnabled=$([int]$license_info.DesktopLaunchingEnabled)"
+Write-Output "ApplicationLaunchingEnabled=$([int]$license_info.ApplicationLaunchingEnabled)"
+Write-Output "InstantCloneEnabled=$([int]$license_info.InstantCloneEnabled)"
+Write-Output "UsageModel=$($usage_models[$license_info.UsageModel])"
+Write-Output "DaysUntilExpiration=$($days_until_expiration)"
+
+Disconnect-HVServer -Server $hv_server -Confirm:$false
+
+exit

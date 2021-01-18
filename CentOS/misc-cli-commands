@@ -1,0 +1,2 @@
+//get all local users
+getent passwd | egrep -v '/s?bin/(nologin|shutdown|sync|halt)' | cut -d: -f1

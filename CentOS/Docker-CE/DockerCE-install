@@ -1,0 +1,29 @@
+#Update the OS
+dnf update
+
+#Add the docker isntall repo to the repolist
+dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+#Check to see the package and versions
+dnf search docker-ce*
+
+#Install a specific version of containerD
+dnf install https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.13-3.2.el7.x86_64.rpm
+
+#Install Docker-CE and cli
+dnf install docker-ce docker-ce-cli -y
+
+#Enable Docker-CE and containterD to start with the system
+systemctl enable --now docker containerd
+
+#Add the logged in user to the docker group so that it can manage without sudo
+usermod -aG docker $USER
+
+#Check the docker version installed (verify that docker-ce is installed correctly)
+docker --version
+
+#Run a docker container to satisfy that docker is installed and the containers can start and run and exit successfully
+docker run hello-world
+
+#Check that the docker container ran and exited successfully
+docker ps -a

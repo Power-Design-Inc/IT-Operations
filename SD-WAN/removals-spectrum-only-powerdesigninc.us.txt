@@ -1,0 +1,11 @@
+barracuda65131107163	3600	 IN 	CNAME	ess.barracuda.com.
+barracuda836134193663	3600	 IN 	CNAME	encrypt.barracudanetworks.com.
+vdi	1800	 IN 	A	63.139.175.37
+
+sip	3600	 IN 	CNAME	sipdir.online.lync.com.
+lyncdiscover	3600	 IN 	CNAME	webdir.online.lync.com.
+
+
+_sip._tls.@	3600	 IN 	SRV	100	1	443	sipdir.online.lync.com.
+_sipdir.online.lync.com._tcp	3600	 IN 	SRV	100	1	5061	sipfed.online.lync.com.
+_sipfederationtls._tcp.@	3600	 IN 	SRV	100	1	5061	sipfed.online.lync.com.

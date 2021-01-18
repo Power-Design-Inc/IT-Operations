@@ -1,0 +1,62 @@
+ESX25 (Apps)- (1) Gold 5122 4c @ 3.6GHz (14.4GHz total)
+Daily Avg 76% (24/7)
+Recommendation: None / Upgrade to a single Gold 5222
+
+ESX26 (DB) - (2) Gold 5122 4c ea;8c total  @ 3.6GHz (28.7 GHz total)
+RMAN Avg 99% (17:30-03:00)
+Non-RMAN Avg 45% (03:00-17:30)
+Recommendation: Upgrade to a single Gold 6244 Processor
+
+ESX23 (LAB DB) - (1) Silver 4112 4c @ 2.6GHz (10.4GHz total)
+Daily Avg 90% (24/7)
+Recommendation: Consume the (2) Gold 5122 CPUs from ESX25
+
+Analysis: There is a Gold 6244 processor that has a higher max turbo frequency that will assist with day-to-day fluctuations in compute requirements where 1 core can max out at 4.4GHz, and 8 Cores can sustain up to 4GHz.
+          While I do think this will help daily use longer running single thread processes, I do not think this will benefit (to a small degree) the RMAN backups that consume 100% of the CPU starting at 17:30. Proof
+          that our existing vSphere configuration of the Gold 5122 processor entering into Turbo mode is illustrated in this picture where Core 4 (Processor1) and Core 11 (Processor2) is entering over 100% utilization via esxtop (right side).
+          vSphere GUI (left side) will always see the ceiling at 100% whether that is a base clock speed or the temporary turbo clock speed. The advantage of having 2 processors with 4c each over a single processor with 8c is that twice as
+          many physical cores can enter into the turbo clock speed. The disadvantage is that the turbo clock speed is significantly lower 3.7GHz (5222) vs. 4.4Ghz (6244). Another advantage of the 6244 model is that all 8c can enter into
+          turbo mode at 4GHz, while 1 single core can boost to 4.4GHz, while every core's base frequency is 3.6 which both the 5122 & 6244 operate at. The downside of turbo mode is increased heat, and the greater need to dissipate it.
+          That is why the 6244 costs more because a different heat sink needs applied to maintain its temperature even though they are both the same base clock speed.
+
+
+
+
+AF5000-Tier1-APPS-DOCWEB
+15m - 24hr
+4hr - 24hr
+1w - 48hr
+
+AF5000-Tier1-APPS-VC
+15m - 15m
+4hr - 4hr
+1w - 48hr
+
+AF5000-Tier3-PDIVWSHARE
+15m - 24hr
+4hr - 24hr
+1w - 48hr
+
+AF5000-Tier3-VC
+15m - 24hr
+4hr - 24hr
+1w - 48hr
+
+AF5000-TIER3-VC-PDIVWCAD
+15m - 24hr
+4hr - 24hr
+1w - 48hr
+
+AF5000-Tier3.1-VC
+15m - 72hr
+4hr - 72hr
+1w - 72hr
+
+DockerVC
+15m - 30m
+4hr - 4hr
+
+NEW-AF5000-Tier1-Ora-VC
+15m - 15m
+4hr - 24hr
+1w - 24hr

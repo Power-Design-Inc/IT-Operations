@@ -1,0 +1,50 @@
+#Docker goal to have a manager and a workder node on each host in the VMware cluster. In this configuration we can have any one particular VM host go down,
+#gracefully or by crash, and the Docker Swarm will still maintain it's health.
+
+#Create a Nimble data protection plan for the Docker LUNs
+DockerVC:
+15m (24x7) 17 retained locally, 21 retained remotely
+4HR (24x7) 43 retained locally, 49 retained remotely
+
+#Create a Nimble Volume for each of the Docker Nodes (since we have 5 hosts, we will need 10 LUNS/volumes)
+vol --create DOCKERNODE-001 --size 51200 --description "Docker Node LUN001" --perfpolicy "VMware ESX 5" --pool default --dedupe_enabled yes --multi_initiator yes --apply_acl_to both  --initiatorgrp CORE-Kratos
+vol --create DOCKERNODE-002 --size 51200 --description "Docker Node LUN002" --perfpolicy "VMware ESX 5" --pool default --dedupe_enabled yes --multi_initiator yes --apply_acl_to both  --initiatorgrp CORE-Kratos
+vol --create DOCKERNODE-003 --size 51200 --description "Docker Node LUN003" --perfpolicy "VMware ESX 5" --pool default --dedupe_enabled yes --multi_initiator yes --apply_acl_to both  --initiatorgrp CORE-Kratos
+vol --create DOCKERNODE-004 --size 51200 --description "Docker Node LUN004" --perfpolicy "VMware ESX 5" --pool default --dedupe_enabled yes --multi_initiator yes --apply_acl_to both  --initiatorgrp CORE-Kratos
+vol --create DOCKERNODE-005 --size 51200 --description "Docker Node LUN005" --perfpolicy "VMware ESX 5" --pool default --dedupe_enabled yes --multi_initiator yes --apply_acl_to both  --initiatorgrp CORE-Kratos
+vol --create DOCKERNODE-006 --size 51200 --description "Docker Node LUN006" --perfpolicy "VMware ESX 5" --pool default --dedupe_enabled yes --multi_initiator yes --apply_acl_to both  --initiatorgrp CORE-Kratos
+vol --create DOCKERNODE-007 --size 51200 --description "Docker Node LUN007" --perfpolicy "VMware ESX 5" --pool default --dedupe_enabled yes --multi_initiator yes --apply_acl_to both  --initiatorgrp CORE-Kratos
+vol --create DOCKERNODE-008 --size 51200 --description "Docker Node LUN008" --perfpolicy "VMware ESX 5" --pool default --dedupe_enabled yes --multi_initiator yes --apply_acl_to both  --initiatorgrp CORE-Kratos
+vol --create DOCKERNODE-009 --size 51200 --description "Docker Node LUN009" --perfpolicy "VMware ESX 5" --pool default --dedupe_enabled yes --multi_initiator yes --apply_acl_to both  --initiatorgrp CORE-Kratos
+vol --create DOCKERNODE-010 --size 51200 --description "Docker Node LUN010" --perfpolicy "VMware ESX 5" --pool default --dedupe_enabled yes --multi_initiator yes --apply_acl_to both  --initiatorgrp CORE-Kratos
+
+#Add the docker LUNs to the Docker VC
+vol --assoc DOCKERNODE-001 --volcoll DockerVC
+vol --assoc DOCKERNODE-002 --volcoll DockerVC
+vol --assoc DOCKERNODE-003 --volcoll DockerVC
+vol --assoc DOCKERNODE-004 --volcoll DockerVC
+vol --assoc DOCKERNODE-005 --volcoll DockerVC
+vol --assoc DOCKERNODE-006 --volcoll DockerVC
+vol --assoc DOCKERNODE-007 --volcoll DockerVC
+vol --assoc DOCKERNODE-008 --volcoll DockerVC
+vol --assoc DOCKERNODE-009 --volcoll DockerVC
+vol --assoc DOCKERNODE-010 --volcoll DockerVC
+
+#Rescan the HBA's on the vSphere hosts
+esxcli storage core adapter rescan --all
+vmkfstools -V
+
+#Static IPs for each docker guest and their vSphere host
+DOCKERNODE-001 172.27.1.61 ESX16
+DOCKERNODE-002 172.27.1.62 ESX16
+DOCKERNODE-003 172.27.1.63 ESX17
+DOCKERNODE-004 172.27.1.64 ESX17
+DOCKERNODE-005 172.27.1.65 ESX19
+DOCKERNODE-006 172.27.1.66 ESX19
+DOCKERNODE-007 172.27.1.67 ESX20
+DOCKERNODE-008 172.27.1.68 ESX20
+DOCKERNODE-009 172.27.1.90 ESX21
+DOCKERNODE-010 172.27.1.91 ESX21
+
+#Boot All the VMs
+Continue setup with DockerCE-Install

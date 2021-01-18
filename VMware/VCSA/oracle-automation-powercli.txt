@@ -1,0 +1,176 @@
+//DISMOUNT STORES
+
+#----------------- Start of code capture -----------------
+
+#---------------Capability---------------
+$_this = Get-View -Id 'HostSystem-host-120'
+$_this.Capability
+#---------------UnmountVmfsVolume---------------
+$vmfsUuid = '5f526595-da559f18-0b9f-f403433d8648'
+$_this = Get-View -Id 'HostStorageSystem-storageSystem-120'
+$_this.UnmountVmfsVolume($vmfsUuid)
+#---------------Capability---------------
+$_this = Get-View -Id 'HostSystem-host-81'
+$_this.Capability
+#---------------UnmountVmfsVolume---------------
+$vmfsUuid = '5f52658f-b9a55ace-e9de-f403434372a8'
+$_this = Get-View -Id 'HostStorageSystem-storageSystem-81'
+$_this.UnmountVmfsVolume($vmfsUuid)
+#---------------Capability---------------
+$_this = Get-View -Id 'HostSystem-host-81'
+$_this.Capability
+#---------------UnmountVmfsVolume---------------
+$vmfsUuid = '5f52658d-a3944598-2e87-f403434372a8'
+$_this = Get-View -Id 'HostStorageSystem-storageSystem-81'
+$_this.UnmountVmfsVolume($vmfsUuid)
+#---------------Capability---------------
+$_this = Get-View -Id 'HostSystem-host-81'
+$_this.Capability
+#---------------UnmountVmfsVolume---------------
+$vmfsUuid = '5f526590-5f479eba-0942-f403434372a8'
+$_this = Get-View -Id 'HostStorageSystem-storageSystem-81'
+$_this.UnmountVmfsVolume($vmfsUuid)
+#---------------Capability---------------
+$_this = Get-View -Id 'HostSystem-host-81'
+$_this.Capability
+#---------------UnmountVmfsVolume---------------
+$vmfsUuid = '5f52658f-581c9570-c459-f403434372a8'
+$_this = Get-View -Id 'HostStorageSystem-storageSystem-81'
+$_this.UnmountVmfsVolume($vmfsUuid)
+#---------------Capability---------------
+$_this = Get-View -Id 'HostSystem-host-81'
+$_this.Capability
+#---------------UnmountVmfsVolume---------------
+$vmfsUuid = '5f526590-128b17c8-0506-f403434372a8'
+$_this = Get-View -Id 'HostStorageSystem-storageSystem-81'
+$_this.UnmountVmfsVolume($vmfsUuid)
+#---------------Capability---------------
+$_this = Get-View -Id 'HostSystem-host-81'
+$_this.Capability
+#---------------UnmountVmfsVolume---------------
+$vmfsUuid = '5f52658e-fb015aa6-9f4e-f403434372a8'
+$_this = Get-View -Id 'HostStorageSystem-storageSystem-81'
+$_this.UnmountVmfsVolume($vmfsUuid)
+
+#----------------- End of code capture -----------------
+
+
+
+
+
+//ADD APP TO INVENTORY
+#----------------- Start of code capture -----------------
+
+#---------------Browser---------------
+$_this = Get-View -Id 'Datastore-datastore-154'
+$_this.Browser
+#---------------SearchDatastore_Task---------------
+$datastorePath = '[03]'
+$searchSpec = New-Object VMware.Vim.HostDatastoreBrowserSearchSpec
+$searchSpec.Query = New-Object VMware.Vim.FileQuery[] (1)
+$searchSpec.Query[0] = New-Object VMware.Vim.FolderFileQuery
+$searchSpec.Details = New-Object VMware.Vim.FileQueryFlags
+$searchSpec.Details.FileSize = $true
+$searchSpec.Details.FileOwner = $true
+$searchSpec.Details.Modification = $true
+$searchSpec.Details.FileType = $true
+$searchSpec.SearchCaseInsensitive = $true
+$searchSpec.SortFoldersFirst = $true
+$_this = Get-View -Id 'HostDatastoreBrowser-datastoreBrowser-datastore-154'
+$_this.SearchDatastore_Task($datastorePath, $searchSpec)
+#---------------Browser---------------
+$_this = Get-View -Id 'Datastore-datastore-154'
+$_this.Browser
+#---------------SearchDatastore_Task---------------
+$datastorePath = '[03] PDIVLORCLAPP'
+$searchSpec = New-Object VMware.Vim.HostDatastoreBrowserSearchSpec
+$searchSpec.Query = New-Object VMware.Vim.FileQuery[] (3)
+$searchSpec.Query[0] = New-Object VMware.Vim.VmConfigFileQuery
+$searchSpec.Query[1] = New-Object VMware.Vim.TemplateConfigFileQuery
+$searchSpec.Query[2] = New-Object VMware.Vim.FolderFileQuery
+$searchSpec.Details = New-Object VMware.Vim.FileQueryFlags
+$searchSpec.Details.FileSize = $true
+$searchSpec.Details.FileOwner = $true
+$searchSpec.Details.Modification = $true
+$searchSpec.Details.FileType = $true
+$searchSpec.SearchCaseInsensitive = $true
+$searchSpec.SortFoldersFirst = $true
+$_this = Get-View -Id 'HostDatastoreBrowser-datastoreBrowser-datastore-154'
+$_this.SearchDatastore_Task($datastorePath, $searchSpec)
+#---------------ListKmipServers---------------
+$_this = Get-View -Id 'CryptoManagerKmip-CryptoManager'
+$_this.ListKmipServers($null)
+#---------------RegisterVM_Task---------------
+$path = '[03] PDIVLORCLAPP/PDIVLORCLAPP.vmx'
+$name = 'LABORAAPP03'
+$asTemplate = $false
+$pool = New-Object VMware.Vim.ManagedObjectReference
+$pool.Type = 'ResourcePool'
+$pool.Value = 'resgroup-8'
+$hostParam = New-Object VMware.Vim.ManagedObjectReference
+$hostParam.Type = 'HostSystem'
+$hostParam.Value = 'host-120'
+$_this = Get-View -Id 'Folder-group-v127'
+$_this.RegisterVM_Task($path, $name, $asTemplate, $pool, $hostParam)
+
+#----------------- End of code capture -----------------
+
+//ADD DB TO INVENTORY
+
+#----------------- Start of code capture -----------------
+
+#---------------Browser---------------
+$_this = Get-View -Id 'Datastore-datastore-150'
+$_this.Browser
+#---------------SearchDatastore_Task---------------
+$datastorePath = '[31]'
+$searchSpec = New-Object VMware.Vim.HostDatastoreBrowserSearchSpec
+$searchSpec.Query = New-Object VMware.Vim.FileQuery[] (1)
+$searchSpec.Query[0] = New-Object VMware.Vim.FolderFileQuery
+$searchSpec.Details = New-Object VMware.Vim.FileQueryFlags
+$searchSpec.Details.FileSize = $true
+$searchSpec.Details.FileOwner = $true
+$searchSpec.Details.Modification = $true
+$searchSpec.Details.FileType = $true
+$searchSpec.SearchCaseInsensitive = $true
+$searchSpec.SortFoldersFirst = $true
+$_this = Get-View -Id 'HostDatastoreBrowser-datastoreBrowser-datastore-150'
+$_this.SearchDatastore_Task($datastorePath, $searchSpec)
+#---------------Browser---------------
+$_this = Get-View -Id 'Datastore-datastore-150'
+$_this.Browser
+#---------------SearchDatastore_Task---------------
+$datastorePath = '[31] PDIVLORACLDB'
+$searchSpec = New-Object VMware.Vim.HostDatastoreBrowserSearchSpec
+$searchSpec.Query = New-Object VMware.Vim.FileQuery[] (3)
+$searchSpec.Query[0] = New-Object VMware.Vim.VmConfigFileQuery
+$searchSpec.Query[1] = New-Object VMware.Vim.TemplateConfigFileQuery
+$searchSpec.Query[2] = New-Object VMware.Vim.FolderFileQuery
+$searchSpec.Details = New-Object VMware.Vim.FileQueryFlags
+$searchSpec.Details.FileSize = $true
+$searchSpec.Details.FileOwner = $true
+$searchSpec.Details.Modification = $true
+$searchSpec.Details.FileType = $true
+$searchSpec.SearchCaseInsensitive = $true
+$searchSpec.SortFoldersFirst = $true
+$_this = Get-View -Id 'HostDatastoreBrowser-datastoreBrowser-datastore-150'
+$_this.SearchDatastore_Task($datastorePath, $searchSpec)
+#---------------ListKmipServers---------------
+$_this = Get-View -Id 'CryptoManagerKmip-CryptoManager'
+$_this.ListKmipServers($null)
+#---------------RegisterVM_Task---------------
+$path = '[31] PDIVLORACLDB/PDIVLORACLDB.vmx'
+$name = 'LABORADB03'
+$asTemplate = $false
+$pool = New-Object VMware.Vim.ManagedObjectReference
+$pool.Type = 'ResourcePool'
+$pool.Value = 'resgroup-8'
+$hostParam = New-Object VMware.Vim.ManagedObjectReference
+$hostParam.Type = 'HostSystem'
+$hostParam.Value = 'host-81'
+$_this = Get-View -Id 'Folder-group-v126'
+$_this.RegisterVM_Task($path, $name, $asTemplate, $pool, $hostParam)
+
+#----------------- End of code capture -----------------
+
+//

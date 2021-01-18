@@ -1,0 +1,9 @@
+** done ** p drive powershell
+** gave up ** ping ID
+veeam audit
+** done ** nimble retun stuff
+vcenter stuff
+zabbix
+UAG Gateway
+Oracle LM alert threshold
+SFTP stuff

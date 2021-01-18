@@ -1,0 +1,6 @@
+#Check the nodes that you added to the swarm and see if they are healthy
+#On any manager node in the docker swarm
+docker node ls
+
+#Check the swarm health and see that they are reporting the correct number of workers and managers
+docker info

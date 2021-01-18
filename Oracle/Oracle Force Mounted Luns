@@ -1,0 +1,15 @@
+Oracle Force Mounted Luns
+less /etc/vmware/esx.conf | grep 'forceMount = "true"'
+
+//ESX25
+AF60-PDIVWORACLAPP  5e19c7ee-e388f4d8-fe5e-38eaa78cd6f8
+
+//ESX26
+AF60-PDIVLORACLDB1  5e19c4b0-8750defa-cbf5-38eaa78cd6f8
+AF60-PDIVLORACLDB5  5e19c4b1-818a9592-f1cb-38eaa78cd6f8
+AF60-PDIVLORACLDB7  5e19c4b1-0870a9a3-61a7-38eaa78cd6f8
+AF60-PDIVLORACLDB12 5e19c4b0-058b04bd-ee88-38eaa78cd6f8
+AF60-PDIVLORACLDB14 5e19c4ae-db23e724-319d-38eaa78cd6f8
+
+
+DRT98

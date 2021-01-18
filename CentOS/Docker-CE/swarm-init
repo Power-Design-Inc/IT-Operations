@@ -1,0 +1,40 @@
+#Update the OS
+dnf update -y
+
+#check your local IP address and note it for ens32
+ip a
+
+#you can save it as a variable
+ip4=$(/sbin/ip -o -4 addr list ens32 | awk '{print $4}' | cut -d/ -f1)
+
+#The default address ip pool space is 10.0.0.0/8 if that does not fit our schema and conflicts with a routable IP space you will need to specify the swarm
+#ip address space in the init command. Check with your netork administrators to see there are no conflicts prior to init
+
+#initialize the docker swarm mode
+docker swarm init \
+  --advertise-addr $ip4 \
+  --listen-addr $ip4:2377
+
+#get your Worker Token and then copy it so that you can paste it into your worker nodes (All managers are workers by default)
+docker swarm join-token worker
+{save the output to a notepad somewhere & document it in confluence}
+docker swarm join --token SWMTKN-1-42srje4r93a1flhvbgj6xcoj03tq5tyzbvk91iqcze9mir2dbc-050xzjyu5t9gachx9xowaq6lt 172.27.1.61:2377
+
+
+#get your Manager Token and then copy it so that you can paste it into your worker nodes (All managers are workers by default)
+docker swarm join-token manager
+{save the output to a notepad somewhere & document it in confluence}
+docker swarm join --token SWMTKN-1-42srje4r93a1flhvbgj6xcoj03tq5tyzbvk91iqcze9mir2dbc-dd42r5mn9ddsyqxivsz4odv5l 172.27.1.61:2377
+
+[root@DOCKERNODE-001 tmartin]# docker node ls
+ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
+2pdi7uevl9s4gi30gj78j31ev *   DOCKERNODE-001      Ready               Active              Leader              19.03.12
+tkzpaaxjdqz1hbqq6tguiojug     DOCKERNODE-002      Ready               Active                                  19.03.12
+ecpmhv5qtjv3a10yw7klaraoe     DOCKERNODE-003      Ready               Active              Reachable           19.03.12
+2o3ejvvfqgxrts2k1kbg8v61h     DOCKERNODE-004      Ready               Active                                  19.03.12
+pzlobggffvgl2nrz8b5ikx4rr     DOCKERNODE-005      Ready               Active              Reachable           19.03.12
+u7m2put3dinc1abhi1usfq0hf     DOCKERNODE-006      Ready               Active                                  19.03.12
+miq9krkz4hboflgn5zzaqwg2g     DOCKERNODE-007      Ready               Active              Reachable           19.03.12
+v4fkcmtx5rhdpgo7q6ofxjgtj     DOCKERNODE-008      Ready               Active                                  19.03.12
+vtax4gogthvap7kal3lnd8ooy     DOCKERNODE-009      Ready               Active              Reachable           19.03.12
+smj4o7sozvm7toda2q8v48c7b     DOCKERNODE-010      Ready               Active                                  19.03.12

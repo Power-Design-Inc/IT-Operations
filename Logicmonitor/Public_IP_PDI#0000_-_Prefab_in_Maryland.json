@@ -1,0 +1,32 @@
+{
+  "percentPktsNotReceiveInTime": 80,
+  "stopMonitoring": false,
+  "testLocation": {
+    "all": false,
+    "smgIds": [2]
+  },
+  "overallAlertLevel": "critical",
+  "pollingInterval": 3,
+  "count": 5,
+  "description": "",
+  "individualSmAlertEnable": true,
+  "checkpoints": [{
+    "geoInfo": "Overall",
+    "smgId": 0
+  }],
+  "disableAlerting": false,
+  "timeoutInMSPktsNotReceive": 5000,
+  "type": "pingcheck",
+  "rolePrivileges": [],
+  "transition": 2,
+  "globalSmAlertCond": 2,
+  "isInternal": false,
+  "lastUpdated": 1602604831,
+  "santabaRelease": 143,
+  "name": "CloudFront DNS 1.1.1.1",
+  "host": "1.1.1.1",
+  "useDefaultLocationSetting": false,
+  "useDefaultAlertSetting": false,
+  "individualAlertLevel": "critical",
+  "properties": []
+}

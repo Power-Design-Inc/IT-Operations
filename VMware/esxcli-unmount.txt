@@ -1,0 +1,16 @@
+**ESX26**
+esxcli storage filesystem unmount -l 4-1
+esxcli storage filesystem unmount -l 4-2
+esxcli storage filesystem unmount -l 4-3
+esxcli storage filesystem unmount -l 4-4
+esxcli storage filesystem unmount -l 4-5
+esxcli storage filesystem unmount -l 4-6
+esxcli storage filesystem unmount -l 4-7
+esxcli storage filesystem unmount -l 4-8
+esxcli storage filesystem unmount -l 4-9
+esxcli storage filesystem unmount -l 4-10
+esxcli storage filesystem unmount -l 4-11
+esxcli storage filesystem unmount -l 4-12
+esxcli storage filesystem unmount -l 4-13
+
+esxcli storage filesystem rescan

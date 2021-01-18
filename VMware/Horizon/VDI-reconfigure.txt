@@ -1,0 +1,26 @@
+1) shut the VM down
+2) Remove the Nvidia Grid vGPU PDI device 0 from the VM config
+3) Power On the VM (Display should work correctly with Web Console now)
+4) Update the VMtools to 10.x
+  (Current)
+  [AF60-PDIISOS] VMware-tools/VMware-tools-windows-10.3.10-12406962.iso
+5) Reboot
+6) Update the Horizon Agent to 7.xx
+  Copy
+   (current)
+   \\pdivlsync7\elc\shared\CSUTIL\Installs\VMware\Horizon 7.11\VMware-Horizon-Agent-x86_64-7.11.0-15238678.exe
+   to c:\tools
+    Run as administrator
+    (Possibly reboot a 2nd time if the Horizon agent encounters a MS runtime DLL error)
+7) shut the VM down
+8) Add the Nvidia Grid 2q profile vGPU display
+    Add new device > Shared PCI Device
+      Expand the Carrot under New PCI Device > Select profile > grid_m60-2q
+        Save
+9) Power On the VM
+10) Install the new W10 nvidia drivers (that match the vSphere nvidia grid Driver)
+  (Current 392.05 x64)
+    \\pdivlsync7\elc\shared\CSUTIL\Installs\NVIDIA\NVIDIA-GRID-vSphere-6.7-390.94-390.96-392.05\392.05_grid_win10_server2016_64bit_international.exe
+    (Express install)
+11) reboot
+12) Reassign the guest to the person who had it - if it changed while you were in Horizon.

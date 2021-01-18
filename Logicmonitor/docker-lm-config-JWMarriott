@@ -1,0 +1,35 @@
+docker run --name DAS_JWMarriott1 -d \
+  -e account=powerdesigninc \
+  -e access_id=8hhR56Vz7e5gREB7b4Dd \
+  -e access_key="p(8H)_4fB9X-776us4s632-P8LET)G6g-p6J7c}U" \
+  -e collector_group=DAS_Docker_JWMarriott \
+  -e collector_size=nano \
+  -e description='JWMarriott1' \
+  -e escalating_chain_id=23 \
+  -e resend_interval=60 \
+  -e suppress_alert_clear=no \
+  -e cleanup=true \
+logicmonitor/collector:latest
+
+
+
+
+
+
+The container name "/DAS_LMdocker1" is already in use by container "4f2316ba84d357e169459883d57197dfe2fec135371951df02cf2c59b5dff9ac"
+docker rm 8eef8a705b4ce1169babf1daf77b48cacc8c365aaecee25deae9fc3428046aa0
+docker rm cbfa87e134f74c85a862d3e1e5e2a5a8fe4a9516f3c4a5ac6d35d42e94b91f07
+
+
+
+
+
+
+user
+	das_lmdock1
+
+access ID
+	8hhR56Vz7e5gREB7b4Dd
+
+access key
+	p(8H)_4fB9X-776us4s632-P8LET)G6g-p6J7c}U

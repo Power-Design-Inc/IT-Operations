@@ -1,0 +1,15 @@
+sudo docker run \
+  --volume=/:/rootfs:ro \
+  --volume=/var/run:/var/run:rw \
+  --volume=/sys:/sys:ro \
+  --volume=/var/lib/docker/:/var/lib/docker:ro \
+  --publish=8080:8080 \
+  --detach=true \
+  --name=cadvisor \
+  --privileged=true \
+  --volume=/cgroup:/cgroup:ro \
+  google/cadvisor:latest
+
+
+2df903387f2c124e27537517dead76903977e96158d4b9f2884e32d6d3eceac0
+docker rm 05fc526ba19010090a4f7c56fd715c10a8479c7714b348fcf3bb527f39d6db3f

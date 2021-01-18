@@ -1,0 +1,5 @@
+# CentOS-Stream-8-x86_64-20200629-boot.iso: 684720128 bytes
+SHA256 (CentOS-Stream-8-x86_64-20200629-boot.iso) = 23b8b5609c4ea8da9c79c2984a796be9d403ec058bd22d8cb5c818929dc766b3
+
+# CentOS-Stream-8-x86_64-20200629-dvd1.iso: 8851030016 bytes
+SHA256 (CentOS-Stream-8-x86_64-20200629-dvd1.iso) = bafde5b238755413d4877a56c5dd5ea7de337f81bbcf6c38a269907a83b99876

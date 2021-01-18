@@ -1,0 +1,18 @@
+Microsoft Windows Hyper-V Server 2019
+17763.737.190906-2324.rs5_release_svc_refresh_SERVERHYPERCORE_OEM_x64FRE_en-us_1.iso
+
+# Boot from .iso
+download the latest Windows Server Hyper-V iso from the business account site or Hyper-V trial center
+https://businessaccount.microsoft.com/
+https://www.microsoft.com/en-us/evalcenter/evaluate-hyper-v-server-2019
+
+# Install from the media
+Configure the ilo of the server so that you can remotely install the media without a console connection
+Attach the iso media to the server via ilo
+Boot the server
+Choose F11 to select a boot device once it has gotten far enough into the bios
+Choose the install media of ilo CD/DVD
+Choose the default install
+Install the OS to the storage directory of your choice
+
+The server will reboot into the OS after it is fully installed

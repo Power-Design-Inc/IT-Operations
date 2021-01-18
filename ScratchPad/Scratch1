@@ -1,0 +1,36 @@
+1user4PDI
+pdidocumgt
+1user4PDI
+
+
+eui.6157a40d35115e7a6c9ce90014f00ced
+
+
+
+
+Please run the virus removal tool on this computer "\pdivlsync13\ELC\Shared\CSUTIL\Installs\Sophos\Sophos Virus Removal Tool.exe"
+
+Host: PDILW5986
+
+
+
+
+
+
+
+
+esxcli storage vmfs snapshot mount -u 5ed01d66-0cc4a423-a5e0-48df3703e028
+esxcli storage core adapter rescan --all
+vmkfstools -V
+
+
+
+
+ESX23 - 1 socket
+ESX25 - 1 socket
+ESX26 - 2 sockets
+vCenter -
+
+
+
+Gold 6244 Processor 8c @ 3.6ghz $3,297.29 

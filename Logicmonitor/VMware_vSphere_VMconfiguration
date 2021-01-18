@@ -1,0 +1,70 @@
+import com.jcraft.jsch.ChannelSftp
+import com.jcraft.jsch.JSch
+
+import java.nio.charset.StandardCharsets
+
+// Get host properties
+def host = hostProps.get("system.hostname")
+def user = hostProps.get("ssh.user")
+def pass = hostProps.get("ssh.pass")
+def port = hostProps.get("ssh.port") ?: '22'
+def strict_host = hostProps.get("ssh.stricthostkeychecking") ?: 'no';
+def control_master = hostProps.get("ssh.control_master") ?: 'auto';
+def control_persist = hostProps.get("ssh.control_persist") ?: '15';
+
+// Try to connect and download the file
+try
+{
+    // Instantiate new Jsch object
+    def jsch = new JSch();
+
+    // Get a session
+    session = jsch.getSession(user, host, port.toInteger());
+
+    // Set the password to use for the session
+    session.setPassword(pass)
+
+    // Create a new config object
+    def config = new java.util.Properties();
+
+    // disable/enable StrictHostKeyChecking
+    config.put("StrictHostKeyChecking", strict_host);
+    config.put("ControlMaster", control_master);
+    config.put("ControlPath", "../tmp/vmx-Files-" + host + ".controlSocket");
+    config.put("ControlPersist", control_persist);
+
+    // Apply the config to the session
+    session.setConfig(config);
+
+    // Connect
+    session.connect();
+
+    // Open a channel for SFTP and connect to it
+    channel = session.openChannel("sftp");
+    channel.connect();
+    channelSftp = (ChannelSftp) channel;
+
+    // Create BIS to store downloaded file contents
+    BufferedInputStream bis = new BufferedInputStream(channelSftp.get("##WILDVALUE##"));
+
+    // Make a buffered reader to read from the BIS
+    BufferedReader r = new BufferedReader(
+    new InputStreamReader(bis, StandardCharsets.UTF_8));
+
+    // Read from the BIS and print the file contents
+    while ((str = r.readLine()) != null)
+    {
+        println str
+    }
+}
+catch(Exception e)
+{
+    println e
+    return 1;
+}
+finally
+{
+    session.disconnect()
+}
+
+return 0;

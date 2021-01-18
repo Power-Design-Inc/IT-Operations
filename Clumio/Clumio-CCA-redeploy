@@ -1,0 +1,35 @@
+pdivcsa-01.powerdesigninc.us
+https://s3.dualstack.us-east-1.amazonaws.com/prod-02-ue-1-clumio-edgesrv-vapp-ova/vapp-prod-02-ue-1.ova
+OTVmNzIyN2YtODlmMi00ODkxLWE3MjItZTk1MjFlYWYzZWEzLGh0dHBzOi8vcHJvZC0wMi11ZS0xLWJhY2tlbmQuYXBpLnByb2QtY2x1bWlvLmNvbS9hcGkvYm9vdHN0cmFw
+
+CLUMIO-CCA-01 172.27.1.190 esx16
+CLUMIO-CCA-02 172.27.1.193 esx17
+CLUMIO-CCA-03 172.27.1.93  esx19
+CLUMIO-CCA-04 172.27.1.45  esx20
+CLUMIO-CCA-05 172.27.1.47  esx21
+
+CLUMIO-CCA-11 172.27.1.112 esx16
+CLUMIO-CCA-12 172.27.1.114 esx17
+CLUMIO-CCA-08 172.27.1.98 esx19
+CLUMIO-CCA-09 172.27.1.99 esx20
+CLUMIO-CCA-10 172.27.1.104 esx21
+
+pdivcsa-02.powerdesigninc.us
+https://s3.dualstack.us-east-1.amazonaws.com/prod-02-ue-1-clumio-edgesrv-vapp-ova/vapp-prod-02-ue-1.ova
+NThiY2YyZmEtYzk1YS00ZGE1LTgxMjMtOWQzOGM3YTg3MTI3LGh0dHBzOi8vcHJvZC0wMi11ZS0xLWJhY2tlbmQuYXBpLnByb2QtY2x1bWlvLmNvbS9hcGkvYm9vdHN0cmFw
+
+CLUMIO-CCA-06 172.27.1.50  esx23
+CLUMIO-CCA-07 172.27.1.96  esx25
+
+
+svc_clumio@vsphere.local
+Power72Clumio18!
+
+
+
+dcvcsa-01.powerdesigninc.us
+https://s3.dualstack.us-east-1.amazonaws.com/prod-02-ue-1-clumio-edgesrv-vapp-ova/vapp-prod-02-ue-1.ova
+Nzg5Y2YyNTMtYWU5Ny00MjU3LThiMzctYzJhN2Q0Y2VmMmNkLGh0dHBzOi8vcHJvZC0wMi11ZS0xLWJhY2tlbmQuYXBpLnByb2QtY2x1bWlvLmNvbS9hcGkvYm9vdHN0cmFw
+
+CLUMIO-CCA-13 10.34.240.25
+CLUMIO-CCA-14 10.34.240.26

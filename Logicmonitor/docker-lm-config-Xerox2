@@ -1,0 +1,25 @@
+docker run --name DAS_Xerox2 -d \
+  -e account=powerdesigninc \
+  -e access_id=8hhR56Vz7e5gREB7b4Dd \
+  -e access_key="p(8H)_4fB9X-776us4s632-P8LET)G6g-p6J7c}U" \
+  -e collector_group=DAS_Docker_Xerox \
+  -e collector_size=nano \
+  -e description='Xerox2' \
+  -e escalating_chain_id=23 \
+  -e resend_interval=60 \
+  -e suppress_alert_clear=no \
+  -e cleanup=true \
+logicmonitor/collector:latest
+
+docker rm 798c7c11c7e2374eee65bdf34b0890a456e017a5efa3a52219a833b4b1a7f6d3
+
+
+
+user
+	das_lmdock1
+
+access ID
+	8hhR56Vz7e5gREB7b4Dd
+
+access key
+	p(8H)_4fB9X-776us4s632-P8LET)G6g-p6J7c}U

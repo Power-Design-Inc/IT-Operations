@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/opsgenie/oec/scripts/actionExecutorForZabbix4.py", line 138, in <module>
+    main()
+  File "/home/opsgenie/oec/scripts/actionExecutorForZabbix4.py", line 115, in main
+    auth = login_to_zabbix(username, password, url)
+  File "/home/opsgenie/oec/scripts/actionExecutorForZabbix4.py", line 55, in login_to_zabbix
+    logging.debug(LOG_PREFIX + " login response: " + str(login_result.status_code) + " " + str(login_result.json()))
+  File "/usr/lib/python3/dist-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/usr/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)

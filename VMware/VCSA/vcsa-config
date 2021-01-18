@@ -1,0 +1,42 @@
+pdivcsa-03 172.27.1.30
+172.27.1.79
+pdivcsa-04 172.27.1.101
+
+
+
+prod replacement pdivcsa-01 172.27.1.30
+oracle deployement pdivcsa-02 172.27.1.101
+
+
+vdi repalcement pdivcsa-03
+dcvcsa-01
+
+ service-control --status --all
+
+
+
+pdivcsa-01.powerdesigninc.us
+172.27.1.30
+root / Think21Omega!
+administrator@vsphere.local / Golf78Apple23$
+logicmonitor@vsphere.local / A3SrkZ8!qkGzb2n8K
+
+pdivcsa-02.powerdesigninc.us
+172.27.1.101
+root / Yeti44Coffee!
+administrator@vsphere.local / Golf78Apple23$
+logicmonitor@vsphere.local / A3SrkZ8!qkGzb2n8K
+
+172.27.1.125
+root / Chip72Mark68!
+administrator@vsphere.local / Golf78Apple23$
+logicmonitor@vsphere.local / A3SrkZ8!qkGzb2n8K
+
+dcvcsa-01.powerdesigninc.us
+10.34.240.40
+root / Chip72Mark68! (Bose82Water!)
+administrator@vsphere.local / Golf78Apple23$
+logicmonitor@vsphere.local / A3SrkZ8!qkGzb2n8K
+
+
+nfs://172.27.1.249/srv/backups/vcenter_backup/pdivcsa

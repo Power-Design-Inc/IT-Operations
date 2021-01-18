@@ -1,0 +1,1630 @@
+Cisco Nexus Operating System (NX-OS) Software
+TAC support: http://www.cisco.com/tac
+Copyright (c) 2002-2019, Cisco Systems, Inc. All rights reserved.
+The copyrights to certain works contained in this software are
+owned by other third parties and used and distributed under
+license. Certain components of this software are licensed under
+the GNU General Public License (GPL) version 2.0 or the GNU
+Lesser General Public License (LGPL) Version 2.1. A copy of each
+such license is available at
+http://www.opensource.org/licenses/gpl-2.0.php and
+http://www.opensource.org/licenses/lgpl-2.1.php
+FUSE-MDF-CORE-1# show run
+
+!Command: show running-config
+!Time: Sun Sep  6 16:57:55 2020
+
+version 7.3(5)N1(1)
+hostname FUSE-MDF-CORE-1
+
+feature telnet
+cfs eth distribute
+feature bgp
+feature pim
+feature udld
+feature interface-vlan
+feature hsrp
+feature lacp
+feature dhcp
+feature vpc
+feature ptp
+feature lldp
+feature vtp
+
+logging level adbm 2
+logging level pltfm_config 4
+logging level spanning-tree 6
+username admin password 5 $1$4I5aPeeZ$91IDAMoiUyyxAPr3Qmo5S0  role network-admin
+username pdicisco password 5 $1$kOjWZAQv$Pc/KwclE6ZbUmmMMhfGlW.  role priv-15
+username pdicisco passphrase  lifetime 99999 warntime 14 gracetime 3
+username fgozagonzalez password 5 $5$COU5l2va$mjjoVa10/AQIJJvofw.uvNItao.o0hghDg
+syd1jSze3  role priv-0
+username fgozagonzalez passphrase  lifetime 99999 warntime 14 gracetime 3
+password strength-check
+
+banner motd Z
+******************************************************************
+                    WARNING NOTICE
+******************************************************************
+This system is restricted solely to Power Design authorized users for
+legitimate business purposes only. The actual or attempted unauthorized
+access, use, or modification of this system is strictly prohibited by Power
+Design.Unauthorized users are subject to County disciplinary proceedings
+and/or criminal and civil penalties under state, federal, or other applicable
+domestic and foreign laws. The use of this system may be monitored and
+recorded for administrative and security reasons. Anyone accessing
+this system expressly consentsto such monitoring and is advised that
+if monitoring reveals possible evidence of criminal activity,
+Power Design may provide the evidence of  such activity to law enforcement
+officials. All users must comply with Power Design Instructions regarding the
+protection of information assets.
+
+Z
+
+ip domain-lookup
+ip domain-name powerdesigninc.us
+logging message interface type ethernet description
+logging event link-status default
+errdisable recovery cause link-flap
+errdisable recovery cause udld
+errdisable recovery cause bpduguard
+errdisable recovery cause loopback
+errdisable recovery cause security-violation
+errdisable recovery cause psecure-violation
+errdisable recovery cause pause-rate-limit
+errdisable recovery cause miscabling
+ip access-list AIR-MEDIA-OUT
+  10 permit udp 172.17.14.0/23 172.27.1.11/32 eq bootps
+  12 permit udp 172.17.14.0/23 172.27.1.11/32 eq bootpc
+  14 permit udp 172.17.14.0/23 172.27.1.12/32 eq bootps
+  16 permit udp 172.17.14.0/23 172.27.1.12/32 eq bootpc
+  20 permit udp 172.17.14.0/23 172.27.1.150/32 eq domain
+  25 permit udp 172.17.14.0/23 172.27.1.151/32 eq domain
+  28 permit icmp any 172.30.4.1/32
+  30 permit tcp 172.17.14.0/23 172.30.32.0/24 eq www
+  35 permit tcp 172.17.14.0/23 172.30.32.0/24 eq 443
+  40 permit udp 172.17.14.0/23 172.30.32.0/24 range 6000 7000
+  45 permit tcp 172.17.14.0/23 172.30.32.0/24 range 6000 7000
+  50 permit tcp 172.17.14.0/23 172.30.32.0/24 eq 47000
+  55 permit tcp 172.17.14.0/23 172.30.32.0/24 eq 47010
+  60 permit tcp 172.17.14.0/23 172.30.32.0/24 range 7200 7201
+  65 permit tcp 172.17.14.0/23 172.30.32.0/24 eq 7250
+  70 permit tcp 172.17.14.0/23 172.30.32.0/24 eq 7011
+  75 permit tcp 172.17.14.0/23 172.30.32.0/24 eq 7236
+  80 permit tcp 172.17.14.0/23 172.30.32.0/24 eq 7100
+  85 permit tcp 172.17.14.0/23 172.30.32.0/24 eq 7300
+  90 permit udp 172.17.14.0/23 172.30.32.0/24 eq 5353
+  100 deny ip any 192.168.0.0/16
+  104 deny ip any 10.0.0.0/8
+  108 deny ip any 172.16.0.0/12
+  999 permit ip any any
+ip access-list DAS-FILTER-IN
+  10 permit udp any any eq domain
+  20 permit udp any any eq bootps
+  25 permit udp any eq bootps any
+  30 permit udp any any eq bootpc
+  35 permit tcp any any eq 22
+  36 permit tcp any eq 22 any
+  40 permit tcp any any eq 443
+  41 permit tcp any eq 443 any
+  45 permit icmp any 172.16.20.38/32
+  50 permit icmp any 172.30.38.1/32
+  55 permit icmp any 172.30.39.1/32
+  60 deny ip any 192.168.0.0/16
+  70 deny ip any 10.0.0.0/8
+  80 deny ip any 172.16.0.0/12
+  90 permit ip any any
+ip access-list GUESTWIFI-FILTER-IN
+  10 permit udp 172.30.4.0/22 172.27.1.11/32 eq bootps
+  12 permit udp 172.30.4.0/22 172.27.1.11/32 eq bootpc
+  14 permit udp 172.30.4.0/22 172.27.1.12/32 eq bootps
+  16 permit udp 172.30.4.0/22 172.27.1.12/32 eq bootpc
+  20 permit udp 172.30.4.0/22 172.27.1.150/32 eq domain
+  25 permit udp 172.30.4.0/22 172.27.1.151/32 eq domain
+  28 permit icmp any 172.30.4.1/32
+  30 permit tcp 172.30.4.0/22 172.30.32.0/24 eq www
+  35 permit tcp 172.30.4.0/22 172.30.32.0/24 eq 443
+  40 permit udp 172.30.4.0/22 172.30.32.0/24 range 6000 7000
+  45 permit tcp 172.30.4.0/22 172.30.32.0/24 range 6000 7000
+  50 permit tcp 172.30.4.0/22 172.30.32.0/24 eq 47000
+  55 permit tcp 172.30.4.0/22 172.30.32.0/24 eq 47010
+  60 permit tcp 172.30.4.0/22 172.30.32.0/24 range 7200 7201
+  65 permit tcp 172.30.4.0/22 172.30.32.0/24 eq 7250
+  70 permit tcp 172.30.4.0/22 172.30.32.0/24 eq 7011
+  75 permit tcp 172.30.4.0/22 172.30.32.0/24 eq 7236
+  80 permit tcp 172.30.4.0/22 172.30.32.0/24 eq 7100
+  85 permit tcp 172.30.4.0/22 172.30.32.0/24 eq 7300
+  90 permit udp 172.30.4.0/22 172.30.32.0/24 eq 5353
+  92 permit udp 172.30.4.0/22 172.27.1.11/32 eq 1812
+  94 permit udp 172.30.4.0/22 172.27.1.11/32 eq 1645
+  96 permit udp 172.30.4.0/22 172.27.1.14/32 eq 1812
+  98 permit udp 172.30.4.0/22 172.27.1.14/32 eq 1645
+  100 deny ip any 192.168.0.0/16
+  104 deny ip any 10.0.0.0/8
+  108 deny ip any 172.16.0.0/12
+  999 permit ip any any
+ip access-list POS-SYSTEM-IN
+  10 permit icmp any 172.30.34.0/24
+  20 permit udp 172.30.34.0/24 172.27.1.11/32 eq bootps
+  30 permit udp 172.30.34.0/24 172.27.1.11/32 eq bootpc
+  40 permit udp 172.30.34.0/24 172.27.1.12/32 eq bootps
+  50 permit udp 172.30.34.0/24 172.27.1.12/32 eq bootpc
+  60 permit udp 172.30.34.0/24 172.27.1.150/32 eq domain
+  70 permit udp 172.30.34.0/24 172.27.1.151/32 eq domain
+  80 permit tcp 172.30.34.0/24 172.30.32.0/24 eq www
+  90 permit tcp 172.30.34.0/24 172.30.32.0/24 eq 443
+  100 permit udp 172.30.34.0/24 172.30.32.0/24 range 6000 7000
+  110 permit tcp 172.30.34.0/24 172.30.32.0/24 range 6000 7000
+  120 permit tcp 172.30.34.0/24 172.30.32.0/24 eq 47000
+  130 permit tcp 172.30.34.0/24 172.30.32.0/24 eq 47010
+  140 permit tcp 172.30.34.0/24 172.30.32.0/24 range 7200 7201
+  150 permit tcp 172.30.34.0/24 172.30.32.0/24 eq 7250
+  160 permit tcp 172.30.34.0/24 172.30.32.0/24 eq 7011
+  170 permit tcp 172.30.34.0/24 172.30.32.0/24 eq 7236
+  180 permit tcp 172.30.34.0/24 172.30.32.0/24 eq 7100
+  190 permit tcp 172.30.34.0/24 172.30.32.0/24 eq 7300
+  200 permit udp 172.30.34.0/24 172.30.32.0/24 eq 5353
+  210 deny ip any 172.16.0.0/13
+  220 deny ip any 172.24.0.0/14
+  230 deny ip any 172.28.0.0/15
+  240 deny ip any 172.30.0.0/19
+  250 deny ip any 172.30.32.0/23
+  260 deny ip any 172.30.35.0/24
+  270 deny ip any 172.30.36.0/22
+  280 deny ip any 172.30.40.0/21
+  290 deny ip any 172.30.48.0/20
+  300 deny ip any 172.30.64.0/18
+  310 deny ip any 172.30.128.0/17
+  320 deny ip any 172.31.0.0/16
+  330 deny ip any 10.0.0.0/8
+  340 deny ip any 192.168.0.0/16
+  999 permit ip any any
+ip access-list PREFAB-FILTER-IN
+  statistics per-entry
+  4 permit ip 172.18.30.0/24 172.18.30.0/24
+  5 permit udp any any eq bootps
+  8 permit udp any any eq bootpc
+  10 permit icmp any 172.18.30.1/32
+  13 permit tcp any any eq telnet
+  14 permit tcp any eq telnet any
+  15 permit tcp any any eq 22
+  16 permit tcp any eq 22 any
+  17 permit tcp any any eq 443
+  18 permit tcp any eq 443 any
+  20 deny ip any 192.168.0.0/16
+  30 deny ip any 10.0.0.0/8
+  40 deny ip any 172.16.0.0/12
+  50 permit ip any any
+ip access-list VL509-FILTER-IN
+  10 permit udp any any eq bootps
+  20 permit udp any any eq bootpc
+  30 permit icmp any 172.17.9.1/32
+  40 deny ip any 192.168.0.0/16
+  50 deny ip any 10.0.0.0/8
+  60 deny ip any 172.16.0.0/12
+  70 permit ip any any
+ip access-list VL836-FILTER-IN
+  10 permit ip 172.30.36.0/24 172.30.36.0/24
+  20 permit icmp any 172.30.36.1/32
+  30 permit ip 172.27.1.180/32 any
+  40 permit ip any 172.27.1.180/32
+  50 deny ip any any
+ip access-list log
+  10 deny tcp any any log
+ip access-list vty-acl-in
+  10 permit tcp any 172.16.254.2/32 eq 22
+  15 permit tcp any eq 22 172.16.254.2/32
+  20 permit tcp any 172.16.254.3/32 eq 22
+  25 permit tcp any eq 22 172.16.254.3/32
+  30 permit tcp any 192.0.2.0/24 eq 22
+  35 permit tcp any eq 22 192.0.2.0/24
+hardware profile tcam feature interface-qos limit 100
+snmp-server user admin network-admin auth md5 0x20d35e390425a608f6449b7b62190d9f
+ priv 0x20d35e390425a608f6449b7b62190d9f localizedkey
+snmp-server user pdicisco priv-15 auth md5 0x20d35e390425a608f6449b7b62190d9f pr
+iv 0x20d35e390425a608f6449b7b62190d9f localizedkey
+snmp-server user fgozagonzalez priv-0 auth md5 0xf3b6de000ae465b2624871afd5373f7
+5 priv 0xf3b6de000ae465b2624871afd5373f75 localizedkey
+rmon event 1 log trap public description FATAL(1) owner PMON@FATAL
+rmon event 2 log trap public description CRITICAL(2) owner PMON@CRITICAL
+rmon event 3 log trap public description ERROR(3) owner PMON@ERROR
+rmon event 4 log trap public description WARNING(4) owner PMON@WARNING
+rmon event 5 log trap public description INFORMATION(5) owner PMON@INFO
+snmp-server community PD! group network-operator
+snmp-server community public group network-operator
+ntp server 192.5.41.40
+ntp server 192.5.41.41
+class-map type qos match-all Dante-Control-Audio
+  match dscp 46
+class-map type qos match-all Dante-Control-Class
+  match dscp 8
+class-map type qos match-all Dante-Control-Clock
+  match dscp 56
+class-map type queuing Dante-queueing-class-Audio
+  match qos-group 3
+class-map type queuing Dante-queueing-class-Clock
+  match qos-group 4
+class-map type queuing Dante-queueing-class-Control
+  match qos-group 2
+policy-map type queuing Dante-queueing-policy
+  class type queuing Dante-queueing-class-Control
+    bandwidth percent 10
+  class type queuing Dante-queueing-class-Audio
+    priority
+  class type queuing Dante-queueing-class-Clock
+    bandwidth percent 15
+  class type queuing class-default
+    bandwidth percent 75
+policy-map type network-qos jumbo
+  class type network-qos class-default
+    mtu 9216
+    multicast-optimize
+system qos
+  service-policy type network-qos jumbo
+
+ip route 0.0.0.0/0 172.16.200.10
+ip route 10.34.0.0/16 172.16.200.10
+ip route 10.96.0.0/11 172.16.200.10
+ip route 172.16.201.0/24 172.16.200.10
+ip route 172.16.204.0/22 172.16.200.10
+ip route 172.31.34.0/24 10.34.251.5
+ip route 172.31.35.0/24 172.16.200.10
+ip pim rp-address 10.35.250.1 group-list 239.0.1.2/32
+ip pim ssm range 232.0.0.0/8
+vlan configuration 818
+  service-policy type qos input default-in-policy-Dante
+
+spanning-tree loopguard default
+spanning-tree vlan 1-3967, 4050-4093 priority 0
+ip prefix-list ALL_NETWORKS seq 5 permit 0.0.0.0/0 le 32
+ip prefix-list BGP_DEFAULT seq 5 permit 0.0.0.0/0
+ip prefix-list BGP_DEFAULT seq 10 deny 0.0.0.0/0 le 32
+ip prefix-list NO_BGP_DEFAULT seq 5 deny 0.0.0.0/0
+ip prefix-list NO_BGP_DEFAULT seq 10 permit 0.0.0.0/0 le 32
+ip as-path access-list LOCAL_ONLY permit "^$"
+route-map BGP_PEER_OUT permit 10
+  match as-path LOCAL_ONLY
+route-map PERMIT_ALL permit 10
+  match ip address ALL_NETWORKS
+route-map PERMIT_ANY permit 10
+key chain PDI
+  key 1
+    key-string 7 044B04110A3348
+udld aggressive
+service dhcp
+ip dhcp relay
+vrf context management
+vpc domain 1
+  role priority 100
+  peer-keepalive destination 192.0.2.2
+  delay restore 150
+ptp source 192.5.41.40
+ptp priority1 1
+
+
+interface Vlan1
+
+interface Vlan20
+  no shutdown
+  ip address 10.0.1.140/24
+
+interface Vlan30
+  description MPLS-PDR  CKID 38/HC--/456372/IP/NUVX POS 38HCFU570857SB  1-800-60
+0-5050
+  ip address 192.168.255.2/30
+
+interface Vlan31
+  no shutdown
+  ip address 10.40.1.2/30
+
+interface Vlan36
+  description Events_Wireless
+  ip address 172.16.36.2/22
+  hsrp version 2
+  hsrp 36
+    preempt
+    priority 80
+    ip 172.16.36.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan40
+  description Corporate_Wireless
+  ip address 172.16.40.2/22
+  hsrp version 2
+  hsrp 40
+    preempt
+    priority 80
+    ip 172.16.40.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan44
+  description Public_Wireless
+
+interface Vlan46
+  description VDI_Users
+  no shutdown
+  ip address 172.16.46.2/24
+  hsrp version 2
+  hsrp 46
+    preempt
+    priority 80
+    ip 172.16.46.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan60
+  description CS_Imaging
+  no shutdown
+  ip address 172.16.60.2/24
+  hsrp version 2
+  hsrp 60
+    preempt
+    priority 80
+    ip 172.16.60.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+  ip dhcp relay address 172.27.1.145
+
+interface Vlan64
+  description Corporate_Wireless_v2
+  ip address 172.16.64.2/20
+  hsrp version 2
+  hsrp 64
+    preempt
+    priority 80
+    ip 172.16.64.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan101
+  description Servers
+  no shutdown
+  ip address 172.27.1.253/24
+  hsrp version 2
+  hsrp 101
+    preempt
+    priority 80
+    ip 172.27.1.1
+
+interface Vlan110
+  description Printers
+  no shutdown
+  ip address 172.16.10.2/24
+  hsrp version 2
+  hsrp 110
+    preempt
+    priority 80
+    ip 172.16.10.1
+
+interface Vlan112
+  description MIST-WiFi-Public
+  ip address 172.16.112.2/23
+  hsrp version 2
+  hsrp 112
+    preempt
+    priority 80
+    ip 172.16.112.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan120
+  description Users-IT
+  no shutdown
+  ip address 172.16.20.2/24
+  hsrp version 2
+  hsrp 120
+    preempt
+    priority 80
+    ip 172.16.20.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan121
+  description Users-BC
+  no shutdown
+  ip address 172.16.21.2/24
+  hsrp version 2
+  hsrp 121
+    preempt
+    priority 80
+    ip 172.16.21.1
+  ip dhcp relay address 172.27.1.14
+  ip dhcp relay address 172.27.1.12
+
+interface Vlan122
+  description Users-D
+  no shutdown
+  ip address 172.16.22.2/24
+  hsrp version 2
+  hsrp 122
+    preempt
+    priority 80
+    ip 172.16.22.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan123
+  description Users-TR
+  no shutdown
+  ip address 172.16.23.2/24
+  hsrp version 2
+  hsrp 123
+    preempt
+    priority 80
+    ip 172.16.23.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan124
+  description PDI-1004-IDF-Data
+  ip address 172.16.24.2/24
+  hsrp version 2
+  hsrp 124
+    preempt
+    priority 80
+    ip 172.16.24.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan130
+  description CORE_Security_Cameras
+  no shutdown
+  ip address 172.16.30.2/24
+  hsrp version 2
+  hsrp 130
+    preempt
+    priority 80
+    ip 172.16.30.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan131
+  description PDI_and_PDI-1004_Access_Controls
+  ip address 172.16.31.2/24
+  hsrp version 2
+  hsrp 131
+    preempt
+    priority 80
+    ip 172.16.31.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan132
+  description PDI_and_PDI-1004_AV
+  ip address 172.16.32.2/24
+  hsrp version 2
+  hsrp 132
+    preempt
+    priority 80
+    ip 172.16.32.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan150
+  description VOIP
+  no shutdown
+  ip address 172.16.50.1/23
+  ip pim sparse-mode
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan154
+  description VIRL_flat
+  no shutdown
+  ip address 172.16.154.2/24
+  hsrp version 2
+  hsrp 154
+    preempt
+    priority 80
+    ip 172.16.154.1
+
+interface Vlan155
+  description VIRL_flat1
+  no shutdown
+  ip address 172.16.155.2/24
+  hsrp version 2
+  hsrp 155
+    preempt
+    priority 80
+    ip 172.16.155.1
+
+interface Vlan156
+  description VIRL_SNAT
+  no shutdown
+  ip address 172.16.156.2/24
+  hsrp version 2
+  hsrp 156
+    preempt
+    priority 80
+    ip 172.16.156.1
+
+interface Vlan160
+  description DMZ
+  no shutdown
+
+interface Vlan171
+  no shutdown
+  ip address 172.16.252.2/29
+
+interface Vlan190
+  no shutdown
+  ip address 172.16.90.2/24
+  hsrp version 2
+  hsrp 190
+    preempt
+    priority 80
+    ip 172.16.90.1
+
+interface Vlan199
+  description VPN_TW_DC
+  no shutdown
+  ip address 172.16.199.2/24
+
+interface Vlan200
+  description FW-Inside
+  no shutdown
+  ip address 172.16.200.2/24
+  hsrp version 2
+  hsrp 200
+    preempt
+    priority 80
+    ip 172.16.200.1
+
+interface Vlan210
+  description PDI-1004-IDF-Voice
+  ip address 172.16.210.2/24
+  hsrp version 2
+  hsrp 210
+    preempt
+    priority 80
+    ip 172.16.210.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan220
+  description EXAGRID
+  no shutdown
+  ip address 172.16.220.2/24
+  hsrp version 2
+  hsrp 220
+    preempt
+    priority 80
+    ip 172.16.220.1
+
+interface Vlan250
+  description VoIP Subscriber Server - DR
+  no shutdown
+  ip address 10.35.250.253/24
+  ip pim sparse-mode
+  hsrp version 2
+  hsrp 250
+    preempt
+    priority 80
+    ip 10.35.250.1
+
+interface Vlan252
+  description NEW-ROUTING
+  no shutdown
+  ip address 10.33.252.1/24
+
+interface Vlan253
+  description Routing
+  no shutdown
+  ip address 172.16.253.2/24
+  hsrp version 2
+  hsrp 253
+    preempt
+    priority 80
+    ip 172.16.253.1
+
+interface Vlan254
+  description Management
+  no shutdown
+  ip address 172.16.254.2/24
+  hsrp version 2
+  hsrp 254
+    preempt
+    priority 80
+    ip 172.16.254.1
+
+interface Vlan321
+  description VM-COMMUNICATIONS
+
+interface Vlan333
+  description ***ROUTING TO PDI-NORTH
+  ip address 172.17.0.1/24
+
+interface Vlan401
+  description ROOSEVELT2-LAN-Clients
+  no shutdown
+  ip address 172.18.1.2/24
+  hsrp version 2
+  hsrp 401
+    preempt
+    priority 80
+    ip 172.18.1.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan402
+  description ROOSEVELT2-VOICE
+  no shutdown
+  ip address 172.18.2.2/24
+  ip pim sparse-mode
+  hsrp version 2
+  hsrp 402
+    preempt
+    priority 80
+    ip 172.18.2.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan407
+  description ROOSEVELT2-Printers
+  no shutdown
+  ip address 172.18.7.2/24
+  hsrp version 2
+  hsrp 407
+    preempt
+    priority 80
+    ip 172.18.7.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan430
+  description ROOSEVELT2-11500-Prefab
+  no shutdown
+  ip access-group PREFAB-FILTER-IN in
+  ip address 172.18.30.2/24
+  hsrp version 2
+  hsrp 430
+    preempt
+    priority 80
+    ip 172.18.30.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan501
+  description PLEX-IDF1-DATA
+  no shutdown
+  ip address 172.17.1.2/24
+  hsrp version 2
+  hsrp 501
+    preempt
+    priority 80
+    ip 172.17.1.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan502
+  description PLEX-IDF1-VOICE
+  no shutdown
+  ip address 172.17.2.2/24
+  ip pim sparse-mode
+  hsrp version 2
+  hsrp 502
+    preempt
+    priority 80
+    ip 172.17.2.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan503
+  description PLEX-MDF-DATA
+  no shutdown
+  ip address 172.17.3.2/24
+  hsrp version 2
+  hsrp 503
+    preempt
+    priority 80
+    ip 172.17.3.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan504
+  description PLEX-MDF-VOICE
+  no shutdown
+  ip address 172.17.4.2/24
+  ip pim sparse-mode
+  hsrp version 2
+  hsrp 504
+    preempt
+    priority 80
+    ip 172.17.4.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan505
+  description PLEX-IDF2-DATA
+  no shutdown
+  ip address 172.17.5.2/24
+  hsrp version 2
+  hsrp 505
+    preempt
+    priority 80
+    ip 172.17.5.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan506
+  description PLEX-IDF2-VOICE
+  no shutdown
+  ip address 172.17.6.2/24
+  ip pim sparse-mode
+  hsrp version 2
+  hsrp 506
+    preempt
+    priority 80
+    ip 172.17.6.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan507
+  description PLEX-PRINTERS
+  no shutdown
+  ip address 172.17.7.2/24
+  hsrp version 2
+  hsrp 507
+    preempt
+    priority 80
+    ip 172.17.7.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan509
+  description PLEX-RUCKUS-PUBLIC-WIFI
+  ip access-group VL509-FILTER-IN in
+  ip address 172.17.9.2/24
+  hsrp version 2
+  hsrp 509
+    preempt
+    priority 80
+    ip 172.17.9.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan510
+  description PLEX-SECURITY-CAMERAS
+  no shutdown
+  ip address 172.17.10.2/24
+  hsrp version 2
+  hsrp 510
+    preempt
+    priority 80
+    ip 172.17.10.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan511
+  description PLEX-WEIRD-DEVICE-MGMT
+  no shutdown
+  ip address 172.17.11.2/24
+  hsrp version 2
+  hsrp 511
+    preempt
+    priority 80
+    ip 172.17.11.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan512
+  description PLEX-AV-GEAR
+  no shutdown
+  ip address 172.17.12.2/24
+  hsrp version 2
+  hsrp 512
+    preempt
+    priority 80
+    ip 172.17.12.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan514
+  description Air-Media-Testing
+  ip address 172.17.14.2/23
+  hsrp version 2
+  hsrp 514
+    preempt
+    priority 80
+    ip 172.17.14.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan516
+  description PLEX-RUCKUS-PRIVATE-WIFI
+  ip address 172.17.16.2/22
+  hsrp version 2
+  hsrp 516
+    preempt
+    priority 80
+    ip 172.17.16.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan530
+  description Special-Events
+  ip address 172.17.30.2/24
+  hsrp version 2
+  hsrp 530
+    preempt
+    priority 80
+    ip 172.17.30.1
+
+interface Vlan600
+  description FUSE-MDF-LAN-Clients
+  no shutdown
+  ip address 172.19.0.2/23
+  hsrp version 2
+  hsrp 600
+    preempt
+    priority 80
+    ip 172.19.0.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan602
+  description FUSE-MDF-VOIP
+  no shutdown
+  ip address 172.19.2.2/23
+  ip pim sparse-mode
+  hsrp version 2
+  hsrp 602
+    preempt
+    priority 80
+    ip 172.19.2.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan604
+  description FUSE-IDF-LAN-Clients
+  no shutdown
+  ip address 172.19.4.2/23
+  hsrp version 2
+  hsrp 604
+    preempt
+    priority 80
+    ip 172.19.4.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan606
+  description FUSE-IDF-VOIP
+  no shutdown
+  ip address 172.19.6.2/23
+  ip pim sparse-mode
+  hsrp version 2
+  hsrp 606
+    preempt
+    priority 80
+    ip 172.19.6.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan610
+  description FUSE-Printers
+  no shutdown
+  ip address 172.19.10.2/24
+  hsrp version 2
+  hsrp 610
+    preempt
+    priority 80
+    ip 172.19.10.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan620
+  description FUSE-Exp-Center
+  no shutdown
+  ip address 172.19.20.2/24
+  hsrp version 2
+  hsrp 620
+    preempt
+    priority 80
+    ip 172.19.20.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan701
+  description GW11300-LAN-Clients
+  no shutdown
+  ip address 172.20.1.2/24
+  hsrp version 2
+  hsrp 701
+    preempt
+    priority 80
+    ip 172.20.1.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan702
+  description GW11300-VOICE
+  no shutdown
+  ip address 172.20.2.2/24
+  ip pim sparse-mode
+  hsrp version 2
+  hsrp 702
+    preempt
+    priority 80
+    ip 172.20.2.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan707
+  description GW11300-Printers
+  no shutdown
+  ip address 172.20.7.2/24
+  hsrp version 2
+  hsrp 707
+    preempt
+    priority 80
+    ip 172.20.7.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan710
+  description GW11300-Printers
+  no shutdown
+  ip address 172.20.10.2/24
+  hsrp version 2
+  hsrp 710
+    preempt
+    priority 80
+    ip 172.20.10.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan800
+  description Mist-AP/BT-devices
+  no shutdown
+  ip address 172.30.0.2/23
+  hsrp version 2
+  hsrp 800
+    preempt
+    priority 80
+    ip 172.30.0.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan804
+  description Mist-Public-Wifi-Clients
+  no shutdown
+  ip access-group GUESTWIFI-FILTER-IN in
+  ip address 172.30.4.2/22
+  hsrp version 2
+  hsrp 804
+    preempt
+    priority 80
+    ip 172.30.4.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan812
+  description Events
+  no shutdown
+  ip address 172.30.12.2/23
+  hsrp version 2
+  hsrp 812
+    preempt
+    priority 80
+    ip 172.30.12.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan814
+  description CE-Lab-Players
+  no shutdown
+  ip address 172.30.14.2/23
+  hsrp version 2
+  hsrp 814
+    preempt
+    priority 80
+    ip 172.30.14.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan816
+  description NVX
+  no shutdown
+  ip address 172.30.16.2/23
+  hsrp version 2
+  hsrp 816
+    preempt
+    priority 80
+    ip 172.30.16.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan818
+  description Dante_system
+  no shutdown
+  ip address 169.254.6.235/16
+  ip igmp version 3
+  ip igmp query-interval 30
+
+interface Vlan820
+  description AV-General
+  no shutdown
+  ip address 172.30.20.2/22
+  hsrp version 2
+  hsrp 820
+    preempt
+    priority 80
+    ip 172.30.20.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan824
+  description Lighting
+  no shutdown
+  ip address 172.30.24.2/22
+  hsrp version 2
+  hsrp 824
+    preempt
+    priority 80
+    ip 172.30.24.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan828
+  description Security
+  no shutdown
+  ip address 172.30.28.2/22
+  hsrp version 2
+  hsrp 828
+    preempt
+    priority 80
+    ip 172.30.28.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan832
+  description Air-Media
+  no shutdown
+  ip address 172.30.32.2/24
+  ip pim sparse-mode
+  hsrp version 2
+  hsrp 832
+    preempt
+    priority 80
+    ip 172.30.32.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan833
+  description Video-Production-Studio
+  no shutdown
+  ip address 172.30.33.2/24
+  hsrp version 2
+  hsrp 833
+    preempt
+    priority 80
+    ip 172.30.33.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan834
+  description POS-System
+  no shutdown
+  ip access-group POS-SYSTEM-IN in
+  ip address 172.30.34.2/24
+  hsrp version 2
+  hsrp 834
+    preempt
+    priority 80
+    ip 172.30.34.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan835
+  description SIKLU-MGMT
+  no shutdown
+  ip address 172.30.35.2/24
+  hsrp version 2
+  hsrp 835
+    preempt
+    priority 80
+    ip 172.30.35.1
+
+interface Vlan836
+  description HVAC-Control
+  no shutdown
+  ip access-group VL836-FILTER-IN in
+  ip address 172.30.36.2/24
+  hsrp version 2
+  hsrp 836
+    preempt
+    priority 80
+    ip 172.30.36.1
+
+interface Vlan837
+  description UPS-MGMT
+  no shutdown
+  ip address 172.30.37.2/24
+  hsrp version 2
+  hsrp 837
+    preempt
+    priority 80
+    ip 172.30.37.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan838
+  description DAS-VERIZON
+  no shutdown
+  ip access-group DAS-FILTER-IN in
+  ip address 172.30.38.2/24
+  hsrp version 2
+  hsrp 838
+    preempt
+    priority 80
+    ip 172.30.38.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan839
+  description DAS-ATT
+  no shutdown
+  ip access-group DAS-FILTER-IN in
+  ip address 172.30.39.2/24
+  hsrp version 2
+  hsrp 839
+    preempt
+    priority 80
+    ip 172.30.39.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan840
+  description Private_WiFi_Pool1
+  no shutdown
+  ip address 172.30.40.2/22
+  hsrp version 2
+  hsrp 840
+    preempt
+    priority 80
+    ip 172.30.40.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan844
+  description Private_WiFi_Pool2
+  no shutdown
+  ip address 172.30.44.2/22
+  hsrp version 2
+  hsrp 844
+    preempt
+    priority 80
+    ip 172.30.44.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan848
+  description Private_WiFi_Pool3
+  no shutdown
+  ip address 172.30.48.2/22
+  hsrp version 2
+  hsrp 848
+    preempt
+    priority 80
+    ip 172.30.48.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan852
+  description Private_WiFi_Pool4
+  no shutdown
+  ip address 172.30.52.2/22
+  hsrp version 2
+  hsrp 852
+    preempt
+    priority 80
+    ip 172.30.52.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface Vlan880
+  description MSTEAMS
+  no shutdown
+  ip address 172.30.80.2/24
+  hsrp version 2
+  hsrp 880
+    preempt
+    priority 80
+    ip 172.30.80.1
+  ip dhcp relay address 172.27.1.12
+  ip dhcp relay address 172.27.1.14
+
+interface port-channel27
+  description ESX27 iSCSI
+  switchport access vlan 20
+  flowcontrol receive on
+  flowcontrol send on
+  vpc 27
+
+interface port-channel101
+  description ***Uplink to Fuse***
+  switchport mode trunk
+  speed 10000
+  vpc 101
+  ip dhcp snooping trust
+
+interface port-channel256
+
+interface port-channel300
+  description Po_Trunk_to_11300_Site
+  switchport mode trunk
+  speed 10000
+  vpc 300
+  ip dhcp snooping trust
+
+interface port-channel401
+  description PC-to-GW11300
+  switchport mode trunk
+  speed 10000
+  vpc 401
+  ip dhcp snooping trust
+
+interface port-channel4090
+  description Available
+  switchport mode trunk
+  no lacp suspend-individual
+  spanning-tree guard loop
+  vpc 4090
+  ip dhcp snooping trust
+
+interface port-channel4091
+  description ***VPC to PDI-NORTH-PLEX-4500X***
+  switchport mode trunk
+  no lacp suspend-individual
+  spanning-tree guard loop
+  vpc 4091
+
+interface port-channel4092
+  description Available
+  switchport mode trunk
+  no lacp suspend-individual
+  vpc 4092
+  ip dhcp snooping trust
+
+interface port-channel4093
+  description PC-Fuse-MDF2-3750X
+  switchport mode trunk
+  no lacp suspend-individual
+  vpc 4093
+  ip dhcp snooping trust
+
+interface port-channel4094
+  description Available
+  switchport mode trunk
+  no lacp suspend-individual
+  vpc 4094
+  ip dhcp snooping trust
+
+interface port-channel4095
+  description Available
+  switchport mode trunk
+  no lacp suspend-individual
+  vpc 4095
+  ip dhcp snooping trust
+
+interface port-channel4096
+  description PC-to MDF-CORE-2
+  switchport mode trunk
+  no lacp suspend-individual
+  spanning-tree port type network
+  vpc peer-link
+  ip dhcp snooping trust
+
+interface Ethernet1/1
+  description PC 4096 To MDF-CORE-2:Eth1/1
+  switchport mode trunk
+  channel-group 4096 mode active
+
+interface Ethernet1/2
+  description Uplink to Fuse
+  switchport mode trunk
+  channel-group 101 mode active
+
+interface Ethernet1/3
+  description ***FUSE-MDF2-3750X-T1/1/1***
+  switchport mode trunk
+  channel-group 4093 mode active
+
+interface Ethernet1/4
+  description empty
+
+interface Ethernet1/5
+  description null
+  shutdown
+  switchport mode trunk
+
+interface Ethernet1/6
+  description null
+  shutdown
+  switchport mode trunk
+
+interface Ethernet1/7
+  description Firewall POC
+  switchport monitor
+
+interface Ethernet1/8
+  description TRUNK TO IDF2-SW1
+  switchport mode trunk
+  channel-group 4090 mode active
+
+interface Ethernet1/9
+  description ***THOUGHTSPOT NODE A***
+  switchport access vlan 101
+
+interface Ethernet1/10
+  description ***THOUGHTSPOT NODE B***
+  switchport access vlan 101
+
+interface Ethernet1/11
+  description PC 4096 To MDF-CORE-2:Eth1/11
+  switchport mode trunk
+  channel-group 4096 mode active
+
+interface Ethernet1/12
+  description Nimble AF60 CtrA Eth1B
+  switchport access vlan 20
+  spanning-tree port type edge
+  flowcontrol receive on
+  flowcontrol send on
+
+interface Ethernet1/13
+  description ***ESX17 LAN#1***
+  switchport mode trunk
+  switchport trunk native vlan 101
+  spanning-tree port type edge trunk
+
+interface Ethernet1/14
+  description ***ESX17 iSCSI #1***
+  switchport access vlan 20
+  flowcontrol receive on
+  flowcontrol send on
+
+interface Ethernet1/15
+  description ***FUSE-MDF-3750X:TE1/1/1***
+  switchport mode trunk
+  channel-group 4092 mode active
+
+interface Ethernet1/16
+  description ***ESX25 LAN#1***
+  switchport mode trunk
+  switchport trunk native vlan 101
+  spanning-tree port type edge trunk
+
+interface Ethernet1/17
+  description ***FUSE-IDF-3750X T1/1/1***
+  switchport mode trunk
+  channel-group 4094 mode active
+
+interface Ethernet1/18
+  description ***10GE TRUNK TO GW11300***
+  switchport mode trunk
+  channel-group 300 mode active
+
+interface Ethernet1/19
+  description Uplink-To-Prefab
+  switchport mode trunk
+
+interface Ethernet1/20
+  description null
+  shutdown
+  switchport mode trunk
+
+interface Ethernet1/21
+  description ***ESX16 iSCSI #1***
+  switchport access vlan 20
+  flowcontrol receive on
+  flowcontrol send on
+
+interface Ethernet1/22
+  description ***ESX16 LAN#1***
+  switchport mode trunk
+  switchport trunk native vlan 101
+  spanning-tree port type edge trunk
+
+interface Ethernet1/23
+  description ***ESX25 iSCSI #1***
+  switchport access vlan 20
+  flowcontrol receive on
+  flowcontrol send on
+
+interface Ethernet1/24
+  description PDI-ESX24 vmnic6
+  switchport mode trunk
+  switchport trunk native vlan 101
+  spanning-tree port type edge trunk
+
+interface Ethernet1/25
+  description ***ESX24 iSCSI #1***
+  switchport access vlan 20
+  flowcontrol receive on
+  flowcontrol send on
+
+interface Ethernet1/26
+  description Nimble AF60 CtrA Eth2A
+  switchport access vlan 20
+  spanning-tree port type edge
+  flowcontrol receive on
+  flowcontrol send on
+
+interface Ethernet1/27
+  description ESX22
+  switchport access vlan 101
+  ip dhcp snooping trust
+
+interface Ethernet1/28
+  description ESX26 iSCSI 1
+  switchport access vlan 20
+  flowcontrol receive on
+  flowcontrol send on
+
+interface Ethernet1/29
+  description ESX26 LAN 1
+  switchport mode trunk
+  switchport trunk native vlan 101
+  spanning-tree port type edge trunk
+
+interface Ethernet1/30
+  description PDI-ESX18 vmnic4
+  switchport mode trunk
+  switchport trunk native vlan 101
+  spanning-tree port type edge trunk
+
+interface Ethernet1/31
+  description ***ESX18 iSCSI***
+  switchport access vlan 20
+  flowcontrol receive on
+  flowcontrol send on
+
+interface Ethernet1/32
+  description ***PLEX-MDF-4500X-Te1/1/5***
+  switchport mode trunk
+  channel-group 4091 mode active
+
+interface Ethernet2/1
+  description ***ESX19 LAN#1***
+  switchport mode trunk
+  switchport trunk native vlan 101
+  spanning-tree port type edge trunk
+
+interface Ethernet2/2
+  description ***ESX19 iSCSI #2***
+  switchport access vlan 20
+  flowcontrol receive on
+  flowcontrol send on
+
+interface Ethernet2/3
+  description ***ESX21 LAN#1***
+  switchport mode trunk
+  switchport trunk native vlan 101
+  spanning-tree port type edge trunk
+
+interface Ethernet2/4
+  description ***ESX21 iSCSI #2***
+  switchport access vlan 20
+  flowcontrol receive on
+  flowcontrol send on
+
+interface Ethernet2/5
+  description ***ESX20 LAN#1***
+  switchport mode trunk
+  switchport trunk native vlan 101
+  spanning-tree port type edge trunk
+
+interface Ethernet2/6
+  description ***ESX20 iSCSI #2***
+  switchport access vlan 20
+  flowcontrol receive on
+  flowcontrol send on
+
+interface Ethernet2/7
+  description PDI-ESX27 iSCSI
+  switchport access vlan 20
+  flowcontrol receive on
+  flowcontrol send on
+
+interface Ethernet2/8
+  description ***Uplink to Fuse***
+  switchport mode trunk
+  channel-group 101 mode active
+
+interface Ethernet2/9
+  description ***b iSCSI#1***
+  switchport access vlan 20
+  flowcontrol receive on
+  flowcontrol send on
+
+interface Ethernet2/10
+  description ***NIMBLE2 PRI Slot1/1 iSCSI***
+  switchport access vlan 20
+  flowcontrol receive on
+  flowcontrol send on
+
+interface Ethernet2/11
+  description PDI-ESX23
+  switchport mode trunk
+  switchport trunk native vlan 101
+  spanning-tree port type edge trunk
+
+interface Ethernet2/12
+  description ***NIMBLE2 SEC Slot1/1 iSCSI***
+  switchport access vlan 20
+  flowcontrol receive on
+  flowcontrol send on
+
+interface Ethernet2/13
+  description Firewall POC
+  switchport monitor
+
+interface Ethernet2/14
+  description VCE-2000-1 VCE20000001000 SFP2
+  switchport mode trunk
+  switchport trunk allowed vlan 171-172
+
+interface Ethernet2/15
+  description SOPHOS-UTM-1 ETH9
+  switchport access vlan 172
+  spanning-tree port type edge
+
+interface Ethernet2/16
+  description SOPHOS-A-ETH10-Inside
+  switchport access vlan 200
+  spanning-tree port type edge
+
+interface mgmt0
+  description ***vPC KeepAlive Link***
+  vrf member management
+  ip address 192.0.2.1/24
+clock timezone EST -5 0
+clock summer-time EST 2 Sun Mar 02:00 1 Sun Nov 02:00 60
+cli alias name wr copy running-config startup-config
+line console
+line vty
+  access-class vty-acl-in in
+boot kickstart bootflash:/n5000-uk9-kickstart.7.3.5.N1.1.bin
+boot system bootflash:/n5000-uk9.7.3.5.N1.1.bin
+router bgp 65000
+  router-id 172.16.254.2
+  address-family ipv4 unicast
+    network 10.30.1.0/24
+    network 10.34.0.0/16
+    network 172.16.201.0/24
+    network 172.16.204.0/22
+    network 172.17.4.0/24
+    network 172.31.1.0/24
+    network 172.31.34.0/24
+    network 172.31.35.0/24
+    network 192.168.0.0/24
+    network 192.168.200.0/24
+    network 192.168.224.0/24
+    redistribute direct route-map PERMIT_ALL
+    aggregate-address 172.17.0.0/16 summary-only
+  neighbor 172.16.252.1
+    remote-as 65010
+    address-family ipv4 unicast
+      prefix-list NO_BGP_DEFAULT in
+      route-map BGP_PEER_OUT out
+      default-originate
+      soft-reconfiguration inbound
+poap transit
+monitor session 1
+  description SPAN Firewall Inside ETH10
+  source interface Ethernet2/16 both
+  destination interface Ethernet2/13
+  no shut
+monitor session 2
+  description SPAN Firewall SDWAN ETH9
+  source interface Ethernet2/15 both
+  destination interface Ethernet1/7
+ip dhcp snooping vlan 64
+logging ip access-list include sgt
+logging logfile messages 6
+logging server 172.27.1.15 7 use-vrf default facility syslog
+logging source-interface Vlan254
+logging monitor 6

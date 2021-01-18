@@ -1,0 +1,1 @@
+esxcli software vib install -d /vmfs/volumes/AF60-PDIISOS/Nimble/NCM/nimble-ncm-for-esx6.5-7.0.0-650012.zip

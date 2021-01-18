@@ -1,0 +1,153 @@
+﻿; Domain: powerdesigninc.us
+; Exported (y-m-d hh:mm:ss): 2020-08-20 16:44:22
+;
+; This file is intended for use for informational and archival
+; purposes ONLY and MUST be edited before use on a production
+; DNS server.
+;
+; In particular, you must update the SOA record with the correct
+; authoritative name server and contact e-mail address information,
+; and add the correct NS records for the name servers which will
+; be authoritative for this domain.
+;
+; For further information, please consult the BIND documentation
+; located on the following website:
+;
+; http://www.isc.org/
+;
+; And RFC 1035:
+;
+; http://www.ietf.org/rfc/rfc1035.txt
+;
+; Please note that we do NOT offer technical support for any use
+; of this zone data, the BIND name server, or any other third-
+; party DNS software.
+;
+; Use at your own risk.
+
+
+; SOA Record
+powerdesigninc.us.	3600	 IN 	SOA	ns03.domaincontrol.com.	dns.jomax.net. (
+					2020081402
+					28800
+					7200
+					604800
+					3600
+					)
+
+; A Records
+@	600	 IN 	A	35.208.225.90
+acl	3600	 IN 	A	107.144.149.45
+acl-dev	3600	 IN 	A	107.144.149.45
+api	3600	 IN 	A	107.144.149.45
+applications	3600	 IN 	A	107.144.149.45
+av	3600	 IN 	A	68.64.38.57
+books	3600	 IN 	A	107.144.149.45
+bpm	3600	 IN 	A	107.144.149.45
+ci	3600	 IN 	A	107.144.149.45
+corningone	3600	 IN 	A	107.144.149.42
+crewconnect-app	3600	 IN 	A	107.144.149.45
+dc	1800	 IN 	A	107.144.149.38
+emailfilter	1800	 IN 	A	107.144.149.35
+employeecentral	3600	 IN 	A	107.144.149.45
+esource	3600	 IN 	A	64.238.152.156
+fieldapps	3600	 IN 	A	107.144.149.45
+files	3600	 IN 	A	162.216.252.22
+ftp	3600	 IN 	A	107.144.149.37
+grid-app	3600	 IN 	A	107.144.149.45
+issupplier	3600	 IN 	A	68.64.38.60
+issuppliertest	3600	 IN 	A	68.64.38.61
+it-test-endpoint	3600	 IN 	A	107.144.149.45
+itrportal	3600	 IN 	A	107.144.149.45
+laboraapp11	3600	 IN 	A	74.84.197.133
+mail	1800	 IN 	A	107.144.149.35
+mist-location-emitter	3600	 IN 	A	107.144.149.45
+mist-location-emitter-dev	3600	 IN 	A	107.144.149.45
+oracle	3600	 IN 	A	68.64.38.60
+pdivlexpedge	1800	 IN 	A	107.144.149.36
+pdivloradmz	3600	 IN 	A	107.144.149.37
+pdivloradmz	3600	 IN 	A	107.144.149.41
+pdivwmes	1800	 IN 	A	107.144.149.38
+pdrsg135	3600	 IN 	A	4.14.248.226
+pledge	3600	 IN 	A	35.208.225.90
+powersource	3600	 IN 	A	107.144.149.46
+powerwear	3600	 IN 	A	107.144.149.45
+services	3600	 IN 	A	107.144.149.45
+servicesdev	3600	 IN 	A	107.144.149.45
+sftp	3600	 IN 	A	107.144.149.46
+staging	3600	 IN 	A	35.208.225.90
+testapps	3600	 IN 	A	107.144.149.39
+thehub	3600	 IN 	A	107.144.149.45
+trainingapps	3600	 IN 	A	107.144.149.45
+view	1800	 IN 	A	107.144.149.43
+vdi	1800	 IN 	A	107.144.149.43
+vpn	1800	 IN 	A	107.144.149.35
+vpn-client	1800	 IN 	A	107.144.149.35
+vpn2	3600	 IN 	A	74.84.197.132
+warehouse	3600	 IN 	A	107.144.149.35
+webconf	3600	 IN 	A	68.64.38.56
+workdaysftp	3600	 IN 	A	107.144.149.38
+_cisco-uds._tcp	1800	 IN 	A	107.144.149.36
+_cuplogin._tcp	1800	 IN 	A	107.144.149.36
+
+; CNAME Records
+autodiscover	3600	 IN 	CNAME	autodiscover.outlook.com.
+
+careers	3600	 IN 	CNAME	pdicareers.now.sh.
+em9207	3600	 IN 	CNAME	u7269038.wl039.sendgrid.net.
+enterpriseenrollment	3600	 IN 	CNAME	enterpriseenrollment-s.manage.microsoft.com.
+enterpriseregistration	3600	 IN 	CNAME	enterpriseregistration.windows.net.
+gridadmin	3600	 IN 	CNAME	d3vy0fsbpjzj3u.cloudfront.net.
+gridadmin-dev	3600	 IN 	CNAME	d3nysjvguu1mea.cloudfront.net.
+gridadmin-test	3600	 IN 	CNAME	d1d0putb1c6c2l.cloudfront.net.
+gridvisitor	3600	 IN 	CNAME	d4ln8iok13575.cloudfront.net.
+gridvisitor-dev	3600	 IN 	CNAME	d3n0grxvsaxsgr.cloudfront.net.
+gridvisitor-test	3600	 IN 	CNAME	d2mfpy3lg94lvv.cloudfront.net.
+intercom._domainkey	3600	 IN 	CNAME	38336486-9418-40ac-a151-ae55dce1b8e9.dkim.intercom.io.
+intercom._domainkey.powerdesigninc.us	3600	 IN 	CNAME	38336486-9418-40ac-a151-ae55dce1b8e9.dkim.intercom.io.
+k1._domainkey	3600	 IN 	CNAME	dkim.mcsv.net.
+maps	3600	 IN 	CNAME	d16svvwexto1u6.cloudfront.net.
+maps-dev	3600	 IN 	CNAME	d37yehh02mhp3x.cloudfront.net.
+media	3600	 IN 	CNAME	rr-media-powerdesigninc-us.getbynder.com.
+msoid	3600	 IN 	CNAME	clientconfig.microsoftonline-p.net.
+s1._domainkey	3600	 IN 	CNAME	s1.domainkey.u7269038.wl039.sendgrid.net.
+s2._domainkey	3600	 IN 	CNAME	s2.domainkey.u7269038.wl039.sendgrid.net.
+selector1._domainkey	3600	 IN 	CNAME	selector1-powerdesigninc-us._domainkey.powerdesignincus.onmicrosoft.com.
+selector2._domainkey	3600	 IN 	CNAME	selector2-powerdesigninc-us._domainkey.powerdesignincus.onmicrosoft.com.
+thehub-support	3600	 IN 	CNAME	custom.intercom.help.
+videos	3600	 IN 	CNAME	powerdesigninc.vids.io.
+www	3600	 IN 	CNAME	@
+_domainconnect	3600	 IN 	CNAME	_domainconnect.gd.domaincontrol.com.
+_f7564be1499fcea2c2f0182e6b3314fa.media	3600	 IN 	CNAME	_6d24e22f2caa6bcf29cd637754490bab.tljzshvwok.acm-validations.aws.
+_fafabb0946618595ad0a2ffba29410e9	3600	 IN 	CNAME	_c979bc4b87902ff14dff5a92f2018148.duyqrilejt.acm-validations.aws.
+
+; MX Records
+@	600	 IN 	MX	0	us-smtp-inbound-1.mimecast.com.
+@	600	 IN 	MX	10	us-smtp-inbound-2.mimecast.com.
+
+; TXT Records
+@	3600	 IN 	TXT	"apple-domain-verification=bIJHrUo82SmQdtBg"
+@	3600	 IN 	TXT	"atlassian-domain-verification=EjR3UuPW4Wq+TihZgTx8yT16GIKbMmVTtEMviNOxi62htUlOpXNLaFKe0tc2Z1ZU"
+@	3600	 IN 	TXT	"google-site-verification=bzFT41csEV1TV-nYxGoPjhh9m6O4h5QrhBjCI10S-XI"
+@	3600	 IN 	TXT	"MS=5A093BCD39F9804ABA941E246D141D2C593B1B51"
+@	3600	 IN 	TXT	"qBLkQXOSDaFyHPOdFiZPEfVIr+jVgF+9sImcAszH6Jy8TgC9mDngv/s9NXw9ZgjmYJK7GcwFgj5aeiYesWAI8A=="
+@	3600	 IN 	TXT	"v=spf1 mx a ip4:107.144.149.34 ip4:216.85.228.130 ip4:107.144.149.35 a:mail.powerdesigninc.us include:spf.mandrillapp.com include:spf.protection.outlook.com include:servers.mcsv.net include:spf_amer.taleo.net include:us._netblocks.mimecast.com ~all"
+@	3600	 IN 	TXT	"v=verifydomain MS=6099944"
+mandrill._domainkey	3600	 IN 	TXT	"v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCrLHiExVd55zd/IQ/J/mRwSRMAocV/hMB3jXwaHH36d9NaVynQFYV8NaWi69c1veUtRzGt7yAioXqLj7Z4TeEUoOLgrKsn8YnckGs9i3B3tVFB+Ch/4mPhXWiNfNdynHWBcPcbJ8kjEQ2U8y78dHZj1YeRXXVvWob2OaKynO8/lQIDAQAB;"
+mimecast20190424._domainkey	3600	 IN 	TXT	"v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCDeqKZMcddOCQK01gVROYbVsiVZwK+I4jYe+SR3mh8E3jYsVgNxnIMO5eg7hsfYVm9wKtGDOwsgfYN1R9nywTS4v/AU0zFjUcUtEkmW+bA96tN1kD8aMSjICGziPY2RAnWh5qexS8HcOuWTCrXFY2rcC16poa+n3QN3dusj72xgwIDAQAB"
+_dmarc	3600	 IN 	TXT	"v=DMARC1; p=reject; pct=100; rua=mailto:backupadmin@powerdesigninc.us; ruf=mailto:backupadmin@powerdesigninc.us; fo=1"
+
+; SRV Records
+_collab-edge._tls.@	3600	 IN 	SRV	0	5	8443	pdivlexpedge.powerdesigninc.us.
+
+; AAAA Records
+
+; CAA Records
+
+; NS Records
+@	3600	 IN 	NS	ns03.domaincontrol.com.
+@	3600	 IN 	NS	ns04.domaincontrol.com.
+smartcampus.powerdesigninc.us	3600	 IN 	NS	ns-1449.awsdns-53.org.
+smartcampus.powerdesigninc.us	3600	 IN 	NS	ns-1675.awsdns-17.co.uk.
+smartcampus.powerdesigninc.us	3600	 IN 	NS	ns-23.awsdns-02.com.
+smartcampus.powerdesigninc.us	3600	 IN 	NS	ns-758.awsdns-30.net.

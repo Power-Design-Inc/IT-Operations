@@ -1,0 +1,49 @@
+# after the OS has been installed
+At the CLI - choose a password and confirm it to change the administrator password
+
+# config the server IP
+At the CLI - choose the option to change the network settings
+Choose the option to change the management NIC
+Choose the option to assign a static IP address
+  Assign the static IP address
+  Assign the defauly gateway
+  Assign the default primary and secondary DNS servers
+
+# Allow Remore Desktop Connections
+Choose option 7 to enable remote desktops
+  Sub-menu choose E to enable11
+    Sub-menu choose option 1 to allow only clients running NLA to connect
+
+# Change the server name
+Choose option 2 at the menu to change the computer name
+  Enter the computer name
+
+# join the server to the domain
+  Choose option 1 to domain join
+    Sub option - choose D to join a domain
+      Enter the credentials of a user that has permission to join a computer to the domain
+      Enter the password of the user that has permission to join a computer to the domain
+
+    Reboot the computer for the changes to take effect.
+
+# Server Updates
+  Option 5 should be set to Download Only (if it is not go into option 5 and change this)
+  Choose option 6 to download options
+  Search for all updates
+  Choose option A to install all updates
+
+# Change Data / Time on the server
+Choose option 9
+  The clock will open and configure it for the timezone that you are in
+
+# Default U/P
+administrator
+Power123
+
+-----------------------------------------------------------------------
+
+# Install MPIO
+Server manager > install new role >
+
+# Install Nimble Windows Toolkit
+Download the NWT from the HPe infosight page, and install the NWT on the OS 

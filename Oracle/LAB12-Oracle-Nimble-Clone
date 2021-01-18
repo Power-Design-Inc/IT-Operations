@@ -1,0 +1,64 @@
+vol --offline LABORAAPP12 --force
+vol --offline LABORADB121 --force
+vol --offline LABORADB122 --force
+vol --offline LABORADB123 --force
+vol --offline LABORADB124 --force
+vol --offline LABORADB125 --force
+vol --offline LABORADB126 --force
+vol --offline LABORADB127 --force
+
+vol --dissoc LABORAAPP12 --force
+vol --dissoc LABORADB121 --force
+vol --dissoc LABORADB122 --force
+vol --dissoc LABORADB123 --force
+vol --dissoc LABORADB124 --force
+vol --dissoc LABORADB125 --force
+vol --dissoc LABORADB126 --force
+vol --dissoc LABORADB127 --force
+
+vol --delete LABORAAPP12 --force
+vol --delete LABORADB121 --force
+vol --delete LABORADB122 --force
+vol --delete LABORADB123 --force
+vol --delete LABORADB124 --force
+vol --delete LABORADB125 --force
+vol --delete LABORADB126 --force
+vol --delete LABORADB127 --force
+
+
+vol --clone PDIVLORACLAPP --snapname NEW-AF5000-Tier1-Ora-VC-4H-2020-06-22::12:17:00.000 --clonename LABORAAPP12 --apply_acl_to both --multi_initiator no --initiatorgrp DC-ESX10
+vol --clone PDIVLORACLDB1 --snapname NEW-AF5000-Tier1-Ora-VC-4H-2020-06-22::12:17:00.000 --clonename LABORADB121 --apply_acl_to both --multi_initiator no --initiatorgrp DC-ESX11
+vol --clone PDIVLORACLDB5 --snapname NEW-AF5000-Tier1-Ora-VC-4H-2020-06-22::12:17:00.000 --clonename LABORADB122 --apply_acl_to both --multi_initiator no --initiatorgrp DC-ESX11
+vol --clone PDIVLORACLDB7 --snapname NEW-AF5000-Tier1-Ora-VC-4H-2020-06-22::12:17:00.000 --clonename LABORADB123 --apply_acl_to both --multi_initiator no --initiatorgrp DC-ESX11
+vol --clone PDIVLORACLDB12 --snapname NEW-AF5000-Tier1-Ora-VC-4H-2020-06-22::12:17:00.000 --clonename LABORADB124 --apply_acl_to both --multi_initiator no --initiatorgrp DC-ESX11
+vol --clone PDIVLORACLDB13 --snapname NEW-AF5000-Tier1-Ora-VC-4H-2020-06-22::12:17:00.000 --clonename LABORADB125 --apply_acl_to both --multi_initiator no --initiatorgrp DC-ESX11
+vol --clone PDIVLORACLDB14 --snapname NEW-AF5000-Tier1-Ora-VC-4H-2020-06-22::12:17:00.000 --clonename LABORADB126 --apply_acl_to both --multi_initiator no --initiatorgrp DC-ESX11
+vol --clone PDIVLORACLDB15 --snapname NEW-AF5000-Tier1-Ora-VC-4H-2020-06-22::12:17:00.000 --clonename LABORADB127 --apply_acl_to both --multi_initiator no --initiatorgrp DC-ESX11
+
+
+esxcli storage vmfs snapshot list | grep UUID | awk '{print $3}'
+
+
+<ESX-10>
+esxcli storage core adapter rescan --all
+vmkfstools -V
+
+esxcli storage vmfs snapshot resignature --volume-uuid=5ed144c4-d5ebd3b8-cfd6-f403433d8648
+
+esxcli storage core adapter rescan --all
+vmkfstools -V
+
+
+<ESX-11>
+esxcli storage core adapter rescan --all
+vmkfstools -V
+
+esxcli storage vmfs snapshot resignature --volume-uuid=5ed144e3-92693890-f6a6-f403433ed358
+esxcli storage vmfs snapshot resignature --volume-uuid=5ed14516-05304262-01b6-f403433ed358
+esxcli storage vmfs snapshot resignature --volume-uuid=5ed1450a-e6f7d526-7d5d-f403433ed358
+esxcli storage vmfs snapshot resignature --volume-uuid=5ed14521-f883a490-1615-f403433ed358
+esxcli storage vmfs snapshot resignature --volume-uuid=5e380fd9-0bc603fa-fc40-f403433ed358
+esxcli storage vmfs snapshot resignature --volume-uuid=5ed144f8-024608b4-c2cd-f403433ed358
+
+esxcli storage core adapter rescan --all
+vmkfstools -V

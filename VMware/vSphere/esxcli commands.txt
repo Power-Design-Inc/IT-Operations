@@ -1,0 +1,24 @@
+esxcli system maintenanceMode set --enable true
+esxcli software vib update -d "/vmfs/volumes/LocalStorage/ISO/VMware/VMware-ESXi-6.7.0-Update1-10302608-HPE-Gen9plus-670.U1.10.3.5.12-Oct2018-depot.zip"
+
+./ssacli ctrl slot=3 array b ld 2 show detail (Used this to show SmartCache config)
+./ssacli ctrl slot=3 array b ld 2 modify writepolicy=writethrough (Change write policy on SmartCache which is useful for instance when you need to delete the SmartCache to expand an array)
+./ssacli ctrl slot=3 ld 2 delete (Deletes the SmartCache)
+./ssacli ctrl slot=3 create type=ldcache drives=1e:1:10 datald=1 (Creates the SmartCache)
+
+
+
+
+
+
+/etc/init.d/xorg stop
+
+esxcli software vib remove --vibname=NVIDIA-VMware_ESXi_6.5_Host_Driver
+
+esxcli software vib install -d /vmfs/volumes/AF60-PDIISOS/nvidia/NVIDIA-VMware_ESXi_6.7_Host_Driver-440.53-1OEM.670.0.0.8169922-offline_bundle-15532662.zip
+
+esxcli software vib install -v /vmfs/volumes/AF60-PDIISOS/nvidia/NVIDIA-VMware_ESXi_6.7_Host_Driver-440.53-1OEM.670.0.0.8169922.x86_64.vib
+
+/etc/init.d/xorg start
+
+/vmfs/volumes/AF60-PDIISOS/ISOS/VMware/ESXi/6.7/VMware-ESXi-6.7.0-Update3-15160138-HPE-Gen9plus-670.U3.10.5.5.25-Mar2020-depot.zip

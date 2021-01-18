@@ -1,0 +1,67 @@
+ESX27
+TL 1/2/7
+TR 2/2/10
+
+ESX18
+TL 1/31 VLAN 20 VMNIC5
+TR 1/30 VLAN 101 VMNIC4
+BL 2/30 VLAN 101 VMNIC6
+BR 2/31 VLAN 20 VMNIC 7
+
+ESX24
+TL 1/24
+TR 1/25
+BL 2/24
+BR 2/25
+
+ESX26
+TL 2/29 vmnic 7 vlan 101
+TR 2/28 vmnic 6 vlan 20
+BL 1/28 vmnic 5 vlan 101
+BR 1/29 vmnic 4 vlan 20
+
+ESX23
+TL 2/27 vlan 101
+TR 2/19 vlan 20
+BL 1/2/11 vlan 101
+BR 1/2/9 vlan 20
+
+ESX25
+TL 2/23 vlan 20
+TR 2/16 vlan 101
+BL 1/23 vlan 20
+BR 1/16 vlan 101
+
+ESX22
+TL 1/27
+TR 2/22
+
+ESX19
+TL1 1/2/1 vmnic 4 vlan 101
+TL2 1/2/2         vlan 20
+TR1 2/2/1         vlan 20
+TR2 2/2/2         vlan 101
+
+ESX20
+TL1 1/2/5
+TL2 1/2/6
+TR1 2/2/5
+TR2 2/2/6
+
+ESX21
+TL1 1/2/3 vlan 101
+TL2 1/2/4 vlan 20
+TR1 2/2/3 vlan 20
+TR2 2/2/4 vlan 101
+
+ESX17
+TL1 1/13 vmnic7 vlan 101
+TL2 1/14 vmnic6 vlan 20
+TR1 2/13 vmnic8 vlan 20
+TR2 2/14 vmnic9 vlan 101
+
+ESX16
+TR slot 1 2/21 vmnic6 vlan 20
+TL slot 1 2/20 vmnic7 vlan 101
+BL embeded port 2 1/22 vmnic 5 vlan 101
+BR embeded port 1 1/21 vmnic 4 vlan 20

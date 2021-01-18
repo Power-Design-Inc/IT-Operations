@@ -1,0 +1,97 @@
+Nimble Commands
+snap --list --unmanaged --all | awk '$4 == "No"'
+snap --delete snapshot_name --vol volume_name
+
+https://code.vmware.com/doc/preview?id=5512#/doc/esxcli_storage.html
+
+esxcli storage vmfs snapshot list
+
+
+esxcli storage vmfs snapshot resignature --volume-uuid=54ecc1df-6ed92c3f-bd62-38eaa78d58e0
+
+
+5e32d138-021e96cf-9572-90e2ba862b10
+5e32d198-87fb8afc-091f-90e2ba862b10
+
+
+
+
+esxcli storage vmfs snapshot list | grep UUID awk '{print $3}'
+
+
+<ESX-25>
+esxcli storage core adapter rescan --all
+vmkfstools -V
+esxcli storage vmfs snapshot resignature --volume-uuid=529f7257-c31f8f0b-9084-d89d671c80c0
+esxcli storage core adapter rescan --all
+vmkfstools -V
+
+<ESX-26>
+esxcli storage core adapter rescan --all
+vmkfstools -V
+esxcli storage vmfs snapshot resignature --volume-uuid=52e29343-65683dd7-69f3-2c44fd7cd874
+esxcli storage vmfs snapshot resignature --volume-uuid=5656a08d-bdd1fca5-0757-38eaa78d58e0
+esxcli storage vmfs snapshot resignature --volume-uuid=5bbf6504-93aa7014-1b9b-f403433ed358
+esxcli storage vmfs snapshot resignature --volume-uuid=5aa323cd-26808365-a104-38eaa78d58e0
+esxcli storage vmfs snapshot resignature --volume-uuid=55e9fafd-f1c654af-ef3c-38eaa78d58e0
+esxcli storage vmfs snapshot resignature --volume-uuid=5dba4635-62faac60-7bf9-5cb9018dc1fc
+
+
+
+
+esxcli storage core adapter rescan --all
+vmkfstools -V
+
+***NEW AF60 DATASTORES UUID***
+<ESX-25>
+esxcli storage core adapter rescan --all
+vmkfstools -V
+esxcli storage vmfs snapshot resignature --volume-uuid=5dd8a511-01d2fef8-97cd-f403433d8648
+esxcli storage core adapter rescan --all
+vmkfstools -V
+
+<ESX-26>
+esxcli storage core adapter rescan --all
+vmkfstools -V
+esxcli storage vmfs snapshot resignature --volume-uuid=5ddf0326-df3eb4c8-5f53-f403433ed358
+esxcli storage vmfs snapshot resignature --volume-uuid=5ddf0280-a6b5bbc8-b098-f403433ed358
+esxcli storage vmfs snapshot resignature --volume-uuid=5ddf0414-a39ffd16-d35e-f403433ed358
+esxcli storage vmfs snapshot resignature --volume-uuid=5ddf02ed-e62a30ce-5d6f-f403433ed358
+esxcli storage vmfs snapshot resignature --volume-uuid=5ddf02d2-a1a02a76-852a-f403433ed358
+esxcli storage vmfs snapshot resignature --volume-uuid=5ddf02b3-cfebb160-b259-f403433ed358
+
+esxcli storage core adapter rescan --all
+vmkfstools -V
+
+
+
+
+
+
+
+
+
+
+
+
+
+ESXi-6.7.0-8169922-standard
+ESXi-6.7.0-20180604001-standard
+
+
+
+esxcli system version get
+vim-cmd /hostsvc/maintenance_mode_enter
+esxcli network firewall ruleset set -e true -r httpClient
+esxcli software profile update -d https://hostupdate.vmware.com/software/VUM/PRODUCTION/main/vmw-depot-index.xml -p ESXi-6.0.0-20180304001-standard
+esxcli software profile update -d https://hostupdate.vmware.com/software/VUM/PRODUCTION/main/vmw-depot-index.xml -p ESXi-6.5.0-20171204001-standard
+esxcli software profile update -d https://hostupdate.vmware.com/software/VUM/PRODUCTION/main/vmw-depot-index.xml -p ESXi-6.5.0-20180604001-standard
+esxcli software profile update -d https://hostupdate.vmware.com/software/VUM/PRODUCTION/main/vmw-depot-index.xml -p ESXi-6.7.0-8169922-standard
+reboot
+vim-cmd /hostsvc/maintenance_mode_exit
+
+esxcli software sources profile list -d https://hostupdate.vmware.com/software/VUM/PRODUCTION/main/vmw-depot-index.xml | grep ESXi-6.0
+
+
+esxcli software profile update -d https://hostupdate.vmware.com/software/VUM/PRODUCTION/main/vmw-depot-index.xml -p ESXi-6.7.0-8169922-standard
+esxcli software profile update -d https://hostupdate.vmware.com/software/VUM/PRODUCTION/main/vmw-depot-index.xml -p ESXi-5.5.0-20180304001-standard

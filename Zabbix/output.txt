@@ -1,0 +1,22 @@
+INFO:root:Will execute Acknowledge for alertId 6d0521b9-71b6-42c0-9d27-5696461ebe22-1609881590583
+DEBUG:root:Username: Admin
+DEBUG:root:Command Url: http://pdivlzabbix.powerdesigninc.us/zabbix/api_jsonrpc.php
+DEBUG:root:AlertId: 6d0521b9-71b6-42c0-9d27-5696461ebe22-1609881590583
+DEBUG:root:Source: {'name': '', 'type': 'web'}
+DEBUG:root:Action: Acknowledge
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.opsgenie.com:443
+DEBUG:urllib3.connectionpool:https://api.opsgenie.com:443 "GET /v2/alerts/6d0521b9-71b6-42c0-9d27-5696461ebe22-1609881590583 HTTP/1.1" 200 None
+DEBUG:root:[Acknowledge] Logging in to Zabbix. Url: http://pdivlzabbix.powerdesigninc.us/zabbix/api_jsonrpc.php user: Admin
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): pdivlzabbix.powerdesigninc.us:80
+DEBUG:urllib3.connectionpool:http://pdivlzabbix.powerdesigninc.us:80 "POST /zabbix/api_jsonrpc.php HTTP/1.1" 404 None
+INFO:root:Will execute Acknowledge for alertId 6d0521b9-71b6-42c0-9d27-5696461ebe22-1609881590583
+DEBUG:root:Username: Admin
+DEBUG:root:Command Url: http://pdivlzabbix.powerdesigninc.us/zabbix/api_jsonrpc.php
+DEBUG:root:AlertId: 6d0521b9-71b6-42c0-9d27-5696461ebe22-1609881590583
+DEBUG:root:Source: {'name': '', 'type': 'web'}
+DEBUG:root:Action: Acknowledge
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.opsgenie.com:443
+DEBUG:urllib3.connectionpool:https://api.opsgenie.com:443 "GET /v2/alerts/6d0521b9-71b6-42c0-9d27-5696461ebe22-1609881590583 HTTP/1.1" 200 None
+DEBUG:root:[Acknowledge] Logging in to Zabbix. Url: http://pdivlzabbix.powerdesigninc.us/zabbix/api_jsonrpc.php user: Admin
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): pdivlzabbix.powerdesigninc.us:80
+DEBUG:urllib3.connectionpool:http://pdivlzabbix.powerdesigninc.us:80 "POST /zabbix/api_jsonrpc.php HTTP/1.1" 404 None

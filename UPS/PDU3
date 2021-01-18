@@ -1,0 +1,25 @@
+PDU3 350w
+
+
+AF60 Array
+Power supply 2 = PDU#3 A3
+
+
+Head Unit
+Power Supply A = PDU#3 B9
+Power Supply B = PDU#3 A9
+
+CS440 Exp1
+Power Supply A = PDU#3 B10
+Power Supply B = PDU#3 A10
+
+CS440 Exp2
+Power Supply A = PDU#3 B11
+Power Supply B = PDU#3 A11
+
+CS440 Exp3
+Power Supply A = PDU#3 B12
+Power Supply B = PDU#3 A12
+
+Tape drive
+Power supply = PDU#3 B6

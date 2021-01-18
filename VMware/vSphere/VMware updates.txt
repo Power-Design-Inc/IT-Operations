@@ -1,0 +1,45 @@
+esxcli system maintenanceMode set --enable true
+
+esxcli software vib update -d /vmfs/volumes/DCESXLOGS/esxi6.7uX-mgmt-bundle-3.3.5-1/index.xml
+esxcli software vib update -d /vmfs/volumes/DCESXLOGS/esxi6.7-util-bundle-3.3.0-9/index.xml
+esxcli software vib update -d https://update.nimblestorage.com/esx6.5/ncm/index.xml
+
+esxcli system maintenanceMode set --enable false
+
+
+
+esxcli system version get
+esxcli network firewall ruleset set -e true -r httpClient
+esxcli software sources profile list -d https://hostupdate.vmware.com/software/VUM/PRODUCTION/main/vmw-depot-index.xml | grep ESXi-6.7.*
+esxcli software profile update -d https://hostupdate.vmware.com/software/VUM/PRODUCTION/main/vmw-depot-index.xml -p ESXi-6.7.0-20181002001-standard
+
+
+
+*************
+10/7/2019
+*************
+esxcli software vib update --depot=/vmfs/volumes/PDIISOS/ISOS/VMware/ESXi/6.7/VMware-ESXi-6.7.0-Update3-14320388-HPE-Gen9plus-670.U3.10.4.5.19-Aug2019-depot.zip
+
+
+esxcli software vib install -d "/vmfs/volumes/AF60-PDIISOS/ISOS/VMware/ESXi/6.7/VMware-ESXi-6.7.0-Update3-15160138-HPE-Gen9plus-670.U3.10.5.5.25-Mar2020-depot.zip"
+
+esxcli software vib install -d "/vmfs/volumes/AF60-PDIISOS/HPe_Tools/cp038233/sut-esxi6.7-offline-bundle-2.5.0.0-75.zip"
+
+esxcli software vib install -d "/tmp/cp038233.zip"
+
+
+
+
+*************
+5/8/2020
+*************
+
+esxcli system maintenanceMode set --enable true
+esxcli software vib update -d "/vmfs/volumes/AF60-PDIISOS/ISOS/VMware/vSphere/6.7/ESXi670-202004002.zip"
+esxcli system maintenanceMode set --enable false
+
+
+*************
+5/28/2020
+*************
+esxcli software vib update -d "/vmfs/volumes/AF60-PDIISOS/NCM/nimble-ncm-for-esx7.0-7.0.0-700012.zip"

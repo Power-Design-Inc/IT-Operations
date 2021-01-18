@@ -1,0 +1,14 @@
+
+Existing:
+(4) 2697v3 145w 14c @ 2.60 GHz = 145.6 GHz
+(6) 2697v4 145w 18c @ 2.30 GHz = 248.4 GHz
+(10)p 162c 1450w 394 GHz
+
+Proposed:
+Platinum 8354H 28c @ 2.90 81.2 GHz 250w x 10 280c 812 GHz 2500w
+Platinum 8376H 28c @ 2.60 72.8 GHz 205w x 10 280c 728 GHZ 2050w
+Platinum 8380H 18c @ 3.10 55.8 GHz 205w x 10 180c 558 GHz 2050w
+
+Typical vCenter Consumes 14-18% of possible 394 GHZ (55-71 GHz)
+Supports more cores at lower frequency for scheduling and lowest latency possible.
+

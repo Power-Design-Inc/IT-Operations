@@ -1,0 +1,19 @@
+useradd -g sftpusers -d /home/##new_user## -s /sbin/nologin ##new_user##
+passwd ##new_user## (**See Devolutions**)
+vim /etc/vsftpd/user_list (and add ##new_user## to the line below the previous user
+
+
+mkdir -p /data/ftpopenscape/upload
+chown -R root:sftpusers /data/ftpopenscape
+chown -R ftpopenscape:sftpusers /data/ftpopenscape/upload
+
+chown -R ftpopenscape /data/ftpopenscape
+
+
+
+sftp.powerdesigninc.us 63.139.175.34
+
+
+useradd -g sftpusers -d /home/ftpopenscape -s /sbin/nologin ftpopenscape
+passwd ftpopenscape
+vim /etc/vsftpd/user_list

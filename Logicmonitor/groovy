@@ -1,0 +1,63 @@
+import com.santaba.agent.groovyapi.esx.ESX
+import com.vmware.vim25.mo.InventoryNavigator
+import com.vmware.vim25.mo.ManagedEntity
+
+def host = hostProps.get("system.hostname")
+def user = "tmartin";
+def pass = "welcome123!";
+def custom_url = hostProps.get("esx.url");
+
+// Open a connection to the vSphere API, get a service instance and root folder
+def url = custom_url ?: String.format("https://%s/sdk", host);
+def svc = new ESX()
+svc.open(url, user, pass, 10 * 1000); // timeout in 10 seconds
+def si = svc.getServiceInstance();
+def rootFolder = si.getRootFolder();
+
+// Extracts volume name and relative VMX path
+def vm_pathname_extractor = ~/\[(.*)\] (.*)/
+
+// Used to check if a VM name is actually a VMX path, indicating an inaccessible VM
+def vmx_path_checker = ~/\/vmfs\/volumes\/.*\.vmx$/
+
+// Get VMs
+ManagedEntity[] vms = new InventoryNavigator(rootFolder).searchManagedEntities("VirtualMachine");
+
+// iterate over vms
+vms.each
+{ vm ->
+
+    // Check if VM name is a VMX path, indicating inaccessible VM and requiring different logic
+    if (vmx_path_checker.matcher(vm?.name))
+    {
+        println "Skipping " + vm.name
+        return
+    }
+    
+    def path_breakdown = vm_pathname_extractor.matcher(vm?.config?.files?.vmPathName)
+    def volume = path_breakdown[0][1]
+    def relative_path = path_breakdown[0][2]
+
+    // Get AD info
+    wildvalue = "/vmfs/volumes/" + volume + "/" + relative_path;
+    wildalias = vm.name
+
+    // Get props/ILP
+    def props_hash = ['auto.hardware.memory_mb'        : vm?.config?.hardware?.memoryMB ?: 0,
+                      'auto.hardware.num_cpu'          : vm?.config?.hardware?.numCPU ?: 0,
+                      'auto.hardware.num_virtual_disks': vm?.summary?.config?.numVirtualDisks ?: 0,
+    ]
+
+    // Print AD line
+    cpu_spec = props_hash['auto.hardware.num_cpu'] + " CPU";
+    double mem_gb = (props_hash['auto.hardware.memory_mb'] / 1024);
+    mem_spec = mem_gb.round(1) + " GB RAM";
+    disk_spec = props_hash['auto.hardware.num_virtual_disks'] + " Disk(s)"
+    description = cpu_spec + " / " + mem_spec + " / " + disk_spec;
+    println wildvalue + "##" + wildalias + "##" + description
+
+}
+
+
+
+return 0;

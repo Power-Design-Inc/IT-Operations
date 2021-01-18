@@ -1,0 +1,124 @@
+Do not backup, DR, or replicate the CCCA (Clumio Cloud Connector Appliance), they are stateless and only need to reside on the vcenter
+they get registered to
+
+Create a local to the vcenter role with service account. The prerequsites has a powershell script that will create the role for you.
+At least 1 CCA per cluster in each vcenter is neccessary
+
+Clumio GUI CCA login: (Publicly Known)
+clumio
+ClumioCBA
+
+Clumio connector uses a total of 8 streams
+2 are reserved for restores
+but restores can consume all 8 if there are no backups ongoing
+
+Clumio can use vmware tag to clumio backup policies.
+I have added a Clumio vcenter tag, that is married to a clumio cloud backup policy
+All you need to do is add a vcenter tag and Clumio will recognize that within 20-30 seconds and begin to do a backup based off the policy
+
+No admin interaction if there are updates to the Clumio Appliance
+Dedupe at source with the cloud conncetor, so if there are shared blocks they will not traverse over the wire
+
+
+o365: Seeding 100gb/hr throughput
+2gb per mailbox per hour
+50 concurrent mailbox limit
+
+POC is production level support - engineers don't know the difference
+
+
+#--------------------------
+#PRODUCTION CONFIG
+#--------------------------
+Activated PDI Admins: Hunter Drawdy, Todd Martin, Brandon Do, Austin Denis
+
+Clumio_Backup role created in pdivcsa-2.powerdesigninc.us
+Clumio_Backup role created in pdivlvcenter.powerdesigninc.us
+Clumio_Backup role created in dcvcsa-2.powerdesigninc.us
+Clumio_Backup role created in pdivcsa-01.powerdesigninc.us
+Clumio_Backup role created in pdivcsa-02.powerdesigninc.us
+
+svc_clumio user created in pdivcsa-2.powerdesigninc.us /p:Power72Clumio18
+svc_clumio user created in pdivlvcenter.powerdesigninc.us /p:Power72Clumio18
+svc_clumio user created in dcvcsa-2.powerdesigninc.us /p:Power72Clumio18
+svc_clumio user created in pdivcsa-01.powerdesigninc.us /p:Power72Clumio18!
+svc_clumio user created in pdivcsa-02.powerdesigninc.us /p:Power72Clumio18!
+
+svc_clumio user added to global permissions with Clumio_Backup role and propigated to children on pdivcsa-2.powerdesigninc.us
+svc_clumio user added to global permissions with Clumio_Backup role and propigated to children on pdivlvcenter.powerdesigninc.us
+svc_clumio user added to global permissions with Clumio_Backup role and propigated to children on dcvcsa-2.powerdesigninc.us
+svc_clumio user added to global permissions with Clumio_Backup role and propigated to children on pdivcsa-01.powerdesigninc.us
+svc_clumio user added to global permissions with Clumio_Backup role and propigated to children on pdivcsa-0d2.powerdesigninc.us
+
+CLUMIOCCA-01 172.27.1.190
+CLUMIOCCA-02 172.27.1.193
+CLUMIOCCA-03 172.27.1.182
+CLUMIOCCA-04 172.27.1.183
+CLUMIOCCA-05 10.34.240.25
+CLUMIOCCA-06 10.34.240.26
+
+CLUMIO-CCA Nimble Volume created 100gb at PDI
+CLUMIO-CCA Nimble Volume created 100gb at P10
+
+#INSTALL CLOUD CONNECTOR ON PDIVCSA-2 VCENTER
+#Use the link below to deploy the Cloud Connector on your vCenter.
+https://s3.dualstack.us-east-1.amazonaws.com/prod-02-ue-1-clumio-edgesrv-vapp-ova/vapp-prod-02-ue-1.ova
+OTY2NjgyNmYtMzY2ZS00YjQ1LTljNGMtMDc3ZTQ2ZDNkODcyLGh0dHBzOi8vcHJvZC0wMi11ZS0xLWJhY2tlbmQuYXBpLnByb2QtY2x1bWlvLmNvbS9hcGkvYm9vdHN0cmFw
+CLUMIOCCA-01 created for PDIVCSA-2
+Username = svc_clumio@vsphere.local
+Clumio Token = OTY2NjgyNmYtMzY2ZS00YjQ1LTljNGMtMDc3ZTQ2ZDNkODcyLGh0dHBzOi8vcHJvZC0wMi11ZS0xLWJhY2tlbmQuYXBpLnByb2QtY2x1bWlvLmNvbS9hcGkvYm9vdHN0cmFw
+Network 1 IP Address = 172.27.1.190
+Network 1 Netmask = 255.255.255.0
+Default Gateway = 172.27.1.1
+DNS = 172.27.1.150,172.27.1.151
+
+CLUMIOCCA-02 created for PDIVCSA-2
+Username = svc_clumio@vsphere.local
+Clumio Token = OTY2NjgyNmYtMzY2ZS00YjQ1LTljNGMtMDc3ZTQ2ZDNkODcyLGh0dHBzOi8vcHJvZC0wMi11ZS0xLWJhY2tlbmQuYXBpLnByb2QtY2x1bWlvLmNvbS9hcGkvYm9vdHN0cmFw
+Network 1 IP Address = 172.27.1.193
+Network 1 Netmask = 255.255.255.0
+Default Gateway = 172.27.1.1
+DNS = 172.27.1.150,172.27.1.151
+
+#INSTALL CLOUD CONNECTOR ON PDIVLVCENTER VCENTER
+#Use the link below to deploy the Cloud Connector on your vCenter.
+https://s3.dualstack.us-east-1.amazonaws.com/prod-02-ue-1-clumio-edgesrv-vapp-ova/vapp-prod-02-ue-1.ova
+#Use the token during the Cloud Connector deployment to establish connection with the Clumio Cloud.
+ZmZiZjg0ZTQtMWQyNi00YmEyLWJhN2QtM2E4ZGJiNzA2NWZmLGh0dHBzOi8vcHJvZC0wMi11ZS0xLWJhY2tlbmQuYXBpLnByb2QtY2x1bWlvLmNvbS9hcGkvYm9vdHN0cmFw
+CLUMIOCCA-03 created for PDIVLVCENTER
+
+Username = svc_clumio@horizon.local
+Clumio Token = ZmZiZjg0ZTQtMWQyNi00YmEyLWJhN2QtM2E4ZGJiNzA2NWZmLGh0dHBzOi8vcHJvZC0wMi11ZS0xLWJhY2tlbmQuYXBpLnByb2QtY2x1bWlvLmNvbS9hcGkvYm9vdHN0cmFw
+Network 1 IP Address = 172.27.1.182
+Network 1 Netmask = 255.255.255.0
+Default Gateway = 172.27.1.1
+DNS = 172.27.1.150,172.27.1.151
+CLUMIOCCA-04 created for PDIVLVCENTER
+
+Username = svc_clumio@horizon.local
+Clumio Token = ZmZiZjg0ZTQtMWQyNi00YmEyLWJhN2QtM2E4ZGJiNzA2NWZmLGh0dHBzOi8vcHJvZC0wMi11ZS0xLWJhY2tlbmQuYXBpLnByb2QtY2x1bWlvLmNvbS9hcGkvYm9vdHN0cmFw
+Network 1 IP Address = 172.27.1.183
+Network 1 Netmask = 255.255.255.0
+Default Gateway = 172.27.1.1
+DNS = 172.27.1.150,172.27.1.151
+
+#INSTALL CLOUD CONNECTOR ON DCVCSA-2 VCENTER
+#Use the link below to deploy the Cloud Connector on your vCenter.
+https://s3.dualstack.us-east-1.amazonaws.com/prod-02-ue-1-clumio-edgesrv-vapp-ova/vapp-prod-02-ue-1.ova
+
+ZTU1MzU2ODYtNzIwNi00MjczLWJhMGUtNDVkYTZlZTQ1ZDAyLGh0dHBzOi8vcHJvZC0wMi11ZS0xLWJhY2tlbmQuYXBpLnByb2QtY2x1bWlvLmNvbS9hcGkvYm9vdHN0cmFw
+CLUMIOCCA-05 created for DCVCSA-2
+Username = svc_clumio@vsphere.local
+Clumio Token = ZTU1MzU2ODYtNzIwNi00MjczLWJhMGUtNDVkYTZlZTQ1ZDAyLGh0dHBzOi8vcHJvZC0wMi11ZS0xLWJhY2tlbmQuYXBpLnByb2QtY2x1bWlvLmNvbS9hcGkvYm9vdHN0cmFw
+Network 1 IP Address = 10.34.240.25
+Network 1 Netmask = 255.255.255.0
+Default Gateway = 10.34.240.1
+DNS = 10.34.240.150,10.34.240.151
+
+CLUMIOCCA-06 created for DCVCSA-2
+Username = svc_clumio@vsphere.local
+Clumio Token = ZTU1MzU2ODYtNzIwNi00MjczLWJhMGUtNDVkYTZlZTQ1ZDAyLGh0dHBzOi8vcHJvZC0wMi11ZS0xLWJhY2tlbmQuYXBpLnByb2QtY2x1bWlvLmNvbS9hcGkvYm9vdHN0cmFw
+Network 1 IP Address = 10.34.240.26
+Network 1 Netmask = 255.255.255.0
+Default Gateway = 10.34.240.1
+DNS = 10.34.240.150,10.34.240.151

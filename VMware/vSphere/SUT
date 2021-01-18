@@ -1,0 +1,21 @@
+\\SUT Install
+
+esxcli software vib install -d "/vmfs/volumes/AF60-PDIISOS/HPe_Tools/cp038233/sut-esxi6.7-offline-bundle-2.5.0.0-75.zip"
+sut -set mode=AutoDeploy
+sut /activate force
+sut /status
+
+
+sut /status
+System Update Manager...................: OS Administrator
+Task Status.............................: To get the iLO Queued Update Deploy status, refer the Inventory Report
+Staging Directory.......................: /tmp/sut/stagingdirectory
+Mode of Operation.......................: AutoDeploy
+Polling Interval In Minutes.............: 5
+Force Deploy............................: No
+Optional Components.....................: None
+EnableiLOQueuedUpdates..................: true
+User Action Needed......................: Wait for iSUT/UEFI/iLO to deploy the components from iloTaskQueue.
+iLO Security Mode.......................: Production
+iLO CAC Smartcard Authentication........: Off
+iLO CAC Strict Mode.....................: Off

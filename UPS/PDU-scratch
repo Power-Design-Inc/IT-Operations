@@ -1,0 +1,44 @@
+AF60 Array
+Power supply 1 = PDU#4 A3
+Power supply 2 = PDU#3 A3
+
+
+Head Unit
+Power Supply A = PDU#3 B9
+Power Supply B = PDU#3 A9
+
+
+Exp1
+Power Supply A = PDU#3 B10
+Power Supply B = PDU#3 A10
+
+
+Exp2
+Power Supply A = PDU#3 B11
+Power Supply B = PDU#3 A11
+
+
+ESX22 - 150w
+Thoughtspot - 300w
+SLES248 - 150w
+SLES249 - 165w
+Cisco UCS1 - 175w
+Cisco UCS2 - 175w
+Copper Core 1 - 350w
+Copper Core 2 - 350w
+Total watts - 1815w
+
+ESX16
+ESX17
+ESX18
+ESX19
+ESX20
+ESX21
+ESX23
+ESX24
+ESX25
+ESX26
+Nimble AF60 - 
+Nexus 1
+Nexus 2
+Total Watt Draw on Liebert 50KVA - 10,000w

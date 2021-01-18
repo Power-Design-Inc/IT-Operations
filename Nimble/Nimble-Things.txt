@@ -1,0 +1,33 @@
+snap --list --unmanaged --all | awk '$4 == "No"' | awk '{print "snap --delete",$2" --vol",$1}'
+
+
+snap --delete NSs-DOCKERLAB-001-2020-10-01::12:30:14.399 --vol DOCKERLAB-001
+snap --delete NSs-PDIVDI-GridClients-2020-10-06::15:38:19.949 --vol PDIVDI-GridClients
+snap --delete NSs-PDIVLELASTICSEARCH-2020-09-17::12:41:35.639 --vol PDIVLELASTICSEARCH
+snap --delete NSs-PDIVLILOAMP-2020-09-17::12:39:05.567 --vol PDIVLILOAMP
+snap --delete NSs-PDIVLSYNC10-2020-10-09::23:39:53.166 --vol PDIVLSYNC10
+snap --delete NSs-PDIVLSYNC11-2020-10-09::23:21:57.228 --vol PDIVLSYNC11
+snap --delete NSs-PDIVLSYNC12-2020-10-09::23:22:45.245 --vol PDIVLSYNC12
+snap --delete NSs-PDIVLSYNC13-2020-10-28::22:22:52.266 --vol PDIVLSYNC13
+snap --delete NSs-PDIVLSYNC15-2020-10-28::22:21:10.277 --vol PDIVLSYNC15
+snap --delete NSs-PDIVLSYNC15-2020-09-23::21:41:35.555 --vol PDIVLSYNC15
+snap --delete NSs-PDIVLSYNC16-2020-09-23::21:42:12.952 --vol PDIVLSYNC16
+snap --delete NSs-PDIVWABACUS-2020-10-28::22:23:50.560 --vol PDIVWABACUS
+snap --delete NSs-PDIVWACL-2020-10-27::09:18:49.982 --vol PDIVWACL
+snap --delete NSs-PDIVWDC02-2020-09-17::14:50:57.897 --vol PDIVWDC02
+snap --delete NSs-PDIVWDOCWEB-2020-09-17::15:03:04.391 --vol PDIVWDOCWEB
+snap --delete NSs-PDIVWESSBASE-LAB-2020-10-28::22:26:01.317 --vol PDIVWESSBASE-LAB
+snap --delete NSs-PDIVWESSBASE02-2020-10-03::21:14:18.432 --vol PDIVWESSBASE02
+snap --delete NSs-PDIVWHYPSB-LAB-2020-09-17::14:56:36.069 --vol PDIVWHYPSB-LAB
+snap --delete NSs-PDIVWWDS2-2020-09-02::21:17:12.558 --vol PDIVWWDS2
+snap --delete NSs-PDIVWWDS2-2020-09-02::21:04:45.288 --vol PDIVWWDS2
+
+snap --delete pdivlsync16-before-maint-2020-09-23-2130ish --vol PDIVLSYNC16
+snap --delete after-mdt-upgrade-maybe-broken-20200902-2030 --vol PDIVWWDS2
+snap --delete pdivlsync15-before-wed-maint-20201028 --vol PDIVLSYNC15
+snap --delete pdivlsync15-before-maint-2020-09-23-2130ish --vol PDIVLSYNC15
+snap --delete pdivlsync13-before-wed-maint-20201028 --vol PDIVLSYNC13
+snap --delete before-elc-version-12-upgrade-2020-10-09-22-00 --vol PDIVLSYNC12
+snap --delete before-elc-version-12-upgrade-2020-10-09-22-00 --vol PDIVLSYNC11
+snap --delete before-elc-version-12-upgrade-2020-10-09-22-00 --vol PDIVLSYNC10
+snap --delete before-grow-vdisk-lvm-home-2020-10-09-22-00 --vol PDIVLORACLAPP

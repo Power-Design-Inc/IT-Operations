@@ -1,0 +1,14 @@
+user: pdiadmin
+password: it123PDI
+
+Base install Windows 10 Enterprise 1909
+VMtools 11.0.0
+Windows updates
+Horizon Agent 7.11.0-15238678
+7-zip
+Java 8
+Java 8 x64
+Chrome
+.net 4.8
+Silverlight
+Adobe Air

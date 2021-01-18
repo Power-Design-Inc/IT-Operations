@@ -1,0 +1,3 @@
+Open the HyperV Manager on the local server
+Right click the server > select create new-vm
+  Give the VM a relative name

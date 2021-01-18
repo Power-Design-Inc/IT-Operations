@@ -1,0 +1,217 @@
+# Update CentOS 8 Software Packages
+dnf update -y
+
+# Configure Local DNS Resolver in CentOS 8
+echo "192.168.150.128 cos8.theOasis.local" >/etc/hosts
+
+# Disable Transparent HugePages in CentOS 8
+cat /sys/kernel/mm/transparent_hugepage/enabled
+# [always] madvise never
+# the [always] flag shows that the Transparent HugePages are in use by our CentOS 8 server.
+
+# To disable Transparent HugePages, we need to edit GRUB configurations
+vi /etc/default/grub
+
+# Add ‘transparent_hugepage=never’ at the end of GRUB_CMDLINE_LINUX parameter. After editing, this directive should be look like this
+# Sample GRUB_CMDLINE_LINUX="resume=/dev/mapper/cl-swap rd.lvm.lv=cl/root rd.lvm.lv=cl/swap rhgb quiet transparent_hugepage=never"
+GRUB_CMDLINE_LINUX="crashkernel=auto resume=/dev/mapper/cl-swap rd.lvm.lv=cl/root rd.lvm.lv=cl/swap transparent_hugepage=never"
+
+# Generate /boot/grub2/grub.cfg file by using modified configurations.
+grub2-mkconfig -o /boot/grub2/grub.cfg
+
+# Reboot the CentOS 8 machine to apply changes.
+systemctl reboot
+
+# After reboot, check status of Transparent HugePages again.
+cat /sys/kernel/mm/transparent_hugepage/enabled
+# always madvise [never]
+# Transparent HugePages has been disabled now.
+
+# We can install Oracle Database 19c prerequisites using dnf command.
+dnf install -y bc \
+binutils \
+elfutils-libelf \
+elfutils-libelf-devel \
+fontconfig-devel \
+glibc \
+glibc-devel \
+ksh \
+libaio \
+libaio-devel \
+libXrender \
+libXrender-devel \
+libX11 \
+libXau \
+libXi \
+libXtst \
+libgcc \
+librdmacm-devel \
+libstdc++ \
+libstdc++-devel \
+libxcb \
+make \
+net-tools \
+smartmontools \
+sysstat \
+unzip \
+libnsl \
+libnsl2
+
+# Create Linux users and groups as required by Oracle Database 19c.
+groupadd -g 1501 oinstall
+groupadd -g 1502 dba
+groupadd -g 1503 oper
+groupadd -g 1504 backupdba
+groupadd -g 1505 dgdba
+groupadd -g 1506 kmdba
+groupadd -g 1507 racdba
+useradd -u 1501 -g oinstall -G dba,oper,backupdba,dgdba,kmdba,racdba oracle
+echo "oracle" | passwd oracle --stdin
+
+# Set Security limits for Oracle user:
+vi /etc/security/limits.d/30-oracle.conf
+
+# And add following
+oracle   soft   nofile    1024
+oracle   hard   nofile    65536
+oracle   soft   nproc    16384
+oracle   hard   nproc    16384
+oracle   soft   stack    10240
+oracle   hard   stack    32768
+oracle   hard   memlock    134217728
+oracle   soft   memlock    134217728
+
+# Adjust Kernel Parameters in CentOS 8
+# Create 98-oracle.conf configuration file in /etc/sysctl.d directory
+vi /etc/sysctl.d/98-oracle.conf
+
+# And add following
+fs.file-max = 6815744
+kernel.sem = 250 32000 100 128
+kernel.shmmni = 4096
+kernel.shmall = 1073741824
+kernel.shmmax = 4398046511104
+kernel.panic_on_oops = 1
+net.core.rmem_default = 262144
+net.core.rmem_max = 4194304
+net.core.wmem_default = 262144
+net.core.wmem_max = 1048576
+net.ipv4.conf.all.rp_filter = 2
+net.ipv4.conf.default.rp_filter = 2
+fs.aio-max-nr = 1048576
+net.ipv4.ip_local_port_range = 9000 65500
+
+# Reload Kernel parameters now by using sysctl
+sysctl -p
+
+# Persistently set SELinux mode to permissive
+sed -i 's/^SELINUX=.*/SELINUX=permissive/g' /etc/sysconfig/selinux
+setenforce permissive
+
+# Allow Oracle SQL* Net Listener port 1521/tcp in CentOS 8 Firewall
+firewall-cmd --permanent --add-port=1521/tcp
+firewall-cmd --reload
+
+# Create Directories for Oracle Database 19c
+mkdir -p /u01/app/oracle/product/19.3.0/dbhome_1
+mkdir -p /u02/oradata
+chown -R oracle:oinstall /u01 /u02
+chmod -R 775 /u01 /u02
+
+# Configure Linux Environment for Oracle User
+# Connect as oracle user
+su - oracle
+
+# Edit oracle user's .bash_profile
+vi ~/.bash_profile
+# And add following configurations at the end of this file
+
+# Oracle Settings
+export TMP=/tmp
+export TMPDIR=$TMP
+
+export ORACLE_HOSTNAME=cos8.theOasis.local
+export ORACLE_UNQNAME=cdb1
+export ORACLE_BASE=/u01/app/oracle
+export ORACLE_HOME=$ORACLE_BASE/product/19.3.0/dbhome_1
+export ORA_INVENTORY=/u01/app/oraInventory
+export ORACLE_SID=cdb1
+export PDB_NAME=pdb1
+export DATA_DIR=/u02/oradata
+
+export PATH=$ORACLE_HOME/bin:$PATH
+
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib
+export CLASSPATH=$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib
+
+# Execute .bash_profile to set environment for the current session
+source ~/.bash_profile
+
+# Unzip the downloaded zip file to ORACLE_HOME directory
+unzip LINUX.X64_193000_db_home.zip -d $ORACLE_HOME
+
+# set OS distro to emulate RHEL8
+export CV_ASSUME_DISTID=RHEL8.0
+
+# Go to ORACLE_HOME directory and start installation.
+cd $ORACLE_HOME
+
+./runInstaller -ignorePrereq -waitforcompletion -silent \
+oracle.install.option=INSTALL_DB_SWONLY \
+ORACLE_HOSTNAME=${ORACLE_HOSTNAME} \
+UNIX_GROUP_NAME=oinstall \
+INVENTORY_LOCATION=${ORA_INVENTORY} \
+ORACLE_HOME=${ORACLE_HOME} \
+ORACLE_BASE=${ORACLE_BASE} \
+oracle.install.db.InstallEdition=EE \
+oracle.install.db.OSDBA_GROUP=dba \
+oracle.install.db.OSBACKUPDBA_GROUP=backupdba \
+oracle.install.db.OSDGDBA_GROUP=dgdba \
+oracle.install.db.OSKMDBA_GROUP=kmdba \
+oracle.install.db.OSRACDBA_GROUP=racdba \
+SECURITY_UPDATES_VIA_MYORACLESUPPORT=false \
+DECLINE_SECURITY_UPDATES=true
+
+# Connect as root user and execute post-installation scripts.
+su -
+/u01/app/oraInventory/orainstRoot.sh
+/u01/app/oracle/product/19.3.0/dbhome_1/root.sh
+
+# Change user to oracle
+su oracle
+
+# Start Oracle Listener by using following command.
+lsnrctl start
+
+# Create Oracle 19c Multitenant database by using the following command.
+dbca -silent -createDatabase \
+templateName General_Purpose.dbc \
+gdbname ${ORACLE_SID} -sid  ${ORACLE_SID} \
+responseFile NO_VALUE \
+characterSet AL32UTF8 \
+sysPassword V3ryStr@ng \
+systemPassword V3ryStr@ng \
+createAsContainerDatabase true \
+numberOfPDBs 1 \
+pdbName ${PDB_NAME} \
+pdbAdminPassword V3ryStr@ng \
+databaseType MULTIPURPOSE \
+automaticMemoryManagement false \
+totalMemory 800 \
+storageType FS \
+datafileDestination "${DATA_DIR}" \
+redoLogFileSize 50 \
+emConfiguration NONE \
+ignorePreReqs
+
+# Install the clients to manage the Oracle DB instance
+# copy the oracle instant clients over to a temp directory and then install them
+dnf install oracle-instantclient19.8-basic-19.8.0.0.0-1.x86_64.rpm -y
+dnf install oracle-instantclient19.8-sqlplus-19.8.0.0.0-1.x86_64.rpm  -y
+
+# After installing Oracle Instant Client, add the path of the Oracle Instant Client libraries to LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/usr/lib/oracle/19.8/client64/lib:$LD_LIBRARY_PATH
+
+# Connect as Oracle user to manage the instance
+su oracle
+sqlplus '/ as sysdba'

@@ -1,0 +1,7 @@
+variant: fcos
+version: 1.0.0
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys:
+        - ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAlBqghAfxoOR3aCreoEJpWqeiLaCm/vd1re5sxMSPey3S8fjjFSI9uFELodJbbA5oh8xGMCE8f2/lOO6Tfj8+RGGSWT91vYTBJ0NyiPx4hP3kFwF8hE/Z2+0ZiMXuqnBFb9v039dna5i0suGSXYK72gBZ6F2tHcNb9P+VTSqb+b0ZoPlgHYfdyU1pL+2kma6Y84pwjIIiRACthutawaknyD296ALFSGd5D1ON+mRQp1RB46HMm+vVANjK7wjjjMrJODAMyg90Qa8UVGNXETo3uS64474/22IgAeMujO7THEEMwRtUXMQ5nlXOUAgX/lX9JrTz6QhynxsZPmjyn2r2ow==

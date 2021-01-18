@@ -1,0 +1,19 @@
+#Update the OS
+dnf update -y
+
+#Find the local ip address of the worker node you are joining
+ip a
+
+#you can save it as a variable
+ip4=$(/sbin/ip -o -4 addr list ens192 | awk '{print $4}' | cut -d/ -f1)
+
+#This command will join a node as a worker into the swarm (all managers are workers by default)
+docker swarm join --token {your worker join token from the init command} {IP of the first host you initialized the swarm from}:2377 \
+  --advertise-addr $ip4 \
+  --listen-addr $ip4:2377
+
+
+  #This command will join a node as a worker into the swarm (all managers are workers by default)
+  docker swarm join --token SWMTKN-1-42srje4r93a1flhvbgj6xcoj03tq5tyzbvk91iqcze9mir2dbc-050xzjyu5t9gachx9xowaq6lt 172.27.1.61:2377 \
+    --advertise-addr $ip4 \
+    --listen-addr $ip4:2377

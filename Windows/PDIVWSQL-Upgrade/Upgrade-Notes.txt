@@ -1,0 +1,4 @@
+Run this from Admin CMD
+setup.exe /runlocal /HideWelcome /auto upgrade /DynamicUpdate disable /quiet /TempDrive:c: /NoReboot
+
+http://go.microsoft.com/fwlink/?LinkId=243105

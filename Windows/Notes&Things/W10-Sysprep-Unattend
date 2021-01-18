@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+   <settings pass="generalize">
+      <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-Security-SPP" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+         <SkipRearm>1</SkipRearm>
+      </component>
+   </settings>
+   <settings pass="specialize">
+      <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-Deployment" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+         <RunSynchronous>
+            <RunSynchronousCommand wcm:action="add">
+               <Order>1</Order>
+               <Path>net user administrator /active:yes</Path>
+            </RunSynchronousCommand>
+         </RunSynchronous>
+      </component>
+      <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+         <TimeZone>Eastern Standard Time</TimeZone>
+         <ComputerName>*</ComputerName>
+      </component>
+   </settings>
+   <settings pass="oobeSystem">
+      <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+         <InputLocale>en-us</InputLocale>
+         <SystemLocale>en-us</SystemLocale>
+         <UILanguage>en-us</UILanguage>
+         <UserLocale>en-us</UserLocale>
+      </component>
+      <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+         <AutoLogon>
+            <Enabled>true</Enabled>
+            <LogonCount>1</LogonCount>
+            <Username>Administrator</Username>
+         </AutoLogon>
+         <OOBE>
+            <HideEULAPage>true</HideEULAPage>
+            <NetworkLocation>Work</NetworkLocation>
+            <HideLocalAccountScreen>true</HideLocalAccountScreen>
+            <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>
+            <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
+            <ProtectYourPC>3</ProtectYourPC>
+         </OOBE>
+         <UserAccounts>
+            <LocalAccounts>
+               <LocalAccount wcm:action="add">
+                  <Description>Local Administrator</Description>
+                  <DisplayName>Administrator</DisplayName>
+                  <Group>Administrators</Group>
+                  <Name>Administrator</Name>
+               </LocalAccount>
+            </LocalAccounts>
+         </UserAccounts>
+      </component>
+   </settings>
+</unattend>

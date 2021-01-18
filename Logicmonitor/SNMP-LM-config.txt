@@ -1,0 +1,7 @@
+vim /etc/snmp/snmpd.conf
+rocommunity public 172.27.1.44/32
+service snmpd restart
+chkconfig snmpd on
+
+egnyteservice
+whitecatgoodluck5

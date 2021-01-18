@@ -1,0 +1,13 @@
+PDU3 400w
+PDU4 300w
+PDU5 2500w
+PDU6 2400w
+PDU7 700w
+
+6300
+
+At 6300w consumed a OL10KRT with 10EBPM BP240VL3U01 (Extended Battery pack modules) would yield a runtime of 114 minutes
+  $5400 + (1077 x10)= $16170
+
+At 6300w consumed a OL10KRT with 5EBPM BP240VL3U01 (Extended Battery pack modules) would yield a runtime of 55 minutes
+ $5400 + (1077 x5)= $10785

@@ -1,0 +1,6 @@
+#Check iptables and list the zones
+iptables --list
+
+firewall-cmd --zone=dmz --permanent --add-service=snmp
+sudo firewall-cmd --zone=public --add-port=161/udp --permanent
+sudo firewall-cmd --reload

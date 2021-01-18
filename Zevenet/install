@@ -1,0 +1,12 @@
+apt-get install wget openssh-server git open-vm-tools gnupg gnupg2 gnupg1
+
+
+vim /etc/apt/sources.list
+#official ZEVENET repository
+deb http://repo.zevenet.com/ce/v5/ buster main
+
+wget -O - 'http://repo.zevenet.com/zevenet.com.gpg.key' | apt-key add -
+apt-get update
+apt-get install zevenet zevenet-gui-ce zevenet-ce-cluster
+
+vi /usr/local/zevenet/app/ucarp/etc/zevenet-cluster.conf

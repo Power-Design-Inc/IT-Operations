@@ -1,0 +1,68 @@
+#Install instruction set for CentOS 8.2-2400
+#minimal install - nothing else selected
+#Update the entire OS
+dnf update -y
+
+#Add new repos to the ecosystem ahead of installing new packages
+#Puppet 5 repo for matching our environment
+#Extra Packages for Enterprise Linux
+rpm -Uvh https://yum.puppet.com/puppet5-release-el-8.noarch.rpm
+rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+dnf makecache
+
+#one line installer
+dnf install open-vm-tools puppet-agent perl-File-Temp vim-enhanced cracklib-dicts net-snmp puppet-agent net-tools p7zip nmap wget mlocate chrony psmisc tree -y
+
+#Checks the version of open-vm-tools installed > (11.0.0.15108)
+/usr/bin/vmware-toolbox-cmd -v
+
+#Config the puppet5 agent
+vi /etc/puppetlabs/puppet/puppet.conf
+
+[main]
+server = pdivlpuppet.powerdesigninc.us
+
+#One last update and reboot
+dnf update -y
+reboot
+
+#shutdown and disable some services to make the footprint even lighter
+systemctl stop firewalld.service
+systemctl disable firewalld.service
+systemctl stop iscsid.service
+systemctl disable iscsid.service
+systemctl stop iscsid.socket
+systemctl disable iscsid.socket
+systemctl stop auditd.service
+systemctl disable auditd.service
+systemctl start snmpd
+systemctl enable snmpd
+
+#clean the DNF installer of cached files
+/usr/bin/dnf clean all
+# /usr/bin/yum clean all
+
+#remove temp/unneccary files that will be created at next boot
+/bin/rm -f /etc/udev/rules.d/70*
+/bin/rm -f /var/log/dmesg.old
+/bin/rm -rf /var/log/anaconda
+/bin/rm -rf /tmp/*
+/bin/rm -rf /var/tmp/*
+/bin/rm -rf ~root/.ssh/
+/bin/rm -f ~root/anaconda-ks.cfg
+/bin/rm -f ~root/.bash_history
+
+#do some additional things - no idea
+/bin/cat /dev/null > /var/log/audit/audit.log
+/bin/cat /dev/null > /var/log/wtmp
+/bin/cat /dev/null > /var/log/lastlog
+/bin/cat /dev/null > /var/log/grubby
+
+#unset the history file
+unset HISTFILE
+
+#rotate the logs
+/usr/sbin/logrotate -f /etc/logrotate.conf
+
+#shut this mother down, and make some VMs
+shutdown -h now

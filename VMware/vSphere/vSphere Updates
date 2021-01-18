@@ -1,0 +1,2 @@
+vim-cmd /hostsvc/maintenance_mode_enter
+esxcli software vib install -d /vmfs/volumes/AF60-PDIISOS/ISOS/VMware/vSphere/6.7/ESXi670-202010001.zip

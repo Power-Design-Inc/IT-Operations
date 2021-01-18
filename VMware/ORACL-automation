@@ -1,0 +1,166 @@
+//SET SDT IN LM FOR ESX23 & ESX25
+// Login to vCenter
+POST https://{{vc}}/rest/com/vmware/cis/session
+
+//Query to see the VM ID 
+GET https://{{vc}}/rest/vcenter/vm
+
+//STORE THE VM ID AS A VARIABLE
+LABORADB03 VM-117
+LABORAAPP03 VM-124
+
+//Query to see the Datastore ID 
+GET https://{{vc}}/rest/vcenter/datastore
+
+//STORE THE DATASTORE ID AS A VARIABLE
+03 datastore-131
+31 datastore-109
+32 datastore-106
+33 datastore-111
+34 datastore-108
+35 datastore-110 
+36 datastore-107
+
+
+//POWER OFF THE VMS
+https://{{vc}}/rest/vcenter/vm/vm-117/power/stop
+https://{{vc}}/rest/vcenter/vm/vm-124/power/stop
+
+//DELETE THE VMS
+https://{{vc}}/rest/vcenter/vm/vm-117
+https://{{vc}}/rest/vcenter/vm/vm-124
+
+//DELETE THE DATASTORE
+
+//CHANGE THE VDISK IN THE GUEST TO MATCH THE NEW CLONE 
+//PATCH
+
+vm-155 app
+2000
+{
+    "spec": {
+        "backing": {
+            "vmdk_file": "[03] PDIVLORCLAPP/PDIVLORCLAPP.vmdk",
+            "type": "VMDK_FILE"
+        }
+    }
+}
+
+vm-156 db
+2000 
+{
+    "spec": {
+        "backing": {
+            "vmdk_file": "[31] PDIVLORACLDB/PDIVLORACLDB_10.vmdk",
+            "type": "VMDK_FILE"
+        }
+    }
+}
+
+2001
+{
+    "spec": {
+        "backing": {
+            "vmdk_file": "[32] PDIVLORACLDB/PDIVLORACLDB_9.vmdk",
+            "type": "VMDK_FILE"
+        }
+    }
+}
+
+2002
+{
+    "spec": {
+        "backing": {
+            "vmdk_file": "[33] PDIVLORACLDB/PDIVLORACLDB_11.vmdk",
+            "type": "VMDK_FILE"
+        }
+    }
+}
+
+2003
+{
+    "spec": {
+        "backing": {
+            "vmdk_file": "[34] PDIVLORACLDB/PDIVLORACLDB_4.vmdk",
+            "type": "VMDK_FILE"
+        }
+    }
+}
+
+2004
+{
+    "spec": {
+        "backing": {
+            "vmdk_file": "[35] PDIVLORACLDB/PDIVLORACLDB_7.vmdk",
+            "type": "VMDK_FILE"
+        }
+    }
+}
+
+2006
+{
+    "spec": {
+        "backing": {
+            "vmdk_file": "[36] PDIVLORACLDB/PDIVLORACLDB_8.vmdk",
+            "type": "VMDK_FILE"
+        }
+    }
+}
+
+
+//GET THE NETWORK DETAILS
+GET https://{{vc}}/rest/vcenter/vm/vm-155/hardware/ethernet/4000
+
+GET https://{{vc}}/rest/vcenter/vm/vm-156/hardware/ethernet/4000
+
+
+//GET THE MEMORY SIZE OF THE VMS
+GET https://{{vc}}/rest/vcenter/vm/vm-155/hardware/memory
+{
+    "value": {
+        "size_MiB": 65536,
+        "hot_add_enabled": false
+    }
+}
+
+PATCH
+
+{
+  "spec": {
+    "size_MiB": 8096
+  }
+}
+
+GET https://{{vc}}/rest/vcenter/vm/vm-156/hardware/memory
+{
+    "value": {
+        "size_MiB": 186368,
+        "hot_add_enabled": false
+    }
+}
+
+
+//GET VCPU PER VM
+GET https://{{vc}}/rest/vcenter/vm/vm-155/hardware/cpu
+
+//PATCH 
+{
+  "spec": {
+    "count": 2,
+    "hot_remove_enabled": false,
+    "cores_per_socket": 1,
+    "hot_add_enabled": false
+  }
+}
+GET https://{{vc}}/rest/vcenter/vm/vm-156/hardware/cpu
+
+//PATCH 
+{
+  "spec": {
+    "count": 2,
+    "hot_remove_enabled": false,
+    "cores_per_socket": 1,
+    "hot_add_enabled": false
+  }
+}
+

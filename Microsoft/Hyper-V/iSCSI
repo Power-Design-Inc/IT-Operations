@@ -1,0 +1,14 @@
+Start the iSCSI initiator service
+Open the Nimble Connection Manager
+Go to the configuration > and copy the initiator name, and make an Access connection for that iqn in Nimble.
+Assign the appropriate ip schema in the adapters for Windows OS
+Create a Test HyperV LUN
+Open the Nimble connection manager
+  Remove any adapters that are not part of the MPIO 10gb connections
+
+Open the Windows Computer management
+  Go to Disk Management
+  Right click the unknown associated disk and set it online
+  Right click the online disk and initialize it with a GPT partition table
+  Right click the unallocated disk and chose to make a new simple volume
+    next, next, next through the menus

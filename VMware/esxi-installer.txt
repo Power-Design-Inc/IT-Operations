@@ -1,0 +1,9 @@
+http://172.27.1.37/IT/P11740_001_spp-2018.11.0-SPP2018110.2018_1114.38.iso
+http://172.27.1.37/IT/hp/intelligent-provisioning/HPIP270b.2017_1214.8.iso
+http://172.27.1.37/IT/vmware/esxi/6.7U1/VMware-ESXi-6.7.0-Update1-10302608-HPE-Gen9plus-670.U1.10.3.5.12-Oct2018.iso
+
+
+
+
+esxcli software vib install -d /vmfs/volumes/AF60-PDIISOS/HPe_Tools/esxi6.7uX-mgmt-bundle-3.5.0-12.zip
+esxcli software vib install -d /vmfs/volumes/AF60-PDIISOS/HPe_Tools/esxi6.7-util-bundle-3.5.5-3.zip
