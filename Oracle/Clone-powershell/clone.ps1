@@ -148,7 +148,7 @@ get-datastore | where-object {($_.Name -like 'snap*db7')} | Set-Datastore -Name 
 get-datastore | where-object {($_.Name -like 'snap*db12')} | Set-Datastore -Name ('LAB'+$labn+'DB4')
 get-datastore | where-object {($_.Name -like 'snap*db13')} | Set-Datastore -Name ('LAB'+$labn+'DB5')
 get-datastore | where-object {($_.Name -like 'snap*db14')} | Set-Datastore -Name ('LAB'+$labn+'DB6')
-get-datastore | where-object { ($_.Name -like 'snap*db15') } | Set-Datastore -Name ('LAB' + $labn + 'DB7')
+get-datastore | where-object {($_.Name -like 'snap*db15')} | Set-Datastore -Name ('LAB'+$labn+'DB7')
 get-datastore | where-object {($_.Name -like 'snap*app')} | Set-Datastore -Name ('LABAPP'+$labn)
 Start-Sleep -s 5
 
