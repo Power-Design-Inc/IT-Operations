@@ -26,14 +26,14 @@ vol --delete LABORADB46 --force
 vol --delete LABORADB47 --force
 
 
-vol --clone PDIVLORACLAPP --snapname NEW-AF5000-Tier1-Ora-VC-4H-2021-01-16::20:17:00.000 --clonename LABORAAPP04 --apply_acl_to both --multi_initiator no --initiatorgrp PDI-ESX25
-vol --clone PDIVLORACLDB1 --snapname NEW-AF5000-Tier1-Ora-VC-4H-2021-01-16::20:17:00.000 --clonename LABORADB41 --apply_acl_to both --multi_initiator no --initiatorgrp PDI-ESX23
-vol --clone PDIVLORACLDB5 --snapname NEW-AF5000-Tier1-Ora-VC-4H-2021-01-16::20:17:00.000 --clonename LABORADB42 --apply_acl_to both --multi_initiator no --initiatorgrp PDI-ESX23
-vol --clone PDIVLORACLDB7 --snapname NEW-AF5000-Tier1-Ora-VC-4H-2021-01-16::20:17:00.000 --clonename LABORADB43 --apply_acl_to both --multi_initiator no --initiatorgrp PDI-ESX23
-vol --clone PDIVLORACLDB12 --snapname NEW-AF5000-Tier1-Ora-VC-4H-2021-01-16::20:17:00.000 --clonename LABORADB44 --apply_acl_to both --multi_initiator no --initiatorgrp PDI-ESX23
-vol --clone PDIVLORACLDB13 --snapname NEW-AF5000-Tier1-Ora-VC-4H-2021-01-16::20:17:00.000 --clonename LABORADB45 --apply_acl_to both --multi_initiator no --initiatorgrp PDI-ESX23
-vol --clone PDIVLORACLDB14 --snapname NEW-AF5000-Tier1-Ora-VC-4H-2021-01-16::20:17:00.000 --clonename LABORADB46 --apply_acl_to both --multi_initiator no --initiatorgrp PDI-ESX23
-vol --clone PDIVLORACLDB15 --snapname NEW-AF5000-Tier1-Ora-VC-4H-2021-01-16::20:17:00.000 --clonename LABORADB47 --apply_acl_to both --multi_initiator no --initiatorgrp PDI-ESX23
+vol --clone PDIVLORACLAPP --snapname NEW-AF5000-Tier1-Ora-VC-15m-2021-01-22::19:27:00.000 --clonename LABORAAPP04 --apply_acl_to both --multi_initiator no --initiatorgrp PDI-ESX25
+vol --clone PDIVLORACLDB1 --snapname NEW-AF5000-Tier1-Ora-VC-15m-2021-01-22::19:27:00.000 --clonename LABORADB41 --apply_acl_to both --multi_initiator no --initiatorgrp PDI-ESX23
+vol --clone PDIVLORACLDB5 --snapname NEW-AF5000-Tier1-Ora-VC-15m-2021-01-22::19:27:00.000 --clonename LABORADB42 --apply_acl_to both --multi_initiator no --initiatorgrp PDI-ESX23
+vol --clone PDIVLORACLDB7 --snapname NEW-AF5000-Tier1-Ora-VC-15m-2021-01-22::19:27:00.000 --clonename LABORADB43 --apply_acl_to both --multi_initiator no --initiatorgrp PDI-ESX23
+vol --clone PDIVLORACLDB12 --snapname NEW-AF5000-Tier1-Ora-VC-15m-2021-01-22::19:27:00.000 --clonename LABORADB44 --apply_acl_to both --multi_initiator no --initiatorgrp PDI-ESX23
+vol --clone PDIVLORACLDB13 --snapname NEW-AF5000-Tier1-Ora-VC-15m-2021-01-22::19:27:00.000 --clonename LABORADB45 --apply_acl_to both --multi_initiator no --initiatorgrp PDI-ESX23
+vol --clone PDIVLORACLDB14 --snapname NEW-AF5000-Tier1-Ora-VC-15m-2021-01-22::19:27:00.000 --clonename LABORADB46 --apply_acl_to both --multi_initiator no --initiatorgrp PDI-ESX23
+vol --clone PDIVLORACLDB15 --snapname NEW-AF5000-Tier1-Ora-VC-15m-2021-01-22::19:27:00.000 --clonename LABORADB47 --apply_acl_to both --multi_initiator no --initiatorgrp PDI-ESX23
 
 
 esxcli storage vmfs snapshot list | grep UUID | awk '{print $3}'
