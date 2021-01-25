@@ -9,8 +9,8 @@ param (
 # Current as of PowerCLI 12 for Powershell 7 core
 # Declare the variables to use in the script
 # 
-$user = 'administrator@vsphere.local'
-$pass = 'm0G!Qx615GX&y^vHmtZs'
+$user = 'service@vsphere.local'
+$pass = 'a47Wz3axkAB6*38Pnvym'
 $vcsa02 = 'pdivcsa-02.powerdesigninc.us'
 $vcsa04 = 'pdivcsa-04.powerdesigninc.us'
 $vsphere23 = 'pdi-esx23.powerdesigninc.us'
@@ -183,9 +183,9 @@ Start-Sleep -s 2
 
 # Power the VM on and Answer the question of copying it
 #
-Start-VM $newAPPname
-Start-Sleep -s 2
-Get-VM $newAPPname | Get-VMQuestion | Set-VMQuestion -DefaultOption  -Confirm:$false
+#Start-VM $newAPPname
+#Start-Sleep -s 2
+#Get-VM $newAPPname | Get-VMQuestion | Set-VMQuestion -DefaultOption  -Confirm:$false
 
 # Add the DB to inventory and start it
 # 
@@ -227,8 +227,8 @@ pause
 # Reconfigure the VM, RAM & connect the NIC after the refresh is done
 # 
 Get-VM -Name $newDBname | Set-VM -MemoryGB $ramDB -Confirm:$false
-Get-VM -Name $newAPPname | Get-NetworkAdapter | Set-NetworkAdapter -StartConnected:$true -Confirm:$false
 Get-VM -Name $newDBname | Get-NetworkAdapter | Set-NetworkAdapter -StartConnected:$true -Confirm:$false
+Get-VM -Name $newAPPname | Get-NetworkAdapter | Set-NetworkAdapter -StartConnected:$true -Confirm:$false
 Pause
 Start-VM $newAPPname
 Start-VM $newDBname
