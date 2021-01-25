@@ -22,8 +22,14 @@ CLUMIO-CCA-06 172.27.1.50  esx23
 CLUMIO-CCA-07 172.27.1.96  esx25
 
 
+pdivcsa-04.powerdesigninc.us
+https://s3.dualstack.us-east-1.amazonaws.com/prod-02-ue-1-clumio-edgesrv-vapp-ova/vapp-prod-02-ue-1.ova
+MTY4N2M3ZjctOTNiNS00N2YwLWE4NjUtYzgzNGI2MWU3ZmQxLGh0dHBzOi8vcHJvZC0wMi11ZS0xLWJhY2tlbmQuYXBpLnByb2QtY2x1bWlvLmNvbS9hcGkvYm9vdHN0cmFw
+CLUMIO-CCA-15 172.27.1.149  esx26
+
+
 svc_clumio@vsphere.local
-Power72Clumio18!
+Power72Clumio18
 
 
 

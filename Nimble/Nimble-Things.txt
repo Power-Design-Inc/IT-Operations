@@ -1,4 +1,4 @@
-snap --list --unmanaged --all | awk '$4 == "No"' | awk '{print "snap --delete",$2" --vol",$1}'
+snap --list --manual_managed --all | awk '$4 == "No"' | awk '{print "snap --delete",$2" --vol",$1}'
 
 
 snap --delete NSs-DOCKERLAB-001-2020-10-01::12:30:14.399 --vol DOCKERLAB-001
