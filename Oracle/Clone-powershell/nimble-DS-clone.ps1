@@ -37,56 +37,56 @@ Write-Host "Removing Nimble volumes for Oracle LAB$labn" -ForegroundColor Red
 # Disconnect, disassociate, and remove the Nimble volumes associated with the LAB instance 
 #
 Write-Host "Removing Nimble volumes for Oracle $labapp" -ForegroundColor Green
-$response = Get-NSVolume -name $labapp | select id
+$response = Get-NSVolume -name $labapp | select-object id
 $responseid = $response.id
 $action = Set-NSVolume -id $responseid -online $false -force $true
 #$action = Remove-NSSnapshotCollection -id $responseid
 $action = Remove-NSVolume -id $responseid
 
 Write-Host "Removing Nimble volumes for Oracle $labdb1" -ForegroundColor Green
-$response = Get-NSVolume -name $labdb1 | select id
+$response = Get-NSVolume -name $labdb1 | select-object id
 $responseid = $response.id
 $action = Set-NSVolume -id $responseid -online $false -force $true
 #$action = Remove-NSSnapshotCollection -id $responseid
 $action = Remove-NSVolume -id $responseid
 
 Write-Host "Removing Nimble volumes for Oracle $labdb2" -ForegroundColor Green
-$response = Get-NSVolume -name $labdb2 | select id
+$response = Get-NSVolume -name $labdb2 | select-object id
 $responseid = $response.id
 $action = Set-NSVolume -id $responseid -online $false -force $true
 #$action = Remove-NSSnapshotCollection -id $responseid
 $action = Remove-NSVolume -id $responseid
 
 Write-Host "Removing Nimble volumes for Oracle $labdb3" -ForegroundColor Green
-$response = Get-NSVolume -name $labdb3 | select id
+$response = Get-NSVolume -name $labdb3 | select-object id
 $responseid = $response.id
 $action = Set-NSVolume -id $responseid -online $false -force $true
 #$action = Remove-NSSnapshotCollection -id $responseid
 $action = Remove-NSVolume -id $responseid
 
 Write-Host "Removing Nimble volumes for Oracle $labdb4" -ForegroundColor Green
-$response = Get-NSVolume -name $labdb4 | select id
+$response = Get-NSVolume -name $labdb4 | select-object id
 $responseid = $response.id
 $action = Set-NSVolume -id $responseid -online $false -force $true
 #$action = Remove-NSSnapshotCollection -id $responseid
 $action = Remove-NSVolume -id $responseid
 
 Write-Host "Removing Nimble volumes for Oracle $labdb5" -ForegroundColor Green
-$response = Get-NSVolume -name $labdb5 | select id
+$response = Get-NSVolume -name $labdb5 | select-object id
 $responseid = $response.id
 $action = Set-NSVolume -id $responseid -online $false -force $true
 #$action = Remove-NSSnapshotCollection -id $responseid
 $action = Remove-NSVolume -id $responseid
 
 Write-Host "Removing Nimble volumes for Oracle $labdb6" -ForegroundColor Green
-$response = Get-NSVolume -name $labdb6 | select id
+$response = Get-NSVolume -name $labdb6 | select-object id
 $responseid = $response.id
 $action = Set-NSVolume -id $responseid -online $false -force $true
 #$action = Remove-NSSnapshotCollection -id $responseid
 $action = Remove-NSVolume -id $responseid
 
 Write-Host "Removing Nimble volumes for Oracle $labdb7" -ForegroundColor Green
-$response = Get-NSVolume -name $labdb7 | select id
+$response = Get-NSVolume -name $labdb7 | select-object id
 $responseid = $response.id
 $action = Set-NSVolume -id $responseid -online $false -force $true
 #$action = Remove-NSSnapshotCollection -id $responseid
@@ -99,28 +99,28 @@ pause
 # Start the clone process
 # Discover the last snap ID to be taken on the Oracle App volume
 #
-$lastsnap = get-NSvolume -name PDIVLORACLAPP | select last_snap
+$lastsnap = get-NSvolume -name PDIVLORACLAPP | select-object last_snap
 $lastsnaptimeidapp = $lastsnap.last_snap.snap_id
 
-$lastsnap = get-NSvolume -name PDIVLORACLDB1 | select last_snap
+$lastsnap = get-NSvolume -name PDIVLORACLDB1 | select-object last_snap
 $lastsnaptimeiddb1 = $lastsnap.last_snap.snap_id
 
-$lastsnap = get-NSvolume -name PDIVLORACLDB5 | select last_snap
+$lastsnap = get-NSvolume -name PDIVLORACLDB5 | select-object last_snap
 $lastsnaptimeiddb2 = $lastsnap.last_snap.snap_id
 
-$lastsnap = get-NSvolume -name PDIVLORACLDB7 | select last_snap
+$lastsnap = get-NSvolume -name PDIVLORACLDB7 | select-object last_snap
 $lastsnaptimeiddb3 = $lastsnap.last_snap.snap_id
 
-$lastsnap = get-NSvolume -name PDIVLORACLDB12 | select last_snap
+$lastsnap = get-NSvolume -name PDIVLORACLDB12 | select-object last_snap
 $lastsnaptimeiddb4 = $lastsnap.last_snap.snap_id
 
-$lastsnap = get-NSvolume -name PDIVLORACLDB13 | select last_snap
+$lastsnap = get-NSvolume -name PDIVLORACLDB13 | select-object last_snap
 $lastsnaptimeiddb5 = $lastsnap.last_snap.snap_id
 
-$lastsnap = get-NSvolume -name PDIVLORACLDB14 | select last_snap
+$lastsnap = get-NSvolume -name PDIVLORACLDB14 | select-object last_snap
 $lastsnaptimeiddb6 = $lastsnap.last_snap.snap_id
 
-$lastsnap = get-NSvolume -name PDIVLORACLDB15 | select last_snap
+$lastsnap = get-NSvolume -name PDIVLORACLDB15 | select-object last_snap
 $lastsnaptimeiddb7 = $lastsnap.last_snap.snap_id
 
 # Create the snap volumes with lab names
@@ -137,25 +137,25 @@ $action = New-NSvolume -name $labdb7 -clone $true -base_snap_id $lastsnaptimeidd
 
 # Get the new Nimble Volume ID's for the clones we just created
 # 
-$db1vol = get-NSvolume -name $labdb1 | select Id
+$db1vol = get-NSvolume -name $labdb1 | select-object Id
 $db1volid = $db1vol.id
 
-$db2vol = get-NSvolume -name $labdb2 | select Id
+$db2vol = get-NSvolume -name $labdb2 | select-object Id
 $db2volid = $db2vol.id
 
-$db3vol = get-NSvolume -name $labdb3 | select Id
+$db3vol = get-NSvolume -name $labdb3 | select-object Id
 $db3volid = $db3vol.id
 
-$db4vol = get-NSvolume -name $labdb4 | select Id
+$db4vol = get-NSvolume -name $labdb4 | select-object Id
 $db4volid = $db4vol.id
 
-$db5vol = get-NSvolume -name $labdb5 | select Id
+$db5vol = get-NSvolume -name $labdb5 | select-object Id
 $db5volid = $db5vol.id
 
-$db6vol = get-NSvolume -name $labdb6 | select Id
+$db6vol = get-NSvolume -name $labdb6 | select-object Id
 $db6volid = $db6vol.id
 
-$db7vol = get-NSvolume -name $labdb7 | select Id
+$db7vol = get-NSvolume -name $labdb7 | select-object Id
 $db7volid = $db7vol.id
 
 # Add initiator group access to the new Clones because we have the lab env on a different host (ESX23)
