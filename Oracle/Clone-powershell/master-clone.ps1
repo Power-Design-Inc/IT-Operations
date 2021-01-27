@@ -192,14 +192,6 @@ $vcsa02 = 'pdivcsa-02.powerdesigninc.us'
 $vcsa04 = 'pdivcsa-04.powerdesigninc.us'
 $vsphere23 = 'pdi-esx23.powerdesigninc.us'
 $vsphere25 = 'pdi-esx25.powerdesigninc.us'
-$vmAPPid = ''
-$vmDBid = ''
-$vmAPPname = ''
-$vmDBname = ''
-$vmAPPds = ''
-$vmDBds = ''
-$vsphereHosts = ''
-$morefHosts = ''
 $resigAPP = @{ volumeuuid = '5ed144c4-d5ebd3b8-cfd6-f403433d8648'}
 $resigDB1 = @{ volumeuuid = '5ed14521-f883a490-1615-f403433ed358'}
 $resigDB5 = @{ volumeuuid = '5ed144e3-92693890-f6a6-f403433ed358'}
