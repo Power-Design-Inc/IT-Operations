@@ -22,7 +22,6 @@ Basic Actions:
     17) Remove extra SDT in LM
 #>
 
-
 #region setsdt
 # Set SDT in LM so that On-call doesn't get alerted
 # 
@@ -203,6 +202,7 @@ Write-Host "Status:$status"
 Write-Host "Response:$body"
 
 #endregion setsdt
+
 #region input
 # Read in the users choice for the oracle clone instance value
 # 
@@ -210,6 +210,7 @@ param (
     [string]$labn = $(Read-Host "Oracle Lab Instance Value (01,02,03,04,05)" )
 )
 #endregion input
+
 #region variables
 
 # Current as of PowerCLI 12 for Powershell 7 core
