@@ -387,7 +387,7 @@ $action = Set-NSVolume -id $responseid -online $false -force $true
 #$action = Remove-NSSnapshotCollection -id $responseid
 $action = Remove-NSVolume -id $responseid
 
-Write-Host "Finished with removing and deleting the Volumes - Break out if you do NOT want to create new volumes" -ForegroundColor Red -BackgroundColor Yellow
+Write-Host "Finished with removing and deleting the Volumes - Break out if you do NOT want to create new volumes" -ForegroundColor Red -BackgroundColor Cyan
 pause
 Clear-Host
 
