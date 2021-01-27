@@ -179,7 +179,7 @@ Write-Host "Response:$body"
 # 
 param (
     [string]$labn = $(Read-Host "Oracle Lab Instance Value (01,02,03,04,05)" )
-    )
+)
 #endregion input
 #region variables
 
