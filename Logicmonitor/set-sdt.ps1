@@ -47,10 +47,13 @@ $response = Invoke-RestMethod -Uri $url -Method $httpVerb -Body $data -Header $h
 
 <# Print status and body of response1 #>
 $status = $response.status
+$sdtid = $response.data.id
 $body = $response.data| ConvertTo-Json -Depth 5
 
 Write-Host "Status:$status"
 Write-Host "Response:$body"
+
+#new host here
 
 <# Get current time in milliseconds #>
 $epoch = [Math]::Round((New-TimeSpan -start (Get-Date -Date "1/1/1970") -end (Get-Date).ToUniversalTime()).TotalMilliseconds)
