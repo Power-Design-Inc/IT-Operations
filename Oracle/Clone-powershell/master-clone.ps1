@@ -747,6 +747,7 @@ Write-Host "Reconfigure the VM memory and add the network adapter for connecting
 Get-VM -Name $newDBname | Set-VM -MemoryGB $ramDB -Confirm:$false
 Get-VM -Name $newDBname | Get-NetworkAdapter | Set-NetworkAdapter -StartConnected:$true -Confirm:$false
 Get-VM -Name $newAPPname | Get-NetworkAdapter | Set-NetworkAdapter -StartConnected:$true -Confirm:$false
+Write-Host "Check to make sure the RAM allocation is correct before powering on" -ForegroundColor Red 
 pause
 Write-Host "Power on the VM for the final time" -ForegroundColor Red
 Start-VM $newAPPname
