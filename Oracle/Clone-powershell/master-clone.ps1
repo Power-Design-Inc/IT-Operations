@@ -1,4 +1,29 @@
-#region sdt
+<# 
+Oracle Clone script v.79
+Author: Todd Martin
+Last updated: 1-27-2021
+Basic Actions: 
+    1) Set SDT in LM
+    2) Read in user option for LABxx instance
+    3) Shut down existing VM
+    4) Remove existing datastores
+    5) Remove existing Nimble LUNs
+    6) Clone new Nimble LUNs
+    7) Resignature vSphere Vols
+    8) Rename and move vSphere datastores
+    9) Add VM to inventory
+    10) Strip autostart nic at boot, and remove high priority for resources
+    11) Change DB vDisks
+    12) Power on VMs
+    13) Do the Oracle Clone
+    14) Power off the VMs
+    15) Change processor, RAM allocation, and nic on boot
+    16) Power on VMs
+    17) Remove extra SDT in LM
+#>
+
+
+#region setsdt
 # Set SDT in LM so that On-call doesn't get alerted
 # 
 <# Use TLS 1.2 #>
@@ -177,7 +202,7 @@ $body = $response.data | ConvertTo-Json -Depth 5
 Write-Host "Status:$status"
 Write-Host "Response:$body"
 
-#endregion sdt
+#endregion setsdt
 #region input
 # Read in the users choice for the oracle clone instance value
 # 
