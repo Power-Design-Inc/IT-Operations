@@ -206,7 +206,7 @@ Write-Host "Response:$body"
 #region input
 # Read in the users choice for the oracle clone instance value
 # 
-param (
+param(
     [string]$labn = $(Read-Host "Oracle Lab Instance Value (01,02,03,04,05)" )
 )
 #endregion input
