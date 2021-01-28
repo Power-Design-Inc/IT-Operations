@@ -246,8 +246,8 @@ $ramDB = '28'
 # Connect to the vCenter that you want to work with
 # 
 Write-Host "Connecting to the VCSA appliances we need to use" -ForegroundColor Red
-Connect-VIServer -Server $vcsa02 -Protocol https -User $user -Password $pass
-Connect-VIServer -Server $vcsa04 -Protocol https -User $user -Password $pass
+$vcsa2 = Connect-VIServer -Server $vcsa02 -Protocol https -User $user -Password $pass
+$vcsa4 = Connect-VIServer -Server $vcsa04 -Protocol https -User $user -Password $pass
 Start-Sleep -s 2
 
 # $vms = get-vm -Name *
@@ -573,9 +573,9 @@ Start-Sleep -s 1
 # Power the VM on and Answer the question of copying it
 #
 Write-Host "Start the APP Vm" -ForegroundColor Red
-#Start-VM $newAPPname
-#Start-Sleep -s 2
-#Get-VM $newAPPname | Get-VMQuestion | Set-VMQuestion -DefaultOption  -Confirm:$false
+Start-VM $newAPPname | Get-VMQuestion | Set-VMQuestion -DefaultOption  -Confirm:$false
+Start-Sleep -s 2
+Get-VM $newAPPname | Get-VMQuestion | Set-VMQuestion -DefaultOption  -Confirm:$false
 
 # Add the DB to inventory and start it
 # 
@@ -761,9 +761,9 @@ $response | ConvertTo-Json
 # Power the VM on and Answer the question of copying it
 # 
 Write-Host "Start the DB Vm" -ForegroundColor Red
-#Start-VM $newDBname
-#Start-Sleep -s 2
-#Get-VM $newDBname | Get-VMQuestion | Set-VMQuestion -DefaultOption  -Confirm:$false
+Start-VM $newDBname
+Start-Sleep -s 2
+Get-VM $newDBname | Get-VMQuestion | Set-VMQuestion -DefaultOption  -Confirm:$false
 
 # Do the oracle refresh in the actual OS
 #
@@ -780,10 +780,15 @@ Get-VM -Name $newAPPname | Get-NetworkAdapter | Set-NetworkAdapter -StartConnect
 Write-Host "Check to make sure the RAM allocation is correct before powering on" -ForegroundColor Red 
 pause
 Write-Host "Power on the VM for the final time" -ForegroundColor Red
-#Start-VM $newAPPname
-#Start-VM $newDBname
+Start-VM $newAPPname
+Start-VM $newDBname
 
 Write-Host "We're done here - don't forget to remove your SDT" -ForegroundColor Green
+
+# General Housekeeping - Log out of vSphere and vCenter connections
+Disconnect-VIServer -Server $vcsa2 -confirm:$false
+Disconnect-VIServer -Server $vcsa4 -confirm:$false
+
 #endregion vsphere2
 
 #region removesdt
