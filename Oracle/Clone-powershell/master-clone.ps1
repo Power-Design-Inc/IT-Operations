@@ -21,7 +21,7 @@ Basic Actions:
     16) Power on VMs
     17) Remove extra SDT in LM
 #>
-
+Clear-Host
 #region setsdt
 # Set SDT in LM so that On-call doesn't get alerted
 # 
@@ -72,13 +72,13 @@ $headers.Add("Content-Type", 'application/json')
 <# Make Request #>
 $response = Invoke-RestMethod -Uri $url -Method $httpVerb -Body $data -Header $headers
 
+Write-Host "Setting SDT for ESX23,ESX25, VCSA-02, VCSA-04" -ForegroundColor Green
 <# Print status and body of response1 #>
 $status = $response.status
 $sdt23id = $response.data.id
 $body = $response.data | ConvertTo-Json -Depth 5
 
 Write-Host "Status:$status"
-Write-Host "Response:$body"
 
 <# Get current time in milliseconds #>
 $epoch = [Math]::Round((New-TimeSpan -start (Get-Date -Date "1/1/1970") -end (Get-Date).ToUniversalTime()).TotalMilliseconds)
@@ -118,7 +118,6 @@ $sdt25id = $response.data.id
 $body = $response.data | ConvertTo-Json -Depth 5
 
 Write-Host "Status:$status"
-Write-Host "Response:$body"
 
 <# Get current time in milliseconds #>
 $epoch = [Math]::Round((New-TimeSpan -start (Get-Date -Date "1/1/1970") -end (Get-Date).ToUniversalTime()).TotalMilliseconds)
@@ -158,8 +157,6 @@ $sdtvcsa02id = $response.data.id
 $body = $response.data | ConvertTo-Json -Depth 5
 
 Write-Host "Status:$status"
-Write-Host "Response:$body"
-
 
 <# Get current time in milliseconds #>
 $epoch = [Math]::Round((New-TimeSpan -start (Get-Date -Date "1/1/1970") -end (Get-Date).ToUniversalTime()).TotalMilliseconds)
@@ -199,16 +196,16 @@ $sdtvcsa04id = $response.data.id
 $body = $response.data | ConvertTo-Json -Depth 5
 
 Write-Host "Status:$status"
-Write-Host "Response:$body"
 
 #endregion setsdt
 
 #region input
 # Read in the users choice for the oracle clone instance value
 # 
-param(
-    [string]$labn = $(Read-Host "Oracle Lab Instance Value (01,02,03,04,05)" )
-)
+[string]$labn = $(Read-Host "Oracle Lab Instance Value (01,02,03,04,05)" )
+Clear-Host
+Write-Host "You have chosen to refresh LAB$labn " -ForegroundColor Green
+
 #endregion input
 
 #region variables
@@ -246,13 +243,12 @@ $ramDB = '28'
 # Connect to the vCenter that you want to work with
 # 
 Write-Host "Connecting to the VCSA appliances we need to use (ln:~248)" -ForegroundColor Red
-$vcsa2 = Connect-VIServer -Server $vcsa02 -Protocol https -User $user -Password $pass
-$vcsa4 = Connect-VIServer -Server $vcsa04 -Protocol https -User $user -Password $pass
-Start-Sleep -s 2
+$vcsa2 = Connect-VIServer -Server $vcsa02 -Protocol https -User $user -Password $pass | Out-Null
+$vcsa4 = Connect-VIServer -Server $vcsa04 -Protocol https -User $user -Password $pass | Out-Null
 
 # $vms = get-vm -Name *
 # 
-$esxcli25 = Get-EsxCli -VMhost pdi-esx25.powerdesigninc.us -V2
+$esxcli25 = Get-EsxCli -VMhost pdi-esx25.powerdesigninc.us -V2 
 $esxcli23 = Get-EsxCli -VMhost pdi-esx23.powerdesigninc.us -V2
 #endregion connections
 
@@ -296,15 +292,15 @@ Start-Sleep -s 1
 # Stops the local VM from Running
 # 
 Write-Host "Stop the local VMs (ln:~298)" -ForegroundColor Red
-Stop-VM -VM $vmAPPname -Confirm:$false
-Stop-VM -VM $vmDBname -Confirm:$false
+Stop-VM -VM $vmAPPname -Confirm:$false | out-null
+Stop-VM -VM $vmDBname -Confirm:$false | out-null
 Start-Sleep -s 1
 
 # Removes the VM from inventory
 # 
 Write-Host "Remove the VMs from inventory (ln:~305)" -ForegroundColor Red
-Remove-VM -VM $vmAPPname -Confirm:$false
-Remove-VM -VM $vmDBname -Confirm:$false
+Remove-VM -VM $vmAPPname -Confirm:$false | out-null
+Remove-VM -VM $vmDBname -Confirm:$false | out-null
 Start-Sleep -s 1
 
 # Removes the datastores from inventory
@@ -360,60 +356,61 @@ Write-Host "Removing Nimble volumes for Oracle LAB$labn (ln:~356)" -ForegroundCo
 Write-Host "Removing Nimble volumes for Oracle $labapp (ln:~360)" -ForegroundColor Green
 $response = Get-NSVolume -name $labapp | select-object id
 $responseid = $response.id
-$action = Set-NSVolume -id $responseid -online $false -force $true
+$action = Set-NSVolume -id $responseid -online $false -force $true |  Out-null
 #$action = Remove-NSSnapshotCollection -id $responseid
-$action = Remove-NSVolume -id $responseid
+$action = Remove-NSVolume -id $responseid |  Out-null
 
 Write-Host "Removing Nimble volumes for Oracle $labdb1 (ln:~367)" -ForegroundColor Green
 $response = Get-NSVolume -name $labdb1 | select-object id
 $responseid = $response.id
-$action = Set-NSVolume -id $responseid -online $false -force $true
+$action = Set-NSVolume -id $responseid -online $false -force $true |  Out-null
 #$action = Remove-NSSnapshotCollection -id $responseid
-$action = Remove-NSVolume -id $responseid
+$action = Remove-NSVolume -id $responseid |  Out-null
 
 Write-Host "Removing Nimble volumes for Oracle $labdb2 (ln:~374)" -ForegroundColor Green
 $response = Get-NSVolume -name $labdb2 | select-object id
 $responseid = $response.id
-$action = Set-NSVolume -id $responseid -online $false -force $true
+$action = Set-NSVolume -id $responseid -online $false -force $true |  Out-null
 #$action = Remove-NSSnapshotCollection -id $responseid
-$action = Remove-NSVolume -id $responseid
+$action = Remove-NSVolume -id $responseid |  Out-null
 
 Write-Host "Removing Nimble volumes for Oracle $labdb3 (ln:~381)" -ForegroundColor Green
 $response = Get-NSVolume -name $labdb3 | select-object id
 $responseid = $response.id
-$action = Set-NSVolume -id $responseid -online $false -force $true
+$action = Set-NSVolume -id $responseid -online $false -force $true |  Out-null
 #$action = Remove-NSSnapshotCollection -id $responseid
-$action = Remove-NSVolume -id $responseid
+$action = Remove-NSVolume -id $responseid |  Out-null
 
 Write-Host "Removing Nimble volumes for Oracle $labdb4 (ln:~388)" -ForegroundColor Green
 $response = Get-NSVolume -name $labdb4 | select-object id
 $responseid = $response.id
-$action = Set-NSVolume -id $responseid -online $false -force $true
+$action = Set-NSVolume -id $responseid -online $false -force $true |  Out-null
 #$action = Remove-NSSnapshotCollection -id $responseid
-$action = Remove-NSVolume -id $responseid
+$action = Remove-NSVolume -id $responseid |  Out-null
 
 Write-Host "Removing Nimble volumes for Oracle $labdb5 (ln:~395)" -ForegroundColor Green
 $response = Get-NSVolume -name $labdb5 | select-object id
 $responseid = $response.id
-$action = Set-NSVolume -id $responseid -online $false -force $true
+$action = Set-NSVolume -id $responseid -online $false -force $true |  Out-null
 #$action = Remove-NSSnapshotCollection -id $responseid
-$action = Remove-NSVolume -id $responseid
+$action = Remove-NSVolume -id $responseid |  Out-null
 
 Write-Host "Removing Nimble volumes for Oracle $labdb6 (ln:~402)" -ForegroundColor Green
 $response = Get-NSVolume -name $labdb6 | select-object id
 $responseid = $response.id
-$action = Set-NSVolume -id $responseid -online $false -force $true
+$action = Set-NSVolume -id $responseid -online $false -force $true |  Out-null
 #$action = Remove-NSSnapshotCollection -id $responseid
-$action = Remove-NSVolume -id $responseid
+$action = Remove-NSVolume -id $responseid |  Out-null
 
 Write-Host "Removing Nimble volumes for Oracle $labdb7 (ln:~409)" -ForegroundColor Green
 $response = Get-NSVolume -name $labdb7 | select-object id
 $responseid = $response.id
-$action = Set-NSVolume -id $responseid -online $false -force $true
+$action = Set-NSVolume -id $responseid -online $false -force $true |  Out-null
 #$action = Remove-NSSnapshotCollection -id $responseid
-$action = Remove-NSVolume -id $responseid
+$action = Remove-NSVolume -id $responseid |  Out-null
 
-Write-Host "Finished with removing and deleting the Volumes - Break out if you do NOT want to create new volumes (ln:~416)" -ForegroundColor Red -BackgroundColor Cyan
+Clear-Host
+Write-Host "Finished with removing and deleting the Volumes - Break out if you do NOT want to create new volumes (ln:~416)" -ForegroundColor White -BackgroundColor Magenta
 pause
 Clear-Host
 
@@ -481,21 +478,21 @@ $db7volid = $db7vol.id
 
 # Add initiator group access to the new Clones because we have the lab env on a different host (ESX23)
 # 
-Write-Host "Adding iSCSI init groups to the new DB vols (ln:~494)" -ForegroundColor Red
+Write-Host "Adding iSCSI init groups to the new DB vols (ln:~494)" -ForegroundColor Red 
 Write-Host "Adding PDI-ESX23 initiator to $labdb1" -ForegroundColor Green
-New-NSAccessControlRecord -initiator_group_id 025b62a468b66e547c00000000000000000000000d -vol_id $db1volid
+New-NSAccessControlRecord -initiator_group_id 025b62a468b66e547c00000000000000000000000d -vol_id $db1volid | out-null
 Write-Host "Adding PDI-ESX23 initiator to $labdb2" -ForegroundColor Green
-New-NSAccessControlRecord -initiator_group_id 025b62a468b66e547c00000000000000000000000d -vol_id $db2volid
+New-NSAccessControlRecord -initiator_group_id 025b62a468b66e547c00000000000000000000000d -vol_id $db2volid | out-null
 Write-Host "Adding PDI-ESX23 initiator to $labdb3" -ForegroundColor Green
-New-NSAccessControlRecord -initiator_group_id 025b62a468b66e547c00000000000000000000000d -vol_id $db3volid
+New-NSAccessControlRecord -initiator_group_id 025b62a468b66e547c00000000000000000000000d -vol_id $db3volid | out-null
 Write-Host "Adding PDI-ESX23 initiator to $labdb4" -ForegroundColor Green
-New-NSAccessControlRecord -initiator_group_id 025b62a468b66e547c00000000000000000000000d -vol_id $db4volid
+New-NSAccessControlRecord -initiator_group_id 025b62a468b66e547c00000000000000000000000d -vol_id $db4volid | out-null
 Write-Host "Adding PDI-ESX23 initiator to $labdb5" -ForegroundColor Green
-New-NSAccessControlRecord -initiator_group_id 025b62a468b66e547c00000000000000000000000d -vol_id $db5volid
+New-NSAccessControlRecord -initiator_group_id 025b62a468b66e547c00000000000000000000000d -vol_id $db5volid | out-null
 Write-Host "Adding PDI-ESX23 initiator to $labdb6" -ForegroundColor Green
-New-NSAccessControlRecord -initiator_group_id 025b62a468b66e547c00000000000000000000000d -vol_id $db6volid
+New-NSAccessControlRecord -initiator_group_id 025b62a468b66e547c00000000000000000000000d -vol_id $db6volid | out-null
 Write-Host "Adding PDI-ESX23 initiator to $labdb7" -ForegroundColor Green
-New-NSAccessControlRecord -initiator_group_id 025b62a468b66e547c00000000000000000000000d -vol_id $db7volid
+New-NSAccessControlRecord -initiator_group_id 025b62a468b66e547c00000000000000000000000d -vol_id $db7volid | out-null
 
 # Disconnect from the Nimble array because we are done.
 # 
@@ -509,9 +506,11 @@ Write-Host "Disconnected from the Nimble array (ln:~503)" -ForegroundColor Green
 # Refresh the iSCSI adapter, rescan it for new VMFS volumes, rescanning all HBAs
 # 
 Write-Host "Rescan vSphere HBAs (ln:~511)" -ForegroundColor Red
-Get-VmHostStorage -VMHost $vsphere23 -Refresh -RescanVmfs -RescanAllHba
-Get-VmHostStorage -VMHost $vsphere25 -Refresh -RescanVmfs -RescanAllHba
+Get-VmHostStorage -VMHost $vsphere23 -Refresh -RescanVmfs -RescanAllHba |  Out-null
+Get-VmHostStorage -VMHost $vsphere25 -Refresh -RescanVmfs -RescanAllHba |  Out-null
 Start-Sleep -s 10
+
+Clear-Host
 
 # Resignature the newly cloned VMFS volumes
 # 
@@ -528,6 +527,7 @@ Start-Sleep -s 10
 
 # Rename the datastore to the appropriate lab number
 #
+Clear-host 
 Write-Host "Rename the cloned datastores to make it clear for LAB$labn (ln:~531)" -ForegroundColor Red
 get-datastore | where-object {($_.Name -like 'snap*db1')} | Set-Datastore -Name ('LAB'+$labn+'DB1')
 get-datastore | where-object {($_.Name -like 'snap*db5')} | Set-Datastore -Name ('LAB'+$labn+'DB2')
@@ -541,20 +541,22 @@ Start-Sleep -s 5
 
 # Move the datastores to the appropriate storage lab folder
 # 
+Clear-host
 Write-Host "Move the datastores into folders for easy seperation and clarity for monitoring environments (ln:~544)" -ForegroundColor Red
 Get-Datastore ('LAB' + $labn + 'DB1'), ('LAB' + $labn + 'DB2'), ('LAB' + $labn + 'DB3'), ('LAB' + $labn + 'DB4'), ('LAB' + $labn + 'DB5'), ('LAB' + $labn + 'DB6'), ('LAB' + $labn + 'DB7'),('LABAPP' + $labn) | Move-datastore -Destination ('LAB'+$labn)
 Start-Sleep -s 2
 
 # Register the VMX files with the appropriate hosts
 # 
+Clear-Host
 Write-Host "Register the LAB$labn APP vm (ln:~550)" -ForegroundColor Red
 $newAPPname = 'LABORAAPP'+$labn
 $appVMXds = 'LABAPP'+$labn
 $appVMXFile = "[$appVMXds] PDIVLORCLAPP/PDIVLORCLAPP.vmx"
 $appVMFolder = Get-Folder 'LAB-APP'
-New-VM -Name $newAPPname -VMFilePath $appVMXFile -VMHost $vsphere25 -Location $appVMFolder 
-Get-VM -Name $newAPPname | Set-VM -NumCPU $vcpuAPP -MemoryGB $ramAPP -CoresPerSocket 1 -Confirm:$false
-Get-VM -Name $newAPPname | Get-NetworkAdapter | Set-NetworkAdapter -StartConnected:$false -Confirm:$false
+New-VM -Name $newAPPname -VMFilePath $appVMXFile -VMHost $vsphere25 -Location $appVMFolder | Out-Null
+Get-VM -Name $newAPPname | Set-VM -NumCPU $vcpuAPP -MemoryGB $ramAPP -CoresPerSocket 1 -Confirm:$false | Out-Null
+Get-VM -Name $newAPPname | Get-NetworkAdapter | Set-NetworkAdapter -StartConnected:$false -Confirm:$false | Out-Null
 $appMoref = get-vm -Server $vcsa02 -name ("*APP" + $labn) | ForEach-Object { (Get-View $_.Id).moref }
 $spec = New-Object VMware.Vim.VirtualMachineConfigSpec
 $spec.CpuAllocation = New-Object VMware.Vim.ResourceAllocationInfo
@@ -578,15 +580,16 @@ Start-Sleep -s 2
 Get-VM $newAPPname | Get-VMQuestion | Set-VMQuestion -DefaultOption  -Confirm:$false
 
 # Add the DB to inventory and start it
-# 
+#
+Clear-Host
 Write-Host "Register the LAB$labn DB vm (ln:~582)" -ForegroundColor Red
 $newDBname = 'LABORADB'+$labn
 $dbVMXds = 'LAB'+$labn+'DB1'
 $dbVMXFile = "[$dbVMXds] PDIVLORACLDB/PDIVLORACLDB.vmx"
 $dbVMFolder = Get-Folder 'LAB-DB'
-New-VM -Name $newDBname -VMFilePath $dbVMXFile -VMHost $vsphere23 -Location $dbVMFolder 
-Get-VM -Name $newDBname | Set-VM -NumCPU $vcpuDB -CoresPerSocket 1 -Confirm:$false
-Get-VM -Name $newDBname | Get-NetworkAdapter | Set-NetworkAdapter -StartConnected:$false -Confirm:$false
+New-VM -Name $newDBname -VMFilePath $dbVMXFile -VMHost $vsphere23 -Location $dbVMFolder | Out-Null
+Get-VM -Name $newDBname | Set-VM -NumCPU $vcpuDB -CoresPerSocket 1 -Confirm:$false | Out-Null
+Get-VM -Name $newDBname | Get-NetworkAdapter | Set-NetworkAdapter -StartConnected:$false -Confirm:$false | Out-Null
 $dbMoref = get-vm -Server $vcsa04 -name ("*DB" + $labn) | ForEach-Object { (Get-View $_.Id).moref }
 $spec = New-Object VMware.Vim.VirtualMachineConfigSpec
 $spec.CpuAllocation = New-Object VMware.Vim.ResourceAllocationInfo
@@ -619,18 +622,19 @@ $vcsa04 = 'pdivcsa-04.powerdesigninc.us'
 # login to the vCenter
 # 
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-$headers.Add("Authorization", "Basic c2VydmljZUB2c3BoZXJlLmxvY2FsOmE0N1d6M2F4a0FCNiozOFBudnlt")
-$headers.Add("Cookie", "vmware-api-session-id=222cee7c16b6135d0a017b217fd4fac8")
+$headers.Add("Authorization", "Basic YWRtaW5pc3RyYXRvckB2c3BoZXJlLmxvY2FsOm0wRyFReDYxNUdYJnledkhtdFpz")
+$headers.Add("Cookie", "vmware-api-session-id=04db3e64c6650449c0130399d3a3bcc5")
 
-$response = Invoke-RestMethod 'https://172.27.1.157/rest/com/vmware/cis/session' -SkipCertificateCheck -Method 'POST' -Headers $headers -UseBasicParsing
-$response | ConvertTo-Json 
+$response = Invoke-RestMethod 'https://172.27.1.157/rest/com/vmware/cis/session' -SkipCertificateCheck -Method 'POST' -Headers $headers
+$response | ConvertTo-Json
 $sessionid = $response.value
 
 # Get the DB VM vmware Id
 # 
-Connect-VIServer -Server $vcsa02 -Protocol https -User $user -Password $pass
-Connect-VIServer -Server $vcsa04 -Protocol https -User $user -Password $pass
+Connect-VIServer -Server $vcsa02 -Protocol https -User $user -Password $pass | Out-Null
+Connect-VIServer -Server $vcsa04 -Protocol https -User $user -Password $pass | Out-Null
 $vmdbid = get-vm -Server $vcsa04 -name ("*DB" + $labn) | ForEach-Object { (Get-View $_.Id).moref.value }
+
 
 # Create the LAB flavored DB datastore variables 
 # 
@@ -757,7 +761,6 @@ $response | ConvertTo-Json
 
 #endregion vspherevdisk
 
-
 # Power the VM on and Answer the question of copying it
 # 
 Write-Host "Start the DB Vm (ln:~763)" -ForegroundColor Red
@@ -770,25 +773,34 @@ Get-VM $newDBname | Get-VMQuestion | Set-VMQuestion -DefaultOption  -Confirm:$fa
 Write-Host "Do the Oracle refresh at the CLI (ln:~770)" -ForegroundColor Red 
 pause 
 
+# Shutdown the VMs after the Oracle refresh
+# 
+Write-Host "Power off the VM for ram & nic reconfig (ln:~777)" -ForegroundColor Red
+Shutdown-VMGuest -VM $newDBname -Confirm:$False | out-null
+Shutdown-VMGuest -VM $newAPPname -Confirm:$False | out-null
+Start-Sleep -s 20
+
 # Reconfigure the VM, RAM & connect the NIC after the refresh is done
 # 
 Write-Host "Reconfigure the VM memory and add the network adapter for connecting at start (ln:~775)" -ForegroundColor Red
-Get-VM -Name $newDBname | Set-VM -MemoryGB $ramDB -Confirm:$false
-Get-VM -Name $newDBname | Get-NetworkAdapter | Set-NetworkAdapter -StartConnected:$true -Confirm:$false
-Get-VM -Name $newAPPname | Get-NetworkAdapter | Set-NetworkAdapter -StartConnected:$true -Confirm:$false
+Get-VM -Name $newDBname | Set-VM -MemoryGB $ramDB -Confirm:$false | Out-Null
+Get-VM -Name $newDBname | Get-NetworkAdapter | Set-NetworkAdapter -StartConnected:$true -Confirm:$false | Out-Null
+Get-VM -Name $newAPPname | Get-NetworkAdapter | Set-NetworkAdapter -StartConnected:$true -Confirm:$false | Out-Null
 
 Write-Host "Check to make sure the RAM allocation is correct before powering on (ln:~780)" -ForegroundColor Red 
 pause
 
 Write-Host "Power on the VM for the final time (ln:~783)" -ForegroundColor Red
-Start-VM $newAPPname
-Start-VM $newDBname
+Start-VM $newAPPname | out-null
+Start-VM $newDBname | out-null
 
 Write-Host "LAB$labn has been refreshed (ln:~787)" -ForegroundColor Green
 
 # General Housekeeping - Log out of vSphere and vCenter connections
-Disconnect-VIServer -Server $vcsa2 -confirm:$false
-Disconnect-VIServer -Server $vcsa4 -confirm:$false
+Disconnect-VIServer -Server $vcsa2 -confirm:$false | Out-Null
+Disconnect-VIServer -Server $vcsa4 -confirm:$false | Out-Null
+
+Write-Host "vCenter's have been disconnected" -ForegroundColor Green
 
 #endregion vsphere2
 
@@ -838,7 +850,7 @@ $status = $response.status
 $body = $response.data | ConvertTo-Json -Depth 5
 
 Write-Host "Status:$status"
-Write-Host "Response:$body"
+
 <# Use TLS 1.2 #>
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
@@ -881,7 +893,7 @@ $status = $response.status
 $body = $response.data | ConvertTo-Json -Depth 5
 
 Write-Host "Status:$status"
-Write-Host "Response:$body"
+
 <# Use TLS 1.2 #>
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
@@ -924,7 +936,7 @@ $status = $response.status
 $body = $response.data | ConvertTo-Json -Depth 5
 
 Write-Host "Status:$status"
-Write-Host "Response:$body"
+
 <# Use TLS 1.2 #>
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
@@ -967,6 +979,5 @@ $status = $response.status
 $body = $response.data | ConvertTo-Json -Depth 5
 
 Write-Host "Status:$status"
-Write-Host "Response:$body"
 
 #endregion removesdt

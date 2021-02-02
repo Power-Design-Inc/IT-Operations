@@ -1,6 +1,6 @@
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-$headers.Add("Authorization", "Basic c2VydmljZUB2c3BoZXJlLmxvY2FsOmE0N1d6M2F4a0FCNiozOFBudnlt")
-$headers.Add("Cookie", "vmware-api-session-id=222cee7c16b6135d0a017b217fd4fac8")
+$headers.Add("Authorization", "Basic YWRtaW5pc3RyYXRvckB2c3BoZXJlLmxvY2FsOm0wRyFReDYxNUdYJnledkhtdFpz")
+$headers.Add("Cookie", "vmware-api-session-id=04db3e64c6650449c0130399d3a3bcc5")
 
-$response = Invoke-RestMethod 'https://172.27.1.157/rest/com/vmware/cis/session' -SkipCertificateCheck -Method 'POST' -Headers $headers
+$response = Invoke-RestMethod 'https://172.27.1.157/rest/com/vmware/cis/session' -skipcertificatecheck -Method 'POST' -Headers $headers
 $response | ConvertTo-Json

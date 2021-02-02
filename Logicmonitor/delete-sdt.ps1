@@ -8,7 +8,7 @@ $company = 'powerdesigninc'
 
 <# request details #>
 $httpVerb = 'DELETE'
-$resourcePath = "/sdt/sdts/H_1645"
+$resourcePath = "/sdt/sdts/H_1684"
 
 <# Construct URL #>
 $url = 'https://' + $company + '.logicmonitor.com/santaba/rest' + $resourcePath
