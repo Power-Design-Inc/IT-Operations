@@ -1,0 +1,142 @@
+deb-01 ip: 192.168.150.133 gw: 192.168.150.2  dns: 192.168.150.2 br: 192.168.150.255 
+deb-02 ip: 192.168.150.134 gw: 192.168.150.2  dns: 192.168.150.2 br: 192.168.150.255 
+deb-03 ip: 192.168.150.135 gw: 192.168.150.2  dns: 192.168.150.2 br: 192.168.150.255 
+
+192.168.150.133 deb-01
+192.168.150.134 deb-02
+192.168.150.135 deb-03
+
+# update the package list
+apt-get update
+
+# install the packages
+apt-get install pacemaker crmsh -y
+
+# install the Nginx server on all nodes
+apt-get install nginx -y
+
+# disable nginx automatic startup
+systemctl disable nginx
+
+# prevent pacemaker from starting immediately
+systemctl disable pacemaker
+
+# edit corosync.conf
+nano /etc/corosync/corosync.conf 
+
+    Change crypto_cipher parameters from none to aes256
+    Change crypto_hash from none to sha1
+    Change the bindnetaddr in the interface-block to your local network address
+    Uncomment the mcastaddr: 239.255.1.1 parameter
+    {
+                # Hostname of the node
+                name: deb-01
+                # Cluster membership node identifier
+                nodeid: 1
+                # Address of first link
+                ring0_addr: 192.169.150.133
+                # When knet transport is used it's possible to define up to 8 links
+                #ring1_addr: 192.168.1.1
+
+     }
+     {
+                # Hostname of the node
+                name: deb-02
+                # Cluster membership node identifier
+                nodeid: 2
+                # Address of first link
+                ring0_addr: 192.169.150.134
+                # When knet transport is used it's possible to define up to 8 links
+                #ring1_addr: 192.168.1.1
+        }
+        {
+                # Hostname of the node
+                name: deb-03
+                # Cluster membership node identifier
+                nodeid: 3
+                # Address of first link
+                ring0_addr: 192.169.150.135
+                # When knet transport is used it's possible to define up to 8 links
+                #ring1_addr: 192.168.1.1
+        }
+
+
+# generate your keys
+/usr/sbin/corosync-keygen
+
+# enable root login
+nano /etc/ssh/sshd_config
+    Change #PermitRootLogin without password to
+    PermiteRootLogin yes
+
+# restart the sshd
+/etc/init.d/ssh restart
+
+# copy the files to the other nodes
+scp /etc/corosync/corosync.conf root@deb-02:/etc/corosync/corosync.conf
+scp /etc/corosync/corosync.conf root@deb-03:/etc/corosync/corosync.conf
+scp /etc/corosync/authkey root@deb-02:/etc/corosync/authkey
+scp /etc/corosync/authkey root@deb-03:/etc/corosync/authkey
+
+
+# crm configuration
+cd /usr/sbin
+./crm configure
+
+# commands for crm 
+    property stonith-enabled=no
+    property no-quorum-policy=ignore
+    property default-resource-stickiness=100
+
+# create the cluster virtual IP
+./crm configure
+primitive virtual_ip \
+ocf:heartbeat:IPaddr2 params ip="192.168.150.130" \
+cidr_netmask="32" op monitor interval="10s" \
+meta migration-threshold="10"
+
+# make the nginx config
+./crm configure
+primitive webserver \
+ocf:heartbeat:nginx configfile=/etc/nginx/nginx.conf \
+op start timeout="40s" interval="0" \
+op stop timeout="60s" interval="0" \
+op monitor interval="10s" timeout="60s" \
+meta migration-threshold="10"
+
+commit
+bye
+
+# create group balance with virtual IP address
+./crm configure
+group ha-deb-nginx virtual_ip webserver
+commit
+bye
+
+# check that the resource has been defined 
+./crm resource show
+
+# test the full cluster is online with resources
+./crm status
+# you should see XX nodes configured and online
+# 2 resources configured and online
+# you should see the Resource group: ha-deb-nginx
+# virtual_ip : started deb-01
+# webserver: started deb01
+
+# navigate to the virtual IP to check nginx is working in HA mode
+http://VIRTUAL_ip ( http://192.168.150.130 )
+
+# take down one of the nodes to test the HA functionality
+# on deb-01
+./crm cluster stop 
+./crm status
+# node should be offline with node 2 & 3 online
+
+# check cluster status on another node (node 2)
+./crm status 
+# you should see node 1 offline with node 2 & 3 online
+
+# check the virtual IP address again 
+http://VIRTUAL_ip ( http://192.168.150.130 )
+# you should see the nginx custom page for DEB-02 on the virtual IP address

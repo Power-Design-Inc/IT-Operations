@@ -22,6 +22,33 @@ Basic Actions:
     17) Remove extra SDT in LM
 #>
 Clear-Host
+#region labinput
+# Read in the users choice for the oracle clone instance value
+# 
+[string]$labn = $(Read-Host "Oracle Lab Instance Value (01,02,03,04,05)" )
+Clear-Host
+Write-Host "You have chosen to refresh LAB$labn " -ForegroundColor Green
+
+#endregion labinput
+
+#region sendmail
+# set variables to send email
+# 
+$smtpusername = 'svc_mailrelay@powerdesigninc.us'
+$smtppassword = 'Lexar8080Yeti$'
+$smtpserver = 'smtp.powerdesigninc.us'
+$fromuser = 'svc_mailrelay@powerdesigninc.us'
+$touser = 'tmartin@powerdesigninc.us'
+
+$smtpsecpasswd = ConvertTo-SecureString $smtppassword -AsPlainText -Force
+$mycreds = New-Object System.Management.Automation.PSCredential ($smtpusername, $smtpsecpasswd)
+
+Send-MailMessage -To $touser -From $fromuser  -Subject “LAB$labn Oracle Clone has started” -Credential $mycreds -SmtpServer $smtpserver -Port 587
+Clear-host
+Write-Host "Notificiations sent to teams" -ForegroundColor Green
+
+#endregion sendmail
+
 #region setsdt
 # Set SDT in LM so that On-call doesn't get alerted
 # 
@@ -198,15 +225,6 @@ $body = $response.data | ConvertTo-Json -Depth 5
 Write-Host "Status:$status"
 
 #endregion setsdt
-
-#region input
-# Read in the users choice for the oracle clone instance value
-# 
-[string]$labn = $(Read-Host "Oracle Lab Instance Value (01,02,03,04,05)" )
-Clear-Host
-Write-Host "You have chosen to refresh LAB$labn " -ForegroundColor Green
-
-#endregion input
 
 #region variables
 
@@ -979,5 +997,6 @@ $status = $response.status
 $body = $response.data | ConvertTo-Json -Depth 5
 
 Write-Host "Status:$status"
+Send-MailMessage -To $touser -From $fromuser  -Subject “LAB$labn Oracle Clone has finished” -Credential $mycreds -SmtpServer $smtpserver -Port 587
 
 #endregion removesdt
