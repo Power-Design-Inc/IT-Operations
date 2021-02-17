@@ -1,25 +1,25 @@
 # Generate the local user login (DB wide credential) You must login to the master DB first and create the local login 
 # 
 
-CREATE LOGIN local_hdadmin WITH password='!SuperSecratPassw3rd$';
+CREATE LOGIN local_tmadmin WITH password='  ';
 go
 
 # Create local db user for the master DB
 # 
 
-CREATE USER local_hdadmin FROM LOGIN local_hdadmin;
+CREATE USER local_tmadmin FROM LOGIN local_tmadmin;
 go
 
 
 # Switch to DB that you wish to add the user to (DB_dvolutions)
 #
 
-CREATE USER local_hdadmin FROM LOGIN local_hdadmin;
+CREATE USER local_tmadmin FROM LOGIN local_tmadmin;
 go
 
 # Grant user permissions
 # 
 
-EXEC sp_addrolemember 'db_datareader', 'local_hdadmin';
-EXEC sp_addrolemember 'db_datawriter', 'local_hdadmin';
+EXEC sp_addrolemember 'db_datareader', 'local_tmadmin';
+EXEC sp_addrolemember 'db_datawriter', 'local_tmadmin';
 go 
