@@ -20,6 +20,7 @@ Basic Actions:
     15) Change processor, RAM allocation, and nic on boot
     16) Power on VMs
     17) Remove extra SDT in LM
+    18) blank area
 #>
 Clear-Host
 #region labinput
