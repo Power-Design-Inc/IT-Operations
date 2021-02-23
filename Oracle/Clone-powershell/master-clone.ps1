@@ -354,8 +354,8 @@ $snapapp = ""
 $snapdb = ""
 
 # Define clear text string for username and password
-[string]$userName = 'tmadmin'
-[string]$userPassword = 'Y@p49RBd4z7CMGDSg%qxKj'
+[string]$userName = 'svcautomation'
+[string]$userPassword = 'xhRQ53#59SgUQCf8Y4Aj9cYHRrpfBnv%1%0LrM'
 
 # Convert to SecureString
 [securestring]$secStringPassword = ConvertTo-SecureString $userPassword -AsPlainText -Force
@@ -824,6 +824,10 @@ Write-Host "vCenter's have been disconnected" -ForegroundColor Green
 #endregion vsphere2
 
 #region removesdt
+
+# Sleeping for a little bit because the SDT gets removed too early before the VMs come back up
+# 
+Start-Sleep -s 20
 
 # This is for removing the SDT that weas set so there is no leftover time
 # 
